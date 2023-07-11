@@ -1,8 +1,5 @@
 package algorithm;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import component.utils.*;
 
 public class MergeSortAlgorithm<T extends Comparable<T>> extends SortingAlgorithm<T> {

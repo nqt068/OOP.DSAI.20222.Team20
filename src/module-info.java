@@ -6,4 +6,5 @@
  *
  */
 module SortingAlgorithmVisualizer {
+	requires java.desktop;
 }
