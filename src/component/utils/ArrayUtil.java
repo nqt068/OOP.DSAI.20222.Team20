@@ -49,9 +49,14 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
     public Element<T> get(int index) {
         return this.array[index];
     }
+    
+    public ArrayUtil<T> clone() {
+    	return new ArrayUtil<T>(array.clone());
+    }
     public void set(int index, Element<T> element) {
         this.array[index] = element;
     }
+    
 
 	@Override
 	public Iterator<Element<T>> iterator() {
