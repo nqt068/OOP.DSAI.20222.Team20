@@ -80,4 +80,16 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
             return array[currentIndex++];
         }
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < array.length; i++) {
+            sb.append(array[i]);
+            if (i < array.length - 1) {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
+    }
 }
