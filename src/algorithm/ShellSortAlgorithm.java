@@ -57,6 +57,8 @@ public class ShellSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
 						count = 0;
 						for (int i = j; i < n; i+= gap) {
 							array.set(i, ins.array.get(count));
+							steps++;
+							stepsList.add(array.clone());
 							count += 1;
 						}
 					}
@@ -71,6 +73,11 @@ class InsertionSortAlgorithm<T extends Comparable<T>> extends SortingAlgorithm<T
 	public InsertionSortAlgorithm(ArrayUtil<T> array) {
 		super(array);
 	}
+	
+	@Override
+    protected boolean lessThanOrEqual(T a, T b) {
+        return a.compareTo(b) <= 0;
+    }
 	
 	@SuppressWarnings("unchecked")
 	public ArrayUtil<T> partlySort(int n, ArrayUtil<T> arr) {
