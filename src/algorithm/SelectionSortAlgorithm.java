@@ -25,6 +25,5 @@ public class SelectionSortAlgorithm<T extends Comparable<T> > extends SortingAlg
 		}
 		timeComplexity=(long)n*n;
 	}
-
-
 }
+
