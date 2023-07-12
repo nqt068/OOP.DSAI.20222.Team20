@@ -1,4 +1,4 @@
-package test.utils;
+package test.component.utils;
 import component.utils.*;
 
 public class ArrayUtilTest {

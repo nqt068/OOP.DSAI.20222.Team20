@@ -2,28 +2,77 @@ package component;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Insets;
-
-import javax.swing.BorderFactory;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JButton;
 
-public class Button extends JButton{
-	String id;
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getId() {
-		return this.id;
-	}
-	public Button(int x, int y, Color color) {
-		super();
-		setModel(new FixedStateButtonModel());
-		setRolloverEnabled(false);
-		setMargin(new Insets(0,0,0,0));	
-		setFocusable(false);
-		setBackground(color);
-		setForeground(Color.WHITE);
-		setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-		setPreferredSize(new Dimension(x,y));			
-	}
+public class Button extends JButton implements MouseListener {
+
+    private static final long serialVersionUID = 1L;
+    private Color buttonColor;
+    private Color hoverColor;
+    private Color textColor;
+    private String buttonText;
+
+    public Button(String text) {
+        super(text);
+        this.buttonText = text;
+        this.buttonColor = new Color(0, 128, 255);
+        this.hoverColor = new Color(30, 144, 255);
+        this.textColor = Color.WHITE;
+        this.setFont(new Font("Arial", Font.PLAIN, 16));
+        this.setPreferredSize(new Dimension(100, 40));
+        this.addMouseListener(this);
+    }
+
+    public void setButtonColor(Color color) {
+        this.buttonColor = color;
+    }
+
+    public void setHoverColor(Color color) {
+        this.hoverColor = color;
+    }
+
+    public void setTextColor(Color color) {
+        this.textColor = color;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        if (getModel().isPressed()) {
+            g2.setColor(buttonColor.darker());
+        } else if (getModel().isRollover()) {
+            g2.setColor(hoverColor);
+        } else {
+            g2.setColor(buttonColor);
+        }
+        g2.fillRect(0, 0, getWidth(), getHeight());
+
+        g2.setColor(textColor);
+        g2.setFont(getFont());
+        g2.drawString(buttonText, getWidth() / 2 - g2.getFontMetrics().stringWidth(buttonText) / 2,
+                getHeight() / 2 + g2.getFontMetrics().getAscent() / 2 - 3);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
 }
