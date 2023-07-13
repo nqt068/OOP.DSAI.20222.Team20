@@ -13,6 +13,8 @@ public class ArrayUtilTest {
 
         // Create an ArrayUtil object using the integerArray
         ArrayUtil<Integer> integerArrayUtil = new ArrayUtil<>(integerArray);
+        System.out.println(integerArrayUtil.dataType);
+        System.out.println(Integer.class);
 
         // Print the original array
         integerArrayUtil.printArray(); // Output: 3 1 4 2
@@ -32,5 +34,9 @@ public class ArrayUtilTest {
         // Test the getMin method
         Element<Integer> minElement = integerArrayUtil.getMin();
         System.out.println("Min element: " + minElement); // Output: Min element: 1
+        
+        integerArrayUtil.generateRandomArray();
+        System.out.println("Array after being randomly regenerated: ");
+        integerArrayUtil.printArray();
     }
 }
