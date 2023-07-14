@@ -38,5 +38,10 @@ public class ArrayUtilTest {
         integerArrayUtil.generateRandomArray();
         System.out.println("Array after being randomly regenerated: ");
         integerArrayUtil.printArray();
+        
+        System.out.println("Create a random array with given length");
+        ArrayUtil randomArr = new ArrayUtil(30);
+        randomArr.generateRandomArray();
+        randomArr.printArray();
     }
 }

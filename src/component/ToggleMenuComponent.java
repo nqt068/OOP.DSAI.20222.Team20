@@ -5,13 +5,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class ToggleMenu extends JPanel implements ActionListener {
+public class ToggleMenuComponent extends JPanel implements ActionListener {
     private String label;
     private JToggleButton button;
     private JPopupMenu popupMenu;
     private ArrayList<String> items = new ArrayList<>();
 
-    public ToggleMenu(String label) {
+    public ToggleMenuComponent(String label) {
         this.label = label;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));

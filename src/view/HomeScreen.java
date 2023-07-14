@@ -7,12 +7,13 @@ import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 import controller.HomeScreenController;
-import component.Button;
-import component.Card;
+import component.ButtonComponent;
+import component.CardComponent;
 
 public class HomeScreen extends Screen{
 	private final HomeScreenController homeScreenController;
@@ -21,11 +22,14 @@ public class HomeScreen extends Screen{
 		super();
 		homeScreenController = new HomeScreenController();
 		JPanel homeScreen = new JPanel(new GridLayout(2,1));
+		add(homeScreen, BorderLayout.CENTER);
 		
 		homeScreen.add(infoPanel());
 		homeScreen.add(sortPanel());
 		// TODO: Change the design margin
 		homeScreen.setBorder(BorderFactory.createEmptyBorder(0,0,45,0));
+		
+		setVisible(true);
 	}
 
 	@Override
@@ -45,6 +49,9 @@ public class HomeScreen extends Screen{
 	
 	private JPanel logoPanel() {
 		JPanel logoPanel = new JPanel(new BorderLayout());
+		Icon visualSoIcon= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"VisualSO_icon1.png").getImage().getScaledInstance(420, 70, Image.SCALE_SMOOTH));
+		JLabel logo = new JLabel(visualSoIcon);
+		logoPanel.add(logo, BorderLayout.CENTER);
 		JLabel appNameLabel = new JLabel("Sorting Algorithm Visualizer");
 		JPanel a = new JPanel();
 		a.add(appNameLabel);
@@ -54,12 +61,12 @@ public class HomeScreen extends Screen{
 	
 	private JPanel helpPanel() {
 		JPanel helpPanel = new JPanel();
-		Button helpBtn = new Button("Help", Color.WHITE, new Color(11,102,106), new Color(7,25,82)); 
+		ButtonComponent helpBtn = new ButtonComponent("Help", Color.WHITE, new Color(11,102,106), new Color(7,25,82)); 
 //		TODO: Add actionListener for helpBtn
 //		btnHelp.addActionListener();
 		helpPanel.add(helpBtn);
 		
-		Button aboutBtn = new Button("About", Color.WHITE, new Color(11,102,106), new Color(7,25,82));
+		ButtonComponent aboutBtn = new ButtonComponent("About", Color.WHITE, new Color(11,102,106), new Color(7,25,82));
 		helpPanel.add(aboutBtn);
 //		TODO: Add actionListener for aboutBtn
 //		aboutBtn.addActionListener();
@@ -75,9 +82,9 @@ public class HomeScreen extends Screen{
 		String mergeSortDescription = "Give some description for merge sort algorithm here";
 		String selectionSortDescription = "Give some description for selection sort algorithm here";
 		String shellSortDescription = "Give some description for shell sort algorithm here";
-		Card mergeSortCard = new Card("Merge Sort", mergeSortImage, mergeSortDescription);
-		Card selectionSortCard = new Card("Selection Sort", selectionSortImage, selectionSortDescription);
-		Card shellSortCard = new Card("Shell Sort", shellSortImage, shellSortDescription);
+		CardComponent mergeSortCard = new CardComponent("Merge Sort", mergeSortImage, mergeSortDescription);
+		CardComponent selectionSortCard = new CardComponent("Selection Sort", selectionSortImage, selectionSortDescription);
+		CardComponent shellSortCard = new CardComponent("Shell Sort", shellSortImage, shellSortDescription);
 		
 		
 		

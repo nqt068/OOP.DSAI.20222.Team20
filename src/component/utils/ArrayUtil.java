@@ -13,6 +13,10 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
         this.array = array.clone();
         this.dataType = (Class<T>) array[0].getValue().getClass();
     }
+    @SuppressWarnings("unchecked")
+	public ArrayUtil(int n) {
+    	this.array = (Element<T>[]) new Element<?>[n];
+    }
 
     public void swap(int i, int j) {
         Element<T> temp = this.array[i];

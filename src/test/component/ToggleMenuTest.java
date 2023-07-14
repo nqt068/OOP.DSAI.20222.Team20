@@ -3,7 +3,7 @@ package test.component;
 import javax.swing.*;
 import java.awt.*;
 
-import component.ToggleMenu;
+import component.ToggleMenuComponent;
 
 public class ToggleMenuTest {
     public static void main(String[] args) {
@@ -12,13 +12,13 @@ public class ToggleMenuTest {
         frame.setSize(300, 200);
         frame.setLocationRelativeTo(null);
 
-        ToggleMenu toggleMenu = new ToggleMenu("Toggle me");
-        toggleMenu.addItem("Bubble Sort");
-        toggleMenu.addItem("Insertion Sort");
-        toggleMenu.addItem("Selection Sort");
+        ToggleMenuComponent toggleMenuComponent = new ToggleMenuComponent("Toggle me");
+        toggleMenuComponent.addItem("Bubble Sort");
+        toggleMenuComponent.addItem("Insertion Sort");
+        toggleMenuComponent.addItem("Selection Sort");
 
         JPanel panel = new JPanel();
-        panel.add(toggleMenu);
+        panel.add(toggleMenuComponent);
 
         frame.add(panel);
         frame.setVisible(true);

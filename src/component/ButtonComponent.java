@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
 
-public class Button extends JButton implements MouseListener {
+public class ButtonComponent extends JButton implements MouseListener {
 
     private static final long serialVersionUID = 1L;
     private Color buttonColor;
@@ -18,7 +18,7 @@ public class Button extends JButton implements MouseListener {
     private Color textColor;
     private String buttonText;
 
-    public Button(String text, Color textColor, Color buttonColor, Color buttonHoverColor) {
+    public ButtonComponent(String text, Color textColor, Color buttonColor, Color buttonHoverColor) {
         super(text);
         this.buttonText = text;
         this.buttonColor = buttonColor;

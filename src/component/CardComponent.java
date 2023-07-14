@@ -7,13 +7,13 @@ import controller.HomeScreenController;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Card extends JPanel implements MouseListener {
+public class CardComponent extends JPanel implements MouseListener {
     private JLabel headingLabel;
     private JLabel imageLabel;
     private JTextArea descriptionTextArea;
     private HomeScreenController homeScreenController;
 
-    public Card(String heading, Image image, String description) {
+    public CardComponent(String heading, Image image, String description) {
         setLayout(new BorderLayout());
 
         // Create the heading label and add it to the panel
