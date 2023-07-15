@@ -1,7 +1,13 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import algorithm.SortingAlgorithm;
 import listener.SortingScreenListener;
@@ -25,7 +31,7 @@ public class SortController extends Controller{
 	public SortScreen getSortScreen() {
 		return this.sortScreen;
 	}
-	public ComponentAdapter changeWindowSize() {
+	public ComponentAdapter adjustWindowSize() {
 		return new ComponentAdapter() {
 		    @Override
 		    public void componentResized( ComponentEvent e ) {
@@ -36,13 +42,78 @@ public class SortController extends Controller{
 		    	getSortScreen().getInputArrayField().setBounds(266, controller.getSortScreen().getHeight()-205, 228,28);
 		    	getSortScreen().getBtnGo().setBounds(496, controller.getSortScreen().getHeight()-205, 50,28);
 		    	getSortScreen().getAnimation().setBounds(45, 30, controller.getSortScreen().getWidth()-200, 520);
-		    	getSortScreen().getDemonstratePane().setBounds(controller.getSortScreen().getWidth()-490,  controller.getSortScreen().getHeight() -208,380 , 65);
+		    	getSortScreen().getExplanationDisplayer().setBounds(controller.getSortScreen().getWidth()-490,  getSortScreen().getHeight() -208,380 , 65);
 		    	getSortScreen().getContainer1().setBounds(45, 30, controller.getSortScreen().getWidth()-200, 522);
 		    	getSortScreen().getMain().setBounds(0, 0, controller.getSortScreen().getWidth()-200, 250);
 		    	getSortScreen().getSub().setBounds(0, 270, controller.getSortScreen().getWidth()-200, 250);
 		    	getSortScreen().getErrorLabel().setBounds((controller.getSortScreen().getWidth()-450)/2, 5, 300, 20);
 		    }
 		};
+	}
+	public ChangeListener adjustSpeed() {
+		return new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				setSpeed(((JSlider) e.getSource()).getValue());
+				// TODO: Show speed in speed label
+			}
+		};
+	}
+	public ChangeListener changeProgress() {
+		return new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// TODO Do the changeProgress here
+			}
+		};
+	}
+	public ActionListener showExplaination() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButton sourceButton = (JButton) e.getSource();
+				boolean isBackwardButton = "<".equals(sourceButton.getText());
+				if (isBackwardButton) {
+				    sourceButton.setText(">");
+				    getSortScreen().getExplanationDisplayer().setVisible(true);
+				} else {
+				    sourceButton.setText("<");
+				    getSortScreen().getExplanationDisplayer().setVisible(false);
+				}
+				
+			}
+		};
+	}
+	public ActionListener buttonCreateSortingArrayClicked() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+	}
+	public ActionListener buttonConfirmInputArrayClicked() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+	}
+	public ActionListener buttonStartSortingClicked() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+	}
+	// Setter methods
+	private void setSpeed(int newSpeed) {
+		this.speed = newSpeed;
 	}
 	// ArrayUtil methods
 	

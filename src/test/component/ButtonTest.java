@@ -9,10 +9,8 @@ public class ButtonTest {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Button Test");
         JPanel panel = new JPanel();
-        ButtonComponent buttonComponent = new ButtonComponent("Click me!");
-        buttonComponent.setButtonColor(Color.GREEN);
-        buttonComponent.setHoverColor(Color.YELLOW);
-        buttonComponent.setTextColor(Color.BLACK);
+        ButtonComponent buttonComponent = new ButtonComponent("Click me!", Color.BLACK, Color.BLUE, Color.CYAN);
+
         panel.add(buttonComponent);
         frame.add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
