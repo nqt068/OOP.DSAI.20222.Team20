@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
@@ -36,16 +38,19 @@ public class SortScreen extends Screen{
     ArrayGraphic main;
     ArrayGraphic sub;
 	JPanel animation;
-	SliderBarComponent processSlider;
-	DemonstratePane demonstratePane;
-	MySideButton btnCreate;
-	MySideButton btnRandom;
-	MyLabel A;
-	MyTextField inputArrayField;
-	MySideButton btnGo;
-	MySideButton btnSort;
+	SliderBarComponent progressSlider;
+	SliderBarComponent speedSlider;
+	TextAreaComponent explanationDisplayer;
+	
+	ButtonComponent buttonCreateSortingArray;
+	ButtonComponent buttonCreateRandomArray;
+	LabelComponent arrayEqualsLabel;
+	TextFieldComponent inputArrayTextField;
+	ButtonComponent buttonConfirmInputArray;
+	ButtonComponent buttonStartSorting;
 	LabelComponent errorLabel;
-	public final String placeHolder = "Ex: 1, 2, 3, 4, 8";
+	
+	JPanel controlPanel;
 	
 	protected int padding = 5;
 	
@@ -87,7 +92,7 @@ public class SortScreen extends Screen{
 		backButton.addActionListener(controller.backProtocol());
 		navigationButton.add(backButton, 2, 0);
 	}
-	private void createCenter(){
+	private JLayeredPane createCenter(){
 		arrayGraphicArea = new JLayeredPane();
 		JPanel container = new JPanel();
 		container.setLayout(null);
@@ -97,12 +102,48 @@ public class SortScreen extends Screen{
 		animation = new JPanel();
 		arrayGraphicArea.add(container, JLayeredPane.DEFAULT_LAYER);
 		
-		
 		errorLabel = new LabelComponent("");
 		errorLabel.setForeground(Color.RED);
 		arrayGraphicArea.add(errorLabel, JLayeredPane.DRAG_LAYER);
 		
+		createMenuList();
 		
+		return arrayGraphicArea;
+	}
+	private JPanel createSouth() {
+		
+	}
+	private JPanel createControlPanel() {
+		JPanel controlPanel = new JPanel();
+		controlPanel.setBackground(Color.BLACK);
+		
+		progressSlider = new SliderBarComponent();
+		
+		
+		return controlPanel;
+	}
+	private void createMenuList() {
+		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonCreateSortingArray.addActionListener(sortController.buttonCreateSortingArrayClicked());
+		arrayGraphicArea.add(buttonCreateSortingArray, JLayeredPane.MODAL_LAYER);
+		
+		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonCreateRandomArray.setSize(new Dimension(100, 34));
+		arrayGraphicArea.add(buttonCreateRandomArray, JLayeredPane.MODAL_LAYER);
+		
+		arrayEqualsLabel = new LabelComponent("Array :=");
+		arrayGraphicArea.add(arrayEqualsLabel, JLayeredPane.MODAL_LAYER);
+		
+		inputArrayTextField = new TextFieldComponent(30, "Ex: 1, 8, 3, 5, 7, 15, 21, 34");
+		arrayGraphicArea.add(inputArrayTextField, JLayeredPane.MODAL_LAYER);
+		
+		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonConfirmInputArray.addActionListener(sortController.buttonConfirmInputArrayClicked());
+		arrayGraphicArea.add(buttonConfirmInputArray, JLayeredPane.MODAL_LAYER);
+		
+		buttonStartSorting = new ButtonComponent("Sort", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonStartSorting.addActionListener(sortController.buttonStartSortingClicked());
+		arrayGraphicArea.add(buttonStartSorting, JLayeredPane.MODAL_LAYER);
 	}
 	private ArrayGraphic mainBarChartVisualizer(Color color) {
 		int unitWidth = ((int) getWidth()-200)/this.sortArray.size();
@@ -123,6 +164,15 @@ public class SortScreen extends Screen{
 		// TODO: Redesign the boundary if necessary
 		mainBarChart.setBounds(45,30,getWidth()-200,250);
 		return mainBarChart;
+	}
+	public TextAreaComponent getExplanationDisplayer() {
+		return this.explanationDisplayer;
+	}
+	public SliderBarComponent getProgressSlider() {
+		return this.progressSlider;
+	}
+	public SliderBarComponent getSpeedSlider() {
+		return this.progressSlider;
 	}
 	
 	@Override
