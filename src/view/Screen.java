@@ -26,7 +26,7 @@ public class Screen extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(true);
-//		setVisible(true);
+		setVisible(true);
     }
     public Screen() {
     	this.width = 800;
@@ -38,7 +38,7 @@ public class Screen extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(true);
-//		setVisible(true);
+		setVisible(true);
     }
 
     public int getWidth() {
@@ -55,14 +55,27 @@ public class Screen extends JFrame {
     	navigationBar.setPreferredSize(new Dimension(800, 30));
     	navigationBar.setBorder(BorderFactory.createEmptyBorder(0,35,0,40));
     	
-		Icon visualSoLogo= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"\\VisualSO_icon.png").getImage().getScaledInstance(180, 30, Image.SCALE_SMOOTH));
-		JLabel icon = new JLabel(visualSoLogo);
-		navigationBar.add(icon,"West");
+//		Icon visualSoLogo= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"\\VisualSO_icon.png").getImage().getScaledInstance(180, 30, Image.SCALE_SMOOTH));
+//		JLabel icon = new JLabel(visualSoLogo);
+//		navigationBar.add(icon,"West");
+    	
+    	JMenu menu = new JMenu("Menu");
+    	
+    	JMenuItem help = new JMenuItem("Help");
+    	JMenuItem about = new JMenuItem("About");
+    	
+    	menu.add(help);
+    	menu.add(about);
 		
+    	JMenuBar menuBar = new JMenuBar();
+    	menuBar.add(menu);
+    	
+    	navigationBar.add(menuBar, "West");
+    	
 		navigationButton = new JPanel(new GridLayout(1,2));
 		navigationButton.setBackground(Color.WHITE);
 		
-		ButtonComponent exitButton = new ButtonComponent("Exit", Color.BLACK, Color.RED, Color.PINK);
+		ButtonComponent exitButton = new ButtonComponent("Exit", Color.WHITE, Color.RED, Color.PINK);
 		exitButton.addActionListener(controller.exitProtol());
 		navigationButton.add(exitButton,1,0);
 		navigationBar.add(navigationButton, "East");

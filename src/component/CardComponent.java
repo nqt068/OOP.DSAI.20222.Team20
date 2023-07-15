@@ -19,8 +19,11 @@ public class CardComponent extends JPanel implements MouseListener {
         // Create the heading label and add it to the panel
         headingLabel = new JLabel(heading);
         headingLabel.setFont(new Font("Arial", Font.BOLD, 18));
+//        add(headingLabel, BorderLayout.NORTH);
+        headingLabel.setHorizontalAlignment(JLabel.CENTER);
+        
         add(headingLabel, BorderLayout.NORTH);
-
+        
         // Create the image label or blank box and add it to the panel
         JPanel imagePanel = new JPanel(new BorderLayout());
         if (image != null) {

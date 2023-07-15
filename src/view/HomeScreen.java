@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -49,28 +50,29 @@ public class HomeScreen extends Screen{
 	
 	private JPanel logoPanel() {
 		JPanel logoPanel = new JPanel(new BorderLayout());
-		Icon visualSoIcon= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"VisualSO_icon1.png").getImage().getScaledInstance(420, 70, Image.SCALE_SMOOTH));
-		JLabel logo = new JLabel(visualSoIcon);
-		logoPanel.add(logo, BorderLayout.CENTER);
-		JLabel appNameLabel = new JLabel("Sorting Algorithm Visualizer");
+//		Icon visualSoIcon= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"VisualSO_icon1.png").getImage().getScaledInstance(420, 70, Image.SCALE_SMOOTH));
+//		JLabel logo = new JLabel(visualSoIcon);
+//		logoPanel.add(logo, BorderLayout.CENTER);
+		JLabel appNameLabel = new JLabel("SORTING ALGORITHM VISUALIZER");
+		appNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
 		JPanel a = new JPanel();
-		a.add(appNameLabel);
-		logoPanel.add(a, BorderLayout.SOUTH);
+		a.add(appNameLabel, BorderLayout.CENTER);
+		logoPanel.add(a, BorderLayout.CENTER);
 		return logoPanel;
 	}
 	
 	private JPanel helpPanel() {
 		JPanel helpPanel = new JPanel();
-		ButtonComponent helpBtn = new ButtonComponent("Help", Color.WHITE, new Color(11,102,106), new Color(7,25,82)); 
-//		TODO: Add actionListener for helpBtn
-//		btnHelp.addActionListener();
-		helpPanel.add(helpBtn);
-		
-		ButtonComponent aboutBtn = new ButtonComponent("About", Color.WHITE, new Color(11,102,106), new Color(7,25,82));
-		helpPanel.add(aboutBtn);
-//		TODO: Add actionListener for aboutBtn
-//		aboutBtn.addActionListener();
-		helpPanel.add(aboutBtn);
+//		ButtonComponent helpBtn = new ButtonComponent("Help", Color.WHITE, new Color(11,102,106), new Color(7,25,82)); 
+////		TODO: Add actionListener for helpBtn
+////		btnHelp.addActionListener();
+//		helpPanel.add(helpBtn);
+//		
+//		ButtonComponent aboutBtn = new ButtonComponent("About", Color.WHITE, new Color(11,102,106), new Color(7,25,82));
+//		helpPanel.add(aboutBtn);
+////		TODO: Add actionListener for aboutBtn
+////		aboutBtn.addActionListener();
+//		helpPanel.add(aboutBtn);
 		return helpPanel;
 	}
 	
@@ -85,8 +87,6 @@ public class HomeScreen extends Screen{
 		CardComponent mergeSortCard = new CardComponent("Merge Sort", mergeSortImage, mergeSortDescription);
 		CardComponent selectionSortCard = new CardComponent("Selection Sort", selectionSortImage, selectionSortDescription);
 		CardComponent shellSortCard = new CardComponent("Shell Sort", shellSortImage, shellSortDescription);
-		
-		
 		
 		sortPanel.add(mergeSortCard);
 		sortPanel.add(selectionSortCard);
