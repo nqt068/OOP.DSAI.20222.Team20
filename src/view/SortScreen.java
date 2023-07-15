@@ -44,7 +44,7 @@ public class SortScreen extends Screen{
 	MyTextField inputArrayField;
 	MySideButton btnGo;
 	MySideButton btnSort;
-	MyLabel errorLabel;
+	LabelComponent errorLabel;
 	public final String placeHolder = "Ex: 1, 2, 3, 4, 8";
 	
 	protected int padding = 5;
@@ -57,6 +57,7 @@ public class SortScreen extends Screen{
 		generateArray(null);
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();
+		setVisible(true);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -69,12 +70,16 @@ public class SortScreen extends Screen{
 		}
 	}
 	private void calculateUnitHeight() {
-		if (this.sortArray.getMax().getValue() != (Integer) 0) {
-			this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());
-		} else if (this.sortArray.getMax().getValue() != (Double) 0.0) {
-			this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());			
-		} else {
+		if (this.sortArray.getMax() == null) {
 			this.unitHeight = 0;
+		} else {			
+			if (this.sortArray.getMax().getValue() != (Integer) 0) {
+				this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());
+			} else if (this.sortArray.getMax().getValue() != (Double) 0.0) {
+				this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());			
+			} else {
+				this.unitHeight = 0;
+			}
 		}
 	}
 	private void addBackButtonToNavigationButton() {
@@ -90,6 +95,13 @@ public class SortScreen extends Screen{
 		sub = new ArrayGraphic(sortArray);
 		container.add(sub);
 		animation = new JPanel();
+		arrayGraphicArea.add(container, JLayeredPane.DEFAULT_LAYER);
+		
+		
+		errorLabel = new LabelComponent("");
+		errorLabel.setForeground(Color.RED);
+		arrayGraphicArea.add(errorLabel, JLayeredPane.DRAG_LAYER);
+		
 		
 	}
 	private ArrayGraphic mainBarChartVisualizer(Color color) {
