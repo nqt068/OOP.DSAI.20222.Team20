@@ -39,18 +39,24 @@ public class MergeSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
         while (i < leftArray.length && j < rightArray.length) {
             if (lessThanOrEqual(leftArray[i].getValue(), rightArray[j].getValue())) {
             	array.set(k++, leftArray[i++]);
+//            	array.printArray();
             } else {
                 array.set(k++, rightArray[j++]);
+//              array.printArray();
             }
         }
+        stepsList.add(array.clone());
         
         while (i < leftArray.length) {
             array.set(k++, leftArray[i++]);
+//            array.printArray();
         }
-        
+//        array.printArray();
         while (j < rightArray.length) {
             array.set(k++, rightArray[j++]);
+//            array.printArray();
         }
+        array.printArray();
     }
     
     @Override
