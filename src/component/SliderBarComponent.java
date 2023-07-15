@@ -11,14 +11,14 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicSliderUI;
 
-public class SliderBar extends JSlider {
+public class SliderBarComponent extends JSlider {
 
     private static final long serialVersionUID = 1L;
     private Color thumbColor;
     private Color trackColor;
     private boolean showMinMaxValues;
 
-    public SliderBar(int min, int max, int value) {
+    public SliderBarComponent(int min, int max, int value) {
         super(min, max, value);
         this.thumbColor = new Color(0, 128, 255);
         this.trackColor = Color.LIGHT_GRAY;
