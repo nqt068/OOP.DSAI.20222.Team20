@@ -12,6 +12,7 @@ public class MergeSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
 
     @Override
     public void sort() {
+    	stepsList.add(array.clone());
         mergeSort(0, array.size() - 1);
     }
 
@@ -21,7 +22,6 @@ public class MergeSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
             mergeSort(left, mid);
             mergeSort(mid + 1, right);
             merge(left, mid, right);
-            stepsList.add(array.clone());
         }
     }
 
@@ -29,8 +29,8 @@ public class MergeSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
         int n1 = mid - left + 1;
         int n2 = right - mid;
 
-        ArrayUtil<T> leftArray = new ArrayUtil<T>(new Element[n1]);
-        ArrayUtil<T> rightArray = new ArrayUtil<T>(new Element[n2]);
+        ArrayUtil<T> leftArray = new ArrayUtil<T>(n1);
+        ArrayUtil<T> rightArray = new ArrayUtil<T>(n2);
 
         for (int i = 0; i < n1; i++) {
             leftArray.set(i, array.get(left + i));
@@ -51,6 +51,7 @@ public class MergeSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
                 array.set(k, rightArray.get(j));
                 j++;
             }
+            stepsList.add(array.clone());
             k++;
         }
         while (i < n1) {
