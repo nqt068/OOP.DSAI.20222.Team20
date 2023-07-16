@@ -34,8 +34,8 @@ public class Screen extends JFrame {
 		setVisible(true);
     }
     public Screen() {
-    	this.width = 800;
-    	this.height = 600;
+    	this.width = 1600;
+    	this.height = 1200;
 //        this.menuItemListener = menuItemListener;
     	controller = new Controller();
     	add(createNorth(), "North");

@@ -73,11 +73,12 @@ public abstract class SortScreen extends Screen{
 		sortController = new SortController(this);
 		sortController.setSortAlgorithm(sortAlgorithm);
 		generateArray(null);
+		System.out.println(this.sortArray);
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();
-		add(createCenter(), BorderLayout.CENTER);
+//		add(createCenter(), BorderLayout.CENTER);
 		add(createSouth(), BorderLayout.SOUTH);
-		add(createWest(), BorderLayout.WEST);
+//		add(createWest(), BorderLayout.WEST);
 		setVisible(true);
 	}
 
@@ -96,16 +97,16 @@ public abstract class SortScreen extends Screen{
 			this.unitHeight = 0;
 		} else {			
 			if (this.sortArray.getMax().getValue() != (Integer) 0) {
-				this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());
+				this.unitHeight = ((int)300)/((int)this.sortArray.getMax().getValue());
 			} else if (this.sortArray.getMax().getValue() != (Double) 0.0) {
-				this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());			
+				this.unitHeight = ((double)300.0)/((double)this.sortArray.getMax().getValue());			
 			} else {
 				this.unitHeight = 0;
 			}
 		}
 	}
 	private void addBackButtonToNavigationButton() {
-		ButtonComponent backButton = new ButtonComponent("Back", Color.WHITE, Color.BLUE, Color.CYAN);
+		ButtonComponent backButton = new ButtonComponent("Back");
 		backButton.addActionListener(controller.backProtocol());
 		navigationButton.add(backButton, 2, 0);
 	}
@@ -123,7 +124,7 @@ public abstract class SortScreen extends Screen{
 		errorLabel.setForeground(Color.RED);
 		visualizerArea.add(errorLabel, JLayeredPane.DRAG_LAYER);
 		
-		createWest();
+//		createWest();
 		visualizerArea.setVisible(true);
 		
 		return visualizerArea;
@@ -136,6 +137,8 @@ public abstract class SortScreen extends Screen{
 		bottomFunctionalBar.add(createControlPanel(), BorderLayout.CENTER);
 		bottomFunctionalBar.add(createSpeedChanger(), BorderLayout.WEST);
 		bottomFunctionalBar.add(createInfoPanel(), BorderLayout.EAST);
+		
+		bottomFunctionalBar.setVisible(true);
 		return bottomFunctionalBar;
 	}
 //	private JPanel createWest() {
@@ -143,8 +146,8 @@ public abstract class SortScreen extends Screen{
 //	}
 	// Progress slider bar, play&pause button, next & back buttons
 	private JPanel createControlPanel() {
-		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		controlPanel.setBackground(Color.BLACK);
+		JPanel controlPanel = new JPanel();
+		controlPanel.setBackground(new Color(238,238,238));
 		
 		if ((int)sortController.getSortAlgorithm().stepsList.size()!=0) {
 			progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size(),0);
@@ -153,33 +156,33 @@ public abstract class SortScreen extends Screen{
 		}
 		// TODO: Add ChangeListener for the progressSlider
 		progressSlider.setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 0));
-		controlPanel.add(progressSlider);
 		
 		Icon iconPause = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"pause.png").getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		buttonPlayOrPause = new ButtonComponent(iconPause);
-		controlPanel.add(buttonPlayOrPause);
 		
 		Icon iconForward = new ImageIcon(new ImageIcon(IMAGE_RESOURCES +"forward.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonForwardOneStep = new ButtonComponent(iconForward);
-		controlPanel.add(buttonForwardOneStep);
 		
 		Icon iconBackward = new ImageIcon(new ImageIcon(IMAGE_RESOURCES +"backward.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardOneStep = new ButtonComponent(iconBackward);
-		controlPanel.add(buttonBackwardOneStep);
 		
-		Icon iconForwardToTheEnd = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"end.jpg").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
+		Icon iconForwardToTheEnd = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"end.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonForwardToTheEnd = new ButtonComponent(iconForwardToTheEnd);
-		controlPanel.add(buttonForwardToTheEnd);
 		
-		Icon iconBackwardToTheStart = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"start.jpg").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
+		Icon iconBackwardToTheStart = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"start.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardToTheStart = new ButtonComponent(iconBackwardToTheStart);
-		controlPanel.add(buttonBackwardToTheStart);
 		
+		controlPanel.add(buttonBackwardToTheStart);
+		controlPanel.add(buttonBackwardOneStep);
+		controlPanel.add(buttonPlayOrPause);
+		controlPanel.add(buttonForwardOneStep);
+		controlPanel.add(buttonForwardToTheEnd);
+		controlPanel.add(progressSlider);
 		return controlPanel;
 	}
 	// Array generator menu list
-	private JPanel createWest() {
-		JPanel westPanel = new JPanel();
+	private JLayeredPane createWest() {
+		JLayeredPane westPanel = new JLayeredPane();
 		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonCreateSortingArray.addActionListener(sortController.buttonCreateSortingArrayClicked());
 		westPanel.add(buttonCreateSortingArray, JLayeredPane.MODAL_LAYER);
@@ -209,7 +212,7 @@ public abstract class SortScreen extends Screen{
 	private JPanel createSpeedChanger() {
 		JPanel speedChanger = new JPanel(new BorderLayout());
 		speedChanger.setPreferredSize(new Dimension(300,50));
-		speedChanger.setBackground(Color.WHITE);
+		speedChanger.setBackground(new Color(238,238,238));
 		speedChanger.setBorder(BorderFactory.createEmptyBorder(5,80,0,0));
 		
 		speedLabel = new LabelComponent(sortController.getSpeed()+"x");
@@ -227,7 +230,7 @@ public abstract class SortScreen extends Screen{
 	private JPanel createInfoPanel() {
 		JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		infoPanel.setPreferredSize(new Dimension(300,50));
-		infoPanel.setBackground(Color.BLACK);
+		infoPanel.setBackground(new Color(238,238,238));
 		
 		buttonHelp = new ButtonComponent("Help", Color.WHITE, Color.BLACK, Color.black.brighter());
 		buttonHelp.addActionListener(sortController.buttonHelpClicked());
