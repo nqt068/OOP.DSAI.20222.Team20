@@ -50,26 +50,26 @@ public class ButtonComponent extends JButton implements MouseListener {
     public void setTextColor(Color color) {
         this.textColor = color;
     }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        if (getModel().isPressed()) {
-            g2.setColor(buttonColor.darker());
-        } else if (getModel().isRollover()) {
-            g2.setColor(hoverColor);
-        } else {
-            g2.setColor(buttonColor);
-        }
-        g2.fillRect(0, 0, getWidth(), getHeight());
-
-        g2.setColor(textColor);
-        g2.setFont(getFont());
-        g2.drawString(buttonText, getWidth() / 2 - g2.getFontMetrics().stringWidth(buttonText) / 2,
-                getHeight() / 2 + g2.getFontMetrics().getAscent() / 2 - 3);
-    }
+//
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        Graphics2D g2 = (Graphics2D) g;
+//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//        if (getModel().isPressed()) {
+//            g2.setColor(buttonColor.darker());
+//        } else if (getModel().isRollover()) {
+//            g2.setColor(hoverColor);
+//        } else {
+//            g2.setColor(buttonColor);
+//        }
+//        g2.fillRect(0, 0, getWidth(), getHeight());
+//
+//        g2.setColor(textColor);
+//        g2.setFont(getFont());
+//        g2.drawString(buttonText, getWidth() / 2 - g2.getFontMetrics().stringWidth(buttonText) / 2,
+//                getHeight() / 2 + g2.getFontMetrics().getAscent() / 2 - 3);
+//    }
 
     @Override
     public void mouseClicked(MouseEvent e) {}

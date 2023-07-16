@@ -41,6 +41,7 @@ public class ArrayUtilTest {
         
         System.out.println("Create a random array with given length");
         ArrayUtil randomArr = new ArrayUtil(30);
+        randomArr.dataType = Integer.class;
         randomArr.generateRandomArray();
         randomArr.printArray();
     }

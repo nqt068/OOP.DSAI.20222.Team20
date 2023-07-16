@@ -78,7 +78,7 @@ public abstract class SortScreen extends Screen{
 		addBackButtonToNavigationButton();
 		add(createCenter(), BorderLayout.CENTER);
 		add(createSouth(), BorderLayout.SOUTH);
-		add(createWest(), BorderLayout.WEST);
+//		add(createWest(), BorderLayout.WEST);
 		setVisible(true);
 	}
 
@@ -86,8 +86,9 @@ public abstract class SortScreen extends Screen{
 	private void generateArray(ArrayUtil array) {
 		if (sortArray == null) {
 			sortArray = new ArrayUtil(sortController.MAX_ARRAY_LENGTH);
-//			sortArray.dataType = Integer.TYPE; //TODO: Let user choose the dataType
+			sortArray.dataType = Integer.class; //TODO: Let user choose the dataType
 			sortArray.generateRandomArray();
+			sortArray.printArray();
 		} else {
 			this.sortArray = array;
 		}
@@ -97,7 +98,7 @@ public abstract class SortScreen extends Screen{
 			this.unitHeight = 0;
 		} else {			
 			if (this.sortArray.getMax().getValue() != (Integer) 0) {
-				this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());
+				this.unitHeight = ((double)300)/((int)this.sortArray.getMax().getValue());
 			} else if (this.sortArray.getMax().getValue() != (Double) 0.0) {
 				this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());			
 			} else {
@@ -114,19 +115,19 @@ public abstract class SortScreen extends Screen{
 		visualizerArea = new JLayeredPane();
 		JPanel container = new JPanel();
 		container.setLayout(null);
+		container.setSize(1000, 1000);
 		container.add(mainBarChartVisualizer(Color.ORANGE));
 		sub = new ArrayGraphic(sortArray);
 		container.add(sub);
+		container.setVisible(true);
 		animation = new JPanel();
 		visualizerArea.add(container, JLayeredPane.DEFAULT_LAYER);
 		
 		errorLabel = new LabelComponent("Exceptions will be printed here");
 		errorLabel.setForeground(Color.RED);
 		visualizerArea.add(errorLabel, JLayeredPane.DRAG_LAYER);
-		
 		createWest();
 		visualizerArea.setVisible(true);
-		
 		return visualizerArea;
 	}
 	private JPanel createSouth() {
@@ -175,7 +176,6 @@ public abstract class SortScreen extends Screen{
 		Icon iconBackwardToTheStart = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"start.jpg").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardToTheStart = new ButtonComponent(iconBackwardToTheStart);
 		controlPanel.add(buttonBackwardToTheStart);
-		
 		return controlPanel;
 	}
 	// Array generator menu list
@@ -203,7 +203,6 @@ public abstract class SortScreen extends Screen{
 		buttonStartSorting = new ButtonComponent("Sort", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonStartSorting.addActionListener(sortController.buttonStartSortingClicked());
 		westPanel.add(buttonStartSorting, JLayeredPane.MODAL_LAYER);
-		
 		return westPanel;
 	}
 	// Speed adjust slider
@@ -221,7 +220,6 @@ public abstract class SortScreen extends Screen{
 		
 		speedChanger.add(speedLabel, BorderLayout.EAST);
 		speedChanger.add(speedSlider, BorderLayout.WEST);
-		
 		return speedChanger;
 	}
 	// Help, About and Team buttons
@@ -241,23 +239,35 @@ public abstract class SortScreen extends Screen{
 		buttonTeam = new ButtonComponent("Team", Color.WHITE, Color.BLACK, Color.black.brighter());
 		buttonTeam.addActionListener(sortController.buttonTeamClicked());
 		infoPanel.add(buttonTeam);
-		
 		return infoPanel;
 	}
 	private ArrayGraphic mainBarChartVisualizer(Color color) {
 		int unitWidth = ((int) getWidth()-200)/this.sortArray.size();
 		ArrayGraphic mainBarChart = new ArrayGraphic(sortArray) {
+			
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				if (sortArray.dataType == Integer.class || sortArray.dataType == Double.class) {
+				System.out.println("heehe");
+
+				if (sortArray.dataType == Double.class) {
 					for (int i = 0; i< sortArray.size();i++) {
-						g.setColor(color);
+
 						int width = Math.min(unitWidth,60+padding);
-						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)((int)sortArray.get(i).getValue() * unitHeight)
-								+ getHeight(),Math.min(width-padding,60),(int)((int)sortArray.get(i).getValue()*unitHeight));
+						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((double)sortArray.get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortArray.get(i).getValue()*unitHeight)));
+						g.setColor(color);
 					}
-				} // TODO: Write fillRect for String data type here
+				} 
+				else if (sortArray.dataType == Integer.class) {
+					for (int i = 0; i< sortArray.size();i++) {
+
+						int width = Math.min(unitWidth,60+padding);
+						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((int)sortArray.get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortArray.get(i).getValue()*unitHeight)));
+						g.setColor(color);
+					}
+				}// TODO: Write fillRect for String data type here
 			}
 		};
 		// TODO: Redesign the boundary if necessary
