@@ -1,5 +1,6 @@
 package view;
 
+import algorithm.ShellSortAlgorithm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,7 +9,7 @@ import component.InfoWindowComponent;
 public class ShellSortScreen extends SortScreen{
 
 	public ShellSortScreen() {
-		super();
+		super(new ShellSortAlgorithm());
 	}
 
 	@Override

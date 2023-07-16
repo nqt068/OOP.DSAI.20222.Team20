@@ -17,7 +17,6 @@ public class MergeSortScreen extends SortScreen{
 
 	public MergeSortScreen() {
 		super(new MergeSortAlgorithm());
-		revalidate();
 	}
 
 	@Override

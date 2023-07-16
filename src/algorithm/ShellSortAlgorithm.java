@@ -28,6 +28,12 @@ public class ShellSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
 		this.array = array;
 		this.n = array.size();
 	}
+	
+    public ShellSortAlgorithm() {
+    	super();
+    	int[] gaps = {5,3,1};
+    	this.gaps = gaps;
+    }
 		
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void sort() {
