@@ -24,12 +24,12 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import algorithm.SortingAlgorithm;
 import component.*;
 import component.utils.*;
 import controller.SortController;
 
 public abstract class SortScreen extends Screen{
-	
 	protected SortController sortController;
 	protected ArrayUtil sortArray;
 	protected String sortInfo = "Welcome to our Sorting Algorithms Visualizer";
@@ -69,9 +69,10 @@ public abstract class SortScreen extends Screen{
 	
 	protected int padding = 5;
 
-	public SortScreen() {
+	public SortScreen(SortingAlgorithm sortAlgorithm) {
 		super();
 		sortController = new SortController(this);
+		sortController.setSortAlgorithm(sortAlgorithm);
 		generateArray(null);
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();

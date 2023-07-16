@@ -9,6 +9,9 @@ public class MergeSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
     public MergeSortAlgorithm(ArrayUtil<T> array) {
         super(array);
     }
+    public MergeSortAlgorithm() {
+    	super();
+    }
 
     @Override
     public void sort() {

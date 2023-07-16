@@ -1,5 +1,7 @@
 package view;
 
+import algorithm.MergeSortAlgorithm;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,8 +16,7 @@ import view.HomeScreen.MenuItemListener;
 public class MergeSortScreen extends SortScreen{
 
 	public MergeSortScreen() {
-		super();
-		sortAlgorithm = new MergeSortAlgorithm();
+		super(new MergeSortAlgorithm());
 	}
 
 	@Override

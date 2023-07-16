@@ -7,6 +7,9 @@ public class SelectionSortAlgorithm<T extends Comparable<T> > extends SortingAlg
 	public SelectionSortAlgorithm(ArrayUtil<T> array) {
 		super(array);
 	}
+	public SelectionSortAlgorithm() {
+		super();
+	}
 	
 	@Override
 	public void sort() {
