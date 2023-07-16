@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import javax.swing.Icon;
 import javax.swing.JButton;
 
 public class ButtonComponent extends JButton implements MouseListener {
@@ -28,8 +30,16 @@ public class ButtonComponent extends JButton implements MouseListener {
         this.setPreferredSize(new Dimension(50, 40));
         this.addMouseListener(this);
     }
-
-    public void setButtonColor(Color color) {
+    public ButtonComponent(Icon icon) {
+    	this.buttonColor = Color.BLACK;
+        this.hoverColor = Color.black.brighter();
+        this.textColor = Color.WHITE;
+        this.setFont(new Font("Arial", Font.PLAIN, 16));
+        this.setPreferredSize(new Dimension(100, 40));
+        this.addMouseListener(this);
+        setIcon(icon);
+    }
+	public void setButtonColor(Color color) {
         this.buttonColor = color;
     }
 

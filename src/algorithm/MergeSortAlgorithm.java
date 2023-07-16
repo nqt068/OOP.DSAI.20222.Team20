@@ -54,6 +54,7 @@ public class MergeSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
             stepsList.add(array.clone());
             k++;
         }
+
         while (i < n1) {
             array.set(k, leftArray.get(i));
             i++;
