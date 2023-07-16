@@ -70,6 +70,7 @@ public class SortController extends Controller{
 			}
 		};
 	}
+
 	public ActionListener showExplanation() {
 		return new ActionListener() {
 			@Override
@@ -85,7 +86,6 @@ public class SortController extends Controller{
 				    getSortScreen().getExplanationDisplayer().setVisible(false);
 				    getSortScreen().getEastPanel().setPreferredSize(new Dimension(40, 590));
 				}
-				
 			}
 		};
 	}

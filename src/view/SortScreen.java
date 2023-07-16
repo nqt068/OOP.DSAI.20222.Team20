@@ -37,10 +37,9 @@ public abstract class SortScreen extends Screen{
 	protected double unitHeight;
 	
 	JPanel eastPanel;
-	
 	JLayeredPane visualizerArea;
-    ArrayGraphic main;
-    ArrayGraphic sub;
+  ArrayGraphic main;
+  ArrayGraphic sub;
 	JPanel animation;
 	JPanel controlPanel;
 	
@@ -54,8 +53,9 @@ public abstract class SortScreen extends Screen{
 	ButtonComponent buttonConfirmInputArray;
 	ButtonComponent buttonStartSorting;
 	LabelComponent errorLabel;
-	
+
 	SliderBarComponent progressSlider;
+
 	ButtonComponent buttonPlayOrPause;
 	ButtonComponent buttonForwardOneStep;
 	ButtonComponent buttonBackwardOneStep;
@@ -70,7 +70,7 @@ public abstract class SortScreen extends Screen{
 	ButtonComponent buttonTeam;	
 	
 	ButtonComponent showMenuList;
-	
+
 	protected int padding = 5;
 
 	public SortScreen(SortingAlgorithm sortAlgorithm) {
@@ -120,10 +120,12 @@ public abstract class SortScreen extends Screen{
 		visualizerArea = new JLayeredPane();
 		JPanel container = new JPanel();
 		container.setLayout(null);
-		container.setSize(1000,1000);
+		container.setSize(1000, 1000);
 		container.add(mainBarChartVisualizer(Color.ORANGE));
 		sub = new ArrayGraphic(sortArray);
 		container.add(sub);
+		container.setVisible(true);
+    
 		animation = new JPanel();
 		visualizerArea.add(container, JLayeredPane.DEFAULT_LAYER);
 		
@@ -132,8 +134,7 @@ public abstract class SortScreen extends Screen{
 		visualizerArea.add(errorLabel, JLayeredPane.DRAG_LAYER);
 		
 //		createWest();
-		visualizerArea.setVisible(true);
-		
+		visualizerArea.setVisible(true);		
 		return visualizerArea;
 	}
 	private JPanel createSouth() {
@@ -192,7 +193,6 @@ public abstract class SortScreen extends Screen{
 		eastPanel.add(explanationDisplayer, BorderLayout.CENTER);
 		return eastPanel;
 	}
-	
 	// Progress slider bar, play&pause button, next & back buttons
 	private JPanel createControlPanel() {
 		JPanel controlPanel = new JPanel();
@@ -229,7 +229,7 @@ public abstract class SortScreen extends Screen{
 		controlPanel.add(progressSlider);
 		return controlPanel;
 	}
-	
+
 	// Speed adjust slider
 	private JPanel createSpeedChanger() {
 		JPanel speedChanger = new JPanel(new BorderLayout());
@@ -245,7 +245,7 @@ public abstract class SortScreen extends Screen{
 		
 		speedChanger.add(speedLabel, BorderLayout.EAST);
 		speedChanger.add(speedSlider, BorderLayout.WEST);
-		
+    
 		return speedChanger;
 	}
 	// Help, About and Team buttons
@@ -265,7 +265,7 @@ public abstract class SortScreen extends Screen{
 		buttonTeam = new ButtonComponent("Team", Color.WHITE, Color.BLACK, Color.black.brighter());
 		buttonTeam.addActionListener(sortController.buttonTeamClicked());
 		infoPanel.add(buttonTeam);
-		
+
 		return infoPanel;
 	}
 	private ArrayGraphic mainBarChartVisualizer(Color color) {
@@ -274,14 +274,26 @@ public abstract class SortScreen extends Screen{
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				if (sortArray.dataType == Integer.class || sortArray.dataType == Double.class) {
+//				System.out.println("heehe");
+
+				if (sortArray.dataType == Double.class) {
 					for (int i = 0; i< sortArray.size();i++) {
-						g.setColor(color);
+
 						int width = Math.min(unitWidth,60+padding);
-						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)((int)sortArray.get(i).getValue() * unitHeight)
-								+ getHeight(),Math.min(width-padding,60),(int)((int)sortArray.get(i).getValue()*unitHeight));
+						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((double)sortArray.get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortArray.get(i).getValue()*unitHeight)));
+						g.setColor(color);
 					}
-				} // TODO: Write fillRect for String data type here
+				} 
+				else if (sortArray.dataType == Integer.class) {
+					for (int i = 0; i< sortArray.size();i++) {
+
+						int width = Math.min(unitWidth,60+padding);
+						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((int)sortArray.get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortArray.get(i).getValue()*unitHeight)));
+						g.setColor(color);
+					}
+				}// TODO: Write fillRect for String data type here
 			}
 		};
 		// TODO: Redesign the boundary if necessary
