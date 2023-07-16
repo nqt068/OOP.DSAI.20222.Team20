@@ -53,7 +53,6 @@ public abstract class SortScreen extends Screen{
 	ButtonComponent buttonStartSorting;
 	LabelComponent errorLabel;
 	
-	
 	ButtonComponent buttonPlayOrPause;
 	ButtonComponent buttonForwardOneStep;
 	ButtonComponent buttonBackwardOneStep;
@@ -211,11 +210,11 @@ public abstract class SortScreen extends Screen{
 	private JPanel createSpeedChanger() {
 		JPanel speedChanger = new JPanel(new BorderLayout());
 		speedChanger.setPreferredSize(new Dimension(300,50));
-		speedChanger.setBackground(Color.BLACK);
+		speedChanger.setBackground(Color.WHITE);
 		speedChanger.setBorder(BorderFactory.createEmptyBorder(5,80,0,0));
 		
 		speedLabel = new LabelComponent(sortController.getSpeed()+"x");
-		speedLabel.setForeground(Color.WHITE);
+		speedLabel.setForeground(Color.BLACK);
 		
 		speedSlider = new SliderBarComponent(1,7,1);
 		speedSlider.addChangeListener(sortController.speedSliderBarChanged());
