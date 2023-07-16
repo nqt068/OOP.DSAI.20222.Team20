@@ -10,10 +10,12 @@ import javax.swing.JMenuItem;
 import component.InfoWindowComponent;
 import view.HomeScreen.MenuItemListener;
 
+
 public class MergeSortScreen extends SortScreen{
 
 	public MergeSortScreen() {
 		super();
+		sortAlgorithm = new MergeSortAlgorithm();
 	}
 
 	@Override
