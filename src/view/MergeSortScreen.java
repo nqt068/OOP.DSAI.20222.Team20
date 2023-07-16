@@ -1,6 +1,5 @@
 package view;
 
-
 import algorithm.MergeSortAlgorithm;
 
 import java.awt.event.ActionEvent;
