@@ -23,7 +23,7 @@ class ExitListener implements ActionListener{
 	// TODO: Rewrite the protocol
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int option= JOptionPane.showConfirmDialog(null, "Do you want to exit the program?","Notification",JOptionPane.OK_CANCEL_OPTION);
+		int option= JOptionPane.showConfirmDialog(null, "Do you want to close this screen?","Notification",JOptionPane.OK_CANCEL_OPTION);
 		if (option == JOptionPane.OK_OPTION) {
 			SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();
 		}

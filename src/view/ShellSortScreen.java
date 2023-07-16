@@ -3,6 +3,8 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import component.InfoWindowComponent;
+
 public class ShellSortScreen extends SortScreen{
 
 	public ShellSortScreen() {
@@ -27,14 +29,15 @@ public class ShellSortScreen extends SortScreen{
 		return null;
 	}
 	
-    protected class MenuItemListener implements ActionListener {
+    protected class MenuItemListener extends view.Screen.MenuItemListener implements ActionListener {
+    	@Override
     	public void actionPerformed(ActionEvent e) {
 			String menuItem = e.getActionCommand();
 			if (menuItem.equals("Help")) {
-				//TODO: Add action for help of HomeScreen
+				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", "ShellSortScreenHelp");
 			}
 			else if (menuItem.equals("About")) {
-				//TODO: Add action for about of HomeScreen
+				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", "ShellSortScreenAbout");
 			}
 		}
     }

@@ -13,16 +13,21 @@ import javax.swing.ImageIcon;
 import javax.swing.Icon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import controller.HomeScreenController;
+import view.Screen.MenuItemListener;
 import component.ButtonComponent;
-import component.CardComponent;
+import component.*;
 
 public class HomeScreen extends Screen{
 	private final HomeScreenController homeScreenController;
 
 	public HomeScreen() {
 		super();
+		this.menuItemListener = new MenuItemListener();
 		homeScreenController = new HomeScreenController();
 		JPanel homeScreen = new JPanel(new GridLayout(2,1));
 		add(homeScreen, BorderLayout.CENTER);
@@ -68,9 +73,9 @@ public class HomeScreen extends Screen{
 		Image mergeSortImage = new ImageIcon(IMAGE_RESOURCES + "mergeSortImage.png").getImage();
 		Image selectionSortImage = new ImageIcon(IMAGE_RESOURCES + "selectionSortImage.png").getImage();
 		Image shellSortImage = new ImageIcon(IMAGE_RESOURCES + "shellSortImage.png").getImage();
-		String mergeSortDescription = "Give some description for merge sort algorithm here";
-		String selectionSortDescription = "Give some description for selection sort algorithm here";
-		String shellSortDescription = "Give some description for shell sort algorithm here";
+		String mergeSortDescription = "This is merge sort";
+		String selectionSortDescription = "This is selection sort";
+		String shellSortDescription = "This is Shell sort";
 		CardComponent mergeSortCard = new CardComponent("Merge Sort", mergeSortImage, mergeSortDescription);
 		CardComponent selectionSortCard = new CardComponent("Selection Sort", selectionSortImage, selectionSortDescription);
 		CardComponent shellSortCard = new CardComponent("Shell Sort", shellSortImage, shellSortDescription);
@@ -81,14 +86,35 @@ public class HomeScreen extends Screen{
 		return sortPanel;
 	}
 	
-    protected class MenuItemListener implements ActionListener {
+    protected JMenuBar createMenuBar() {
+    	this.menuItemListener = new MenuItemListener();
+    	
+    	JMenu menu = new JMenu("Menu");
+    	
+    	JMenuItem help = new JMenuItem("Help");
+    	JMenuItem about = new JMenuItem("About");
+    	
+    	help.addActionListener(menuItemListener);
+    	about.addActionListener(menuItemListener);
+
+    	menu.add(help);
+    	menu.add(about);
+    	
+    	JMenuBar menuBar = new JMenuBar();
+    	menuBar.add(menu);
+    	
+    	return menuBar;
+    }
+    
+    protected class MenuItemListener extends view.Screen.MenuItemListener implements ActionListener {
+    	@Override
     	public void actionPerformed(ActionEvent e) {
 			String menuItem = e.getActionCommand();
 			if (menuItem.equals("Help")) {
-				//TODO: Add action for help of HomeScreen
+				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", "HomeScreenHelp");
 			}
 			else if (menuItem.equals("About")) {
-				//TODO: Add action for about of HomeScreen
+				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", "HomeScreenAbout");
 			}
 		}
     }
