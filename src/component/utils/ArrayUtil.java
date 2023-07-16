@@ -2,12 +2,20 @@ package component.utils;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
-    protected Element<T>[] array;
+	protected Element<T>[] array;
+    public Class<T> dataType;
 
-    public ArrayUtil(Element<T>[] array) {
+    @SuppressWarnings("unchecked")
+	public ArrayUtil(Element<T>[] array) {
         this.array = array.clone();
+        this.dataType = (Class<T>) array[0].getValue().getClass();
+    }
+    @SuppressWarnings("unchecked")
+	public ArrayUtil(int n) {
+    	this.array = (Element<T>[]) new Element<?>[n];
     }
 
     public void swap(int i, int j) {
@@ -53,6 +61,16 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
     public ArrayUtil<T> clone() {
     	return new ArrayUtil<T>(array.clone());
     }
+    
+    public int min(int a, int b) { 
+    	if (a <= b) {
+    		return a;
+    	}
+    	else {
+    		return b;
+    	}
+    }
+        
     public void set(int index, Element<T> element) {
         this.array[index] = element;
     }
@@ -60,7 +78,6 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
 
 	@Override
 	public Iterator<Element<T>> iterator() {
-		// TODO Auto-generated method stub
 		return new ArrayUtilIterator();
 	}
 	
@@ -92,4 +109,27 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
         }
         return sb.toString();
     }
+    
+    @SuppressWarnings("unchecked")
+	public void generateRandomArray() {
+    	Random rand = new Random();
+    	if (dataType == Integer.class || dataType == null) {
+            for (int i = 0; i < this.size(); i++) {
+                array[i] = new Element<T>((T)Integer.valueOf(rand.nextInt(100)));
+            }
+    	} else if (dataType == Double.class) {
+            for (int i = 0; i < this.size(); i++) {
+                array[i] = new Element<T>((T) Double.valueOf(rand.nextDouble() * 100));
+            }
+    	} else if (dataType == String.class) {
+            for (int i = 0; i < this.size(); i++) {
+                byte[] bytes = new byte[5];
+                rand.nextBytes(bytes);
+                array[i] = new Element<T>((T) new String(bytes));
+            }
+    	} else {
+//    		System.out.println(dataType);
+    	}
+    }
 }
+
