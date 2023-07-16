@@ -3,7 +3,7 @@ package component;
 import javax.swing.*;
 
 import controller.HomeScreenController;
-import view.MergeSortScreen;
+import view.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -52,13 +52,16 @@ public class CardComponent extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
     	if (headingLabel.getText() == "Merge Sort") {
     		MergeSortScreen sortScreen = new MergeSortScreen();
+//    		SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();	
     	}
-//    	else if (headingLabel.getText() == "Selection Sort") {
-//    		MergeSortScreen sortScreen = new SelectionSortScreen();
-//    	}
-//    	else if (headingLabel.getText() == "Shell Sort") {
-//    		MergeSortScreen sortScreen = new ShellSortScreen();
-//    	}
+    	else if (headingLabel.getText() == "Selection Sort") {
+    		SelectionSortScreen sortScreen = new SelectionSortScreen();
+//    		SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();	
+    	}
+    	else if (headingLabel.getText() == "Shell Sort") {
+    		ShellSortScreen sortScreen = new ShellSortScreen();
+//    		SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();	
+    	}
     }
 
     @Override
