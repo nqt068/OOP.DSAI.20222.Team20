@@ -127,6 +127,8 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
                 rand.nextBytes(bytes);
                 array[i] = new Element<T>((T) new String(bytes));
             }
+    	} else {
+//    		System.out.println(dataType);
     	}
     }
 }

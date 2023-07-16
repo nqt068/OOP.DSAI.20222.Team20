@@ -83,6 +83,7 @@ public abstract class SortScreen extends Screen{
 	private void generateArray(ArrayUtil array) {
 		if (sortArray == null) {
 			sortArray = new ArrayUtil(sortController.MAX_ARRAY_LENGTH);
+//			sortArray.dataType = Integer.TYPE; //TODO: Let user choose the dataType
 			sortArray.generateRandomArray();
 		} else {
 			this.sortArray = array;
@@ -174,10 +175,10 @@ public abstract class SortScreen extends Screen{
 		buttonCreateSortingArray.addActionListener(sortController.buttonCreateSortingArrayClicked());
 		visualizerArea.add(buttonCreateSortingArray, JLayeredPane.MODAL_LAYER);
 		
-		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
-		buttonCreateRandomArray.setSize(new Dimension(100, 34));
-//		buttonCreateRandomArray.addActionListener();
-		visualizerArea.add(buttonCreateRandomArray, JLayeredPane.MODAL_LAYER);
+//		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
+//		buttonCreateRandomArray.setSize(new Dimension(100, 34));
+////		buttonCreateRandomArray.addActionListener();
+//		visualizerArea.add(buttonCreateRandomArray, JLayeredPane.MODAL_LAYER);
 		
 		arrayEqualsLabel = new LabelComponent("Array :=");
 		visualizerArea.add(arrayEqualsLabel, JLayeredPane.MODAL_LAYER);
