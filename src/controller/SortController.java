@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -69,7 +70,8 @@ public class SortController extends Controller{
 			}
 		};
 	}
-	public ActionListener showExplaination() {
+
+	public ActionListener showExplanation() {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -78,11 +80,12 @@ public class SortController extends Controller{
 				if (isBackwardButton) {
 				    sourceButton.setText(">");
 				    getSortScreen().getExplanationDisplayer().setVisible(true);
+				    getSortScreen().getEastPanel().setPreferredSize(new Dimension(200, 590));
 				} else {
 				    sourceButton.setText("<");
 				    getSortScreen().getExplanationDisplayer().setVisible(false);
+				    getSortScreen().getEastPanel().setPreferredSize(new Dimension(40, 590));
 				}
-				
 			}
 		};
 	}
