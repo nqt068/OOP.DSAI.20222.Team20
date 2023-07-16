@@ -102,7 +102,7 @@ public abstract class SortScreen extends Screen{
 		}
 	}
 	private void addBackButtonToNavigationButton() {
-		ButtonComponent backButton = new ButtonComponent("Back", Color.BLACK, Color.BLUE, Color.CYAN);
+		ButtonComponent backButton = new ButtonComponent("Back", Color.WHITE, Color.BLUE, Color.CYAN);
 		backButton.addActionListener(controller.backProtocol());
 		navigationButton.add(backButton, 2, 0);
 	}

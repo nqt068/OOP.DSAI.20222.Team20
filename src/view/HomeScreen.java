@@ -54,7 +54,7 @@ public class HomeScreen extends Screen{
 		JLabel logo = new JLabel(visualSoIcon);
 		logoPanel.add(logo, BorderLayout.CENTER);
 		JLabel appNameLabel = new JLabel("SORTING ALGORITHM VISUALIZER");
-		appNameLabel.setFont(new Font("Arial", Font.BOLD, 20));
+		appNameLabel.setFont(new Font("Silkscreen", Font.PLAIN, 20));
 		JPanel a = new JPanel();
 		a.add(appNameLabel, BorderLayout.CENTER);
 		logoPanel.add(a, BorderLayout.SOUTH);
@@ -78,9 +78,9 @@ public class HomeScreen extends Screen{
 	
 	private JPanel sortPanel() {
 		JPanel sortPanel = new JPanel(new GridLayout(1,3));
-		Image mergeSortImage = new ImageIcon("mergeSortImage.png").getImage();
-		Image selectionSortImage = new ImageIcon("selectionSortImage.png").getImage();
-		Image shellSortImage = new ImageIcon("shellSortImage.png").getImage();
+		Image mergeSortImage = new ImageIcon(IMAGE_RESOURCES + "mergeSortImage.png").getImage();
+		Image selectionSortImage = new ImageIcon(IMAGE_RESOURCES + "selectionSortImage.png").getImage();
+		Image shellSortImage = new ImageIcon(IMAGE_RESOURCES + "shellSortImage.png").getImage();
 		String mergeSortDescription = "Give some description for merge sort algorithm here";
 		String selectionSortDescription = "Give some description for selection sort algorithm here";
 		String shellSortDescription = "Give some description for shell sort algorithm here";
