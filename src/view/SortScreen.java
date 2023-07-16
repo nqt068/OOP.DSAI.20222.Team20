@@ -53,7 +53,6 @@ public abstract class SortScreen extends Screen{
 	ButtonComponent buttonStartSorting;
 	LabelComponent errorLabel;
 	
-	
 	ButtonComponent buttonPlayOrPause;
 	ButtonComponent buttonForwardOneStep;
 	ButtonComponent buttonBackwardOneStep;
@@ -74,11 +73,12 @@ public abstract class SortScreen extends Screen{
 		sortController = new SortController(this);
 		sortController.setSortAlgorithm(sortAlgorithm);
 		generateArray(null);
+		System.out.println(this.sortArray);
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();
 		add(createCenter(), BorderLayout.CENTER);
 		add(createSouth(), BorderLayout.SOUTH);
-		add(createWest(), BorderLayout.WEST);
+//		add(createWest(), BorderLayout.WEST);
 		setVisible(true);
 	}
 
@@ -86,8 +86,9 @@ public abstract class SortScreen extends Screen{
 	private void generateArray(ArrayUtil array) {
 		if (sortArray == null) {
 			sortArray = new ArrayUtil(sortController.MAX_ARRAY_LENGTH);
-//			sortArray.dataType = Integer.TYPE; //TODO: Let user choose the dataType
+			sortArray.dataType = Integer.class; //TODO: Let user choose the dataType
 			sortArray.generateRandomArray();
+			sortArray.printArray();
 		} else {
 			this.sortArray = array;
 		}
@@ -97,16 +98,17 @@ public abstract class SortScreen extends Screen{
 			this.unitHeight = 0;
 		} else {			
 			if (this.sortArray.getMax().getValue() != (Integer) 0) {
-				this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());
+
+				this.unitHeight = ((int)300)/((int)this.sortArray.getMax().getValue());
 			} else if (this.sortArray.getMax().getValue() != (Double) 0.0) {
-				this.unitHeight = ((double)300)/((double)this.sortArray.getMax().getValue());			
+				this.unitHeight = ((double)300.0)/((double)this.sortArray.getMax().getValue());			
 			} else {
 				this.unitHeight = 0;
 			}
 		}
 	}
 	private void addBackButtonToNavigationButton() {
-		ButtonComponent backButton = new ButtonComponent("Back", Color.WHITE, Color.BLUE, Color.CYAN);
+		ButtonComponent backButton = new ButtonComponent("Back");
 		backButton.addActionListener(controller.backProtocol());
 		navigationButton.add(backButton, 2, 0);
 	}
@@ -114,9 +116,11 @@ public abstract class SortScreen extends Screen{
 		visualizerArea = new JLayeredPane();
 		JPanel container = new JPanel();
 		container.setLayout(null);
+		container.setSize(1000, 1000);
 		container.add(mainBarChartVisualizer(Color.ORANGE));
 		sub = new ArrayGraphic(sortArray);
 		container.add(sub);
+		container.setVisible(true);
 		animation = new JPanel();
 		visualizerArea.add(container, JLayeredPane.DEFAULT_LAYER);
 		
@@ -124,9 +128,8 @@ public abstract class SortScreen extends Screen{
 		errorLabel.setForeground(Color.RED);
 		visualizerArea.add(errorLabel, JLayeredPane.DRAG_LAYER);
 		
-		createWest();
+//		createWest();
 		visualizerArea.setVisible(true);
-		
 		return visualizerArea;
 	}
 	private JPanel createSouth() {
@@ -137,6 +140,8 @@ public abstract class SortScreen extends Screen{
 		bottomFunctionalBar.add(createControlPanel(), BorderLayout.CENTER);
 		bottomFunctionalBar.add(createSpeedChanger(), BorderLayout.WEST);
 		bottomFunctionalBar.add(createInfoPanel(), BorderLayout.EAST);
+		
+		bottomFunctionalBar.setVisible(true);
 		return bottomFunctionalBar;
 	}
 //	private JPanel createWest() {
@@ -144,8 +149,8 @@ public abstract class SortScreen extends Screen{
 //	}
 	// Progress slider bar, play&pause button, next & back buttons
 	private JPanel createControlPanel() {
-		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		controlPanel.setBackground(Color.BLACK);
+		JPanel controlPanel = new JPanel();
+		controlPanel.setBackground(new Color(238,238,238));
 		
 		if ((int)sortController.getSortAlgorithm().stepsList.size()!=0) {
 			progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size(),0);
@@ -154,33 +159,34 @@ public abstract class SortScreen extends Screen{
 		}
 		// TODO: Add ChangeListener for the progressSlider
 		progressSlider.setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 0));
-		controlPanel.add(progressSlider);
 		
 		Icon iconPause = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"pause.png").getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		buttonPlayOrPause = new ButtonComponent(iconPause);
-		controlPanel.add(buttonPlayOrPause);
 		
 		Icon iconForward = new ImageIcon(new ImageIcon(IMAGE_RESOURCES +"forward.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonForwardOneStep = new ButtonComponent(iconForward);
-		controlPanel.add(buttonForwardOneStep);
 		
 		Icon iconBackward = new ImageIcon(new ImageIcon(IMAGE_RESOURCES +"backward.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardOneStep = new ButtonComponent(iconBackward);
-		controlPanel.add(buttonBackwardOneStep);
 		
-		Icon iconForwardToTheEnd = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"end.jpg").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
+		Icon iconForwardToTheEnd = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"end.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonForwardToTheEnd = new ButtonComponent(iconForwardToTheEnd);
-		controlPanel.add(buttonForwardToTheEnd);
 		
-		Icon iconBackwardToTheStart = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"start.jpg").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
+		Icon iconBackwardToTheStart = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"start.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardToTheStart = new ButtonComponent(iconBackwardToTheStart);
-		controlPanel.add(buttonBackwardToTheStart);
+
 		
+		controlPanel.add(buttonBackwardToTheStart);
+		controlPanel.add(buttonBackwardOneStep);
+		controlPanel.add(buttonPlayOrPause);
+		controlPanel.add(buttonForwardOneStep);
+		controlPanel.add(buttonForwardToTheEnd);
+		controlPanel.add(progressSlider);
 		return controlPanel;
 	}
 	// Array generator menu list
-	private JPanel createWest() {
-		JPanel westPanel = new JPanel();
+	private JLayeredPane createWest() {
+		JLayeredPane westPanel = new JLayeredPane();
 		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonCreateSortingArray.addActionListener(sortController.buttonCreateSortingArrayClicked());
 		westPanel.add(buttonCreateSortingArray, JLayeredPane.MODAL_LAYER);
@@ -203,32 +209,30 @@ public abstract class SortScreen extends Screen{
 		buttonStartSorting = new ButtonComponent("Sort", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonStartSorting.addActionListener(sortController.buttonStartSortingClicked());
 		westPanel.add(buttonStartSorting, JLayeredPane.MODAL_LAYER);
-		
 		return westPanel;
 	}
 	// Speed adjust slider
 	private JPanel createSpeedChanger() {
 		JPanel speedChanger = new JPanel(new BorderLayout());
 		speedChanger.setPreferredSize(new Dimension(300,50));
-		speedChanger.setBackground(Color.BLACK);
+		speedChanger.setBackground(new Color(238,238,238));
 		speedChanger.setBorder(BorderFactory.createEmptyBorder(5,80,0,0));
 		
 		speedLabel = new LabelComponent(sortController.getSpeed()+"x");
-		speedLabel.setForeground(Color.WHITE);
+		speedLabel.setForeground(Color.BLACK);
 		
 		speedSlider = new SliderBarComponent(1,7,1);
 		speedSlider.addChangeListener(sortController.speedSliderBarChanged());
 		
 		speedChanger.add(speedLabel, BorderLayout.EAST);
 		speedChanger.add(speedSlider, BorderLayout.WEST);
-		
 		return speedChanger;
 	}
 	// Help, About and Team buttons
 	private JPanel createInfoPanel() {
 		JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		infoPanel.setPreferredSize(new Dimension(300,50));
-		infoPanel.setBackground(Color.BLACK);
+		infoPanel.setBackground(new Color(238,238,238));
 		
 		buttonHelp = new ButtonComponent("Help", Color.WHITE, Color.BLACK, Color.black.brighter());
 		buttonHelp.addActionListener(sortController.buttonHelpClicked());
@@ -241,23 +245,35 @@ public abstract class SortScreen extends Screen{
 		buttonTeam = new ButtonComponent("Team", Color.WHITE, Color.BLACK, Color.black.brighter());
 		buttonTeam.addActionListener(sortController.buttonTeamClicked());
 		infoPanel.add(buttonTeam);
-		
 		return infoPanel;
 	}
 	private ArrayGraphic mainBarChartVisualizer(Color color) {
 		int unitWidth = ((int) getWidth()-200)/this.sortArray.size();
 		ArrayGraphic mainBarChart = new ArrayGraphic(sortArray) {
+			
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				if (sortArray.dataType == Integer.class || sortArray.dataType == Double.class) {
+//				System.out.println("heehe");
+
+				if (sortArray.dataType == Double.class) {
 					for (int i = 0; i< sortArray.size();i++) {
-						g.setColor(color);
+
 						int width = Math.min(unitWidth,60+padding);
-						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)((int)sortArray.get(i).getValue() * unitHeight)
-								+ getHeight(),Math.min(width-padding,60),(int)((int)sortArray.get(i).getValue()*unitHeight));
+						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((double)sortArray.get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortArray.get(i).getValue()*unitHeight)));
+						g.setColor(color);
 					}
-				} // TODO: Write fillRect for String data type here
+				} 
+				else if (sortArray.dataType == Integer.class) {
+					for (int i = 0; i< sortArray.size();i++) {
+
+						int width = Math.min(unitWidth,60+padding);
+						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((int)sortArray.get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortArray.get(i).getValue()*unitHeight)));
+						g.setColor(color);
+					}
+				}// TODO: Write fillRect for String data type here
 			}
 		};
 		// TODO: Redesign the boundary if necessary

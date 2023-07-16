@@ -1,88 +1,74 @@
 package component;
-
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.border.Border;
 
 public class ButtonComponent extends JButton implements MouseListener {
-
+    
     private static final long serialVersionUID = 1L;
-    private Color buttonColor;
-    private Color hoverColor;
-    private Color textColor;
-    private String buttonText;
-
-    public ButtonComponent(String text, Color textColor, Color buttonColor, Color buttonHoverColor) {
+    
+    private Color backgroundColor = new Color(51,153,255);
+    private Color foregroundColor = Color.WHITE;
+    private Color hoverColor = new Color(102,204,255);
+    private Border border = BorderFactory.createEmptyBorder(5, 15, 5, 15);
+    private Font font = new Font("Arial", Font.PLAIN, 16);
+    
+    public ButtonComponent(String text,Color foregroundColor, Color backgroundColor, Color hoverColor) {
         super(text);
-        this.buttonText = text;
-        this.buttonColor = buttonColor;
-        this.hoverColor = buttonHoverColor;
-        this.textColor = textColor;
-        this.setFont(new Font("Arial",Font.CENTER_BASELINE, 14));
-        this.setPreferredSize(new Dimension(50, 40));
-        this.addMouseListener(this);
+        this.foregroundColor = foregroundColor;
+        this.backgroundColor = backgroundColor;
+        this.hoverColor = hoverColor;
+        setFont(font);
+        setForeground(foregroundColor);
+        setBackground(backgroundColor);
+        setBorder(border);
+        setFocusPainted(false);
+        addMouseListener(this);
+    }
+    public ButtonComponent(String text) {
+        super(text);
+        setFont(font);
+        setForeground(foregroundColor);
+        setBackground(backgroundColor);
+        setBorder(border);
+        setFocusPainted(false);
+        addMouseListener(this);
     }
     public ButtonComponent(Icon icon) {
-    	this.buttonColor = Color.BLACK;
-        this.hoverColor = Color.black.brighter();
-        this.textColor = Color.WHITE;
-        this.setFont(new Font("Arial", Font.PLAIN, 16));
-        this.setPreferredSize(new Dimension(100, 40));
-        this.addMouseListener(this);
-        setIcon(icon);
+    	super(icon);
+        setFont(font);
+        setForeground(foregroundColor);
+        setBackground(backgroundColor);
+        setBorder(border);
+        setFocusPainted(false);
+        addMouseListener(this);
     }
-	public void setButtonColor(Color color) {
-        this.buttonColor = color;
-    }
-
-    public void setHoverColor(Color color) {
-        this.hoverColor = color;
-    }
-
-    public void setTextColor(Color color) {
-        this.textColor = color;
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        if (getModel().isPressed()) {
-            g2.setColor(buttonColor.darker());
-        } else if (getModel().isRollover()) {
-            g2.setColor(hoverColor);
-        } else {
-            g2.setColor(buttonColor);
-        }
-        g2.fillRect(0, 0, getWidth(), getHeight());
-
-        g2.setColor(textColor);
-        g2.setFont(getFont());
-        g2.drawString(buttonText, getWidth() / 2 - g2.getFontMetrics().stringWidth(buttonText) / 2,
-                getHeight() / 2 + g2.getFontMetrics().getAscent() / 2 - 3);
+    public void mouseEntered(MouseEvent e) {
+        setBackground(this.hoverColor);
+    }
+    @Override
+    public void mouseExited(MouseEvent e) {
+        setBackground(this.backgroundColor);
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
-
-    @Override
-    public void mouseExited(MouseEvent e) {}
-
-    @Override
-    public void mousePressed(MouseEvent e) {}
-
-    @Override
-    public void mouseReleased(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {
+    }
+    
 }

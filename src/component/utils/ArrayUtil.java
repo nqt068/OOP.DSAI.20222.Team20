@@ -113,7 +113,7 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
     @SuppressWarnings("unchecked")
 	public void generateRandomArray() {
     	Random rand = new Random();
-    	if (dataType == Integer.class) {
+    	if (dataType == Integer.class || dataType == null) {
             for (int i = 0; i < this.size(); i++) {
                 array[i] = new Element<T>((T)Integer.valueOf(rand.nextInt(100)));
             }
@@ -127,8 +127,10 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
                 rand.nextBytes(bytes);
                 array[i] = new Element<T>((T) new String(bytes));
             }
-    	} else {
-//    		System.out.println(dataType);
+    	} else { // just let it be integers :v
+//    		for (int i = 0; i < this.size(); i++) {
+//                array[i] = new Element<T>((T)Integer.valueOf(rand.nextInt(100)));
+//            }
     	}
     }
 }
