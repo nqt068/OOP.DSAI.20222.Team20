@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -81,7 +83,19 @@ public class Screen extends JFrame {
 		navigationBar.add(navigationButton, "East");
 		return navigationBar;
 	}
-
+    
+    protected abstract class MenuItemListener implements ActionListener {
+    	public void actionPerformed(ActionEvent e) {
+			String menuItem = e.getActionCommand();
+			if (menuItem.equals("Help")) {
+				
+			}
+			else if (menuItem.equals("About")) {
+				
+			}
+		}
+    }
+		
     public void onEntry() {};
     public void onExit() {};
 }

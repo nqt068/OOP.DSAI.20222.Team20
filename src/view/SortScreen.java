@@ -176,6 +176,7 @@ public abstract class SortScreen extends Screen{
 		
 		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonCreateRandomArray.setSize(new Dimension(100, 34));
+//		buttonCreateRandomArray.addActionListener();
 		visualizerArea.add(buttonCreateRandomArray, JLayeredPane.MODAL_LAYER);
 		
 		arrayEqualsLabel = new LabelComponent("Array :=");

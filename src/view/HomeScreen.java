@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -42,7 +44,7 @@ public class HomeScreen extends Screen{
 	private JPanel infoPanel() {
 		JPanel infoPanel = new JPanel(new BorderLayout()); 
 		infoPanel.add(logoPanel());
-		infoPanel.add(helpPanel(),BorderLayout.SOUTH);
+//		infoPanel.add(helpPanel(),BorderLayout.SOUTH);
 		// TODO: Adjust the dimension of the empty border
 		infoPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0));;
 		return infoPanel;
@@ -59,21 +61,6 @@ public class HomeScreen extends Screen{
 		a.add(appNameLabel, BorderLayout.CENTER);
 		logoPanel.add(a, BorderLayout.SOUTH);
 		return logoPanel;
-	}
-	
-	private JPanel helpPanel() {
-		JPanel helpPanel = new JPanel();
-//		ButtonComponent helpBtn = new ButtonComponent("Help", Color.WHITE, new Color(11,102,106), new Color(7,25,82)); 
-////		TODO: Add actionListener for helpBtn
-////		btnHelp.addActionListener();
-//		helpPanel.add(helpBtn);
-//		
-//		ButtonComponent aboutBtn = new ButtonComponent("About", Color.WHITE, new Color(11,102,106), new Color(7,25,82));
-//		helpPanel.add(aboutBtn);
-////		TODO: Add actionListener for aboutBtn
-////		aboutBtn.addActionListener();
-//		helpPanel.add(aboutBtn);
-		return helpPanel;
 	}
 	
 	private JPanel sortPanel() {
@@ -93,5 +80,17 @@ public class HomeScreen extends Screen{
 		sortPanel.add(shellSortCard);
 		return sortPanel;
 	}
+	
+    protected class MenuItemListener implements ActionListener {
+    	public void actionPerformed(ActionEvent e) {
+			String menuItem = e.getActionCommand();
+			if (menuItem.equals("Help")) {
+				//TODO: Add action for help of HomeScreen
+			}
+			else if (menuItem.equals("About")) {
+				//TODO: Add action for about of HomeScreen
+			}
+		}
+    }
 
 }
