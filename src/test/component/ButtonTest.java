@@ -1,20 +1,31 @@
 package test.component;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
+
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 import component.ButtonComponent;
 
 public class ButtonTest {
+    
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Button Test");
-        JPanel panel = new JPanel();
-        ButtonComponent buttonComponent = new ButtonComponent("Click me!", Color.BLACK, Color.BLUE, Color.CYAN);
-
-        panel.add(buttonComponent);
-        frame.add(panel);
+        // Create a new JFrame
+        JFrame frame = new JFrame("Button Component Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        frame.setSize(400, 200);
+        frame.setLayout(new FlowLayout());
+        
+        // Create a new ButtonComponent instance
+        ButtonComponent button1 = new ButtonComponent("Click Me 1!", Color.WHITE, Color.BLACK, Color.RED);
+        ButtonComponent button2 = new ButtonComponent("Click Me 2!");
+        
+        // Add the button to the frame
+        frame.add(button1);
+        frame.add(button2);
+        
+        // Make the frame visible
         frame.setVisible(true);
     }
+    
 }
