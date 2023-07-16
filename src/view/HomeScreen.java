@@ -50,14 +50,14 @@ public class HomeScreen extends Screen{
 	
 	private JPanel logoPanel() {
 		JPanel logoPanel = new JPanel(new BorderLayout());
-//		Icon visualSoIcon= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"VisualSO_icon1.png").getImage().getScaledInstance(420, 70, Image.SCALE_SMOOTH));
-//		JLabel logo = new JLabel(visualSoIcon);
-//		logoPanel.add(logo, BorderLayout.CENTER);
+		Icon visualSoIcon= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"VisualSO_icon1.png").getImage().getScaledInstance(420, 70, Image.SCALE_SMOOTH));
+		JLabel logo = new JLabel(visualSoIcon);
+		logoPanel.add(logo, BorderLayout.CENTER);
 		JLabel appNameLabel = new JLabel("SORTING ALGORITHM VISUALIZER");
-		appNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
+		appNameLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		JPanel a = new JPanel();
 		a.add(appNameLabel, BorderLayout.CENTER);
-		logoPanel.add(a, BorderLayout.CENTER);
+		logoPanel.add(a, BorderLayout.SOUTH);
 		return logoPanel;
 	}
 	

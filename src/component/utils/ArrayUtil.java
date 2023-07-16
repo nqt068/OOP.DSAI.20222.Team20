@@ -78,7 +78,6 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
 
 	@Override
 	public Iterator<Element<T>> iterator() {
-		// TODO Auto-generated method stub
 		return new ArrayUtilIterator();
 	}
 	
