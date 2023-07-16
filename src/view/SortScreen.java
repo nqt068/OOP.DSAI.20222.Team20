@@ -38,8 +38,8 @@ public abstract class SortScreen extends Screen{
 	
 	JPanel eastPanel;
 	JLayeredPane visualizerArea;
-  ArrayGraphic main;
-  ArrayGraphic sub;
+	ArrayGraphic main;
+	ArrayGraphic sub;
 	JPanel animation;
 	JPanel controlPanel;
 	
@@ -83,7 +83,7 @@ public abstract class SortScreen extends Screen{
 		addBackButtonToNavigationButton();
 		add(createCenter(), BorderLayout.CENTER);
 		add(createSouth(), BorderLayout.SOUTH);
-		add(createWest(), BorderLayout.WEST);
+//		add(createWest(), BorderLayout.WEST);
 		add(createEast(), BorderLayout.EAST);
 		setVisible(true);
 	}
@@ -124,16 +124,20 @@ public abstract class SortScreen extends Screen{
 		container.add(mainBarChartVisualizer(Color.ORANGE));
 		sub = new ArrayGraphic(sortArray);
 		container.add(sub);
+		container.setBounds(0,0,1200,500);
 		container.setVisible(true);
     
 		animation = new JPanel();
-		visualizerArea.add(container, JLayeredPane.DEFAULT_LAYER);
-		
+		visualizerArea.add(container, new Integer(1));
+
 		errorLabel = new LabelComponent("Exceptions will be printed here");
+		errorLabel.setAlignment(SwingConstants.CENTER, SwingConstants.CENTER);
 		errorLabel.setForeground(Color.RED);
-		visualizerArea.add(errorLabel, JLayeredPane.DRAG_LAYER);
+//		errorLabel.setPreferredSize(new Dimension(2000,50));
+		errorLabel.setBounds(0,0,1200,50);
+		visualizerArea.add(errorLabel, new Integer(2));
 		
-//		createWest();
+		visualizerArea.add(createWest(), new Integer(3));
 		visualizerArea.setVisible(true);		
 		return visualizerArea;
 	}
@@ -152,7 +156,6 @@ public abstract class SortScreen extends Screen{
 	// Array generator menu list
 	private JLayeredPane createWest() {
 		JLayeredPane westLayerPane = new JLayeredPane();
-		westLayerPane.setBackground(Color.BLACK);
 		
 		JPanel menuCreateAndStart = new JPanel(new GridLayout(2,1));
 		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.WHITE, Color.CYAN, Color.cyan.darker());
@@ -161,6 +164,7 @@ public abstract class SortScreen extends Screen{
 		buttonStartSorting.addActionListener(sortController.buttonStartSortingClicked());
 		menuCreateAndStart.add(buttonCreateSortingArray);
 		menuCreateAndStart.add(buttonStartSorting);
+		menuCreateAndStart.setVisible(true);
 		
 		JPanel createArrayField = new JPanel(new FlowLayout());
 		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
@@ -173,9 +177,10 @@ public abstract class SortScreen extends Screen{
 		createArrayField.add(arrayEqualsLabel);
 		createArrayField.add(inputArrayTextField);
 		createArrayField.add(buttonConfirmInputArray);
+		createArrayField.setVisible(true);
 		
-		westLayerPane.add(menuCreateAndStart, JLayeredPane.DRAG_LAYER);
-		westLayerPane.add(createArrayField, JLayeredPane.PALETTE_LAYER);
+		westLayerPane.add(menuCreateAndStart, new Integer(2));
+		westLayerPane.add(createArrayField, new Integer(1));
 		
 		return westLayerPane;
 	}
@@ -195,16 +200,17 @@ public abstract class SortScreen extends Screen{
 	}
 	// Progress slider bar, play&pause button, next & back buttons
 	private JPanel createControlPanel() {
-		JPanel controlPanel = new JPanel();
+		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		controlPanel.setBackground(new Color(238,238,238));
+		controlPanel.setPreferredSize(new Dimension(800, 50));
 		
 		if ((int)sortController.getSortAlgorithm().stepsList.size()!=0) {
-			progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size(),0);
+			progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size(),0,700);
 		} else {
-			progressSlider = new SliderBarComponent(0,1,0);
+			progressSlider = new SliderBarComponent(0,1,0,700);
 		}
-		// TODO: Add ChangeListener for the progressSlider
-		progressSlider.setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 0));
+		progressSlider.addChangeListener(sortController.progressSliderBarChanged());
+		progressSlider.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
 		
 		Icon iconPause = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"pause.png").getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		buttonPlayOrPause = new ButtonComponent(iconPause);
@@ -232,19 +238,20 @@ public abstract class SortScreen extends Screen{
 
 	// Speed adjust slider
 	private JPanel createSpeedChanger() {
-		JPanel speedChanger = new JPanel(new BorderLayout());
-		speedChanger.setPreferredSize(new Dimension(300,50));
+		JPanel speedChanger = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		speedChanger.setPreferredSize(new Dimension(400,50));
 		speedChanger.setBackground(new Color(238,238,238));
-		speedChanger.setBorder(BorderFactory.createEmptyBorder(5,80,0,0));
+		speedChanger.setBorder(BorderFactory.createEmptyBorder(5,10,0,0));
 		
 		speedLabel = new LabelComponent(sortController.getSpeed()+"x");
 		speedLabel.setForeground(Color.BLACK);
+		speedLabel.setVisible(true);
 		
-		speedSlider = new SliderBarComponent(1,7,1);
+		speedSlider = new SliderBarComponent(1,10,1,250);
 		speedSlider.addChangeListener(sortController.speedSliderBarChanged());
 		
-		speedChanger.add(speedLabel, BorderLayout.EAST);
-		speedChanger.add(speedSlider, BorderLayout.WEST);
+		speedChanger.add(speedSlider);
+		speedChanger.add(speedLabel);
     
 		return speedChanger;
 	}
@@ -274,8 +281,6 @@ public abstract class SortScreen extends Screen{
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-//				System.out.println("heehe");
-
 				if (sortArray.dataType == Double.class) {
 					for (int i = 0; i< sortArray.size();i++) {
 

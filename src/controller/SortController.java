@@ -120,8 +120,7 @@ public class SortController extends Controller{
 		return new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				// TODO Auto-generated method stub
-				
+				System.out.println(((JSlider)e.getSource()).getValue());
 			}
 		};
 	}
@@ -130,7 +129,7 @@ public class SortController extends Controller{
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				setSpeed(((JSlider)e.getSource()).getValue());
-				getSortScreen().getSpeedLabel().setText(getSpeed()+"");
+				getSortScreen().getSpeedLabel().setText(getSpeed()+"x");
 				if (isSorting()) {
 					timer.stop();
 					timer.setDelay(1000 - sortingSpeed*100);
