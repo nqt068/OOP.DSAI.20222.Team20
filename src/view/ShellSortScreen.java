@@ -3,7 +3,7 @@ package view;
 public class ShellSortScreen extends SortScreen{
 
 	public ShellSortScreen() {
-		super();s
+		super();
 	}
 
 	@Override

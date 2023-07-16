@@ -1,9 +1,12 @@
 package view;
 
+import algorithm.MergeSortAlgorithm;
+
 public class MergeSortScreen extends SortScreen{
 
 	public MergeSortScreen() {
 		super();
+		sortAlgorithm = new MergeSortAlgorithm();
 	}
 
 	@Override

@@ -76,6 +76,8 @@ public abstract class SortScreen extends Screen{
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();
 		add(createCenter(), BorderLayout.CENTER);
+		add(createSouth(), BorderLayout.SOUTH);
+		add(createWest(), BorderLayout.WEST);
 		setVisible(true);
 	}
 
@@ -120,7 +122,8 @@ public abstract class SortScreen extends Screen{
 		errorLabel.setForeground(Color.RED);
 		visualizerArea.add(errorLabel, JLayeredPane.DRAG_LAYER);
 		
-		createMenuList();
+		createWest();
+		visualizerArea.setVisible(true);
 		
 		return visualizerArea;
 	}
@@ -134,6 +137,10 @@ public abstract class SortScreen extends Screen{
 		bottomFunctionalBar.add(createInfoPanel(), BorderLayout.EAST);
 		return bottomFunctionalBar;
 	}
+//	private JPanel createWest() {
+		
+//	}
+	// Progress slider bar, play&pause button, next & back buttons
 	private JPanel createControlPanel() {
 		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		controlPanel.setBackground(Color.BLACK);
@@ -169,29 +176,35 @@ public abstract class SortScreen extends Screen{
 		
 		return controlPanel;
 	}
-	private void createMenuList() {
+	// Array generator menu list
+	private JPanel createWest() {
+		JPanel westPanel = new JPanel();
 		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonCreateSortingArray.addActionListener(sortController.buttonCreateSortingArrayClicked());
-		visualizerArea.add(buttonCreateSortingArray, JLayeredPane.MODAL_LAYER);
+		westPanel.add(buttonCreateSortingArray, JLayeredPane.MODAL_LAYER);
 		
 		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonCreateRandomArray.setSize(new Dimension(100, 34));
-		visualizerArea.add(buttonCreateRandomArray, JLayeredPane.MODAL_LAYER);
+		westPanel.add(buttonCreateRandomArray, JLayeredPane.MODAL_LAYER);
 		
 		arrayEqualsLabel = new LabelComponent("Array :=");
-		visualizerArea.add(arrayEqualsLabel, JLayeredPane.MODAL_LAYER);
+		westPanel.add(arrayEqualsLabel, JLayeredPane.MODAL_LAYER);
+		
 		
 		inputArrayTextField = new TextFieldComponent(30, "Ex: 1, 8, 3, 5, 7, 15, 21, 34");
-		visualizerArea.add(inputArrayTextField, JLayeredPane.MODAL_LAYER);
+		westPanel.add(inputArrayTextField, JLayeredPane.MODAL_LAYER);
 		
 		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonConfirmInputArray.addActionListener(sortController.buttonConfirmInputArrayClicked());
-		visualizerArea.add(buttonConfirmInputArray, JLayeredPane.MODAL_LAYER);
+		westPanel.add(buttonConfirmInputArray, JLayeredPane.MODAL_LAYER);
 		
 		buttonStartSorting = new ButtonComponent("Sort", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonStartSorting.addActionListener(sortController.buttonStartSortingClicked());
-		visualizerArea.add(buttonStartSorting, JLayeredPane.MODAL_LAYER);
+		westPanel.add(buttonStartSorting, JLayeredPane.MODAL_LAYER);
+		
+		return westPanel;
 	}
+	// Speed adjust slider
 	private JPanel createSpeedChanger() {
 		JPanel speedChanger = new JPanel(new BorderLayout());
 		speedChanger.setPreferredSize(new Dimension(300,50));
@@ -209,6 +222,7 @@ public abstract class SortScreen extends Screen{
 		
 		return speedChanger;
 	}
+	// Help, About and Team buttons
 	private JPanel createInfoPanel() {
 		JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		infoPanel.setPreferredSize(new Dimension(300,50));
@@ -248,6 +262,7 @@ public abstract class SortScreen extends Screen{
 		mainBarChart.setBounds(45,30,getWidth()-200,250);
 		return mainBarChart;
 	}
+//	public JPanel 
 	public TextAreaComponent getExplanationDisplayer() {
 		return this.explanationDisplayer;
 	}
