@@ -1,62 +1,74 @@
 package algorithm;
 
-import component.utils.*;
+import component.utils.ArrayUtil;
+import component.utils.Element;
+
 
 public class MergeSortAlgorithm<T extends Comparable<T>> extends SortingAlgorithm<T> {
-    
+
     public MergeSortAlgorithm(ArrayUtil<T> array) {
         super(array);
     }
-    
+    public MergeSortAlgorithm() {
+    	super();
+    }
+
     @Override
     public void sort() {
+    	stepsList.add(array.clone());
         mergeSort(0, array.size() - 1);
     }
-    
-    private void mergeSort(int low, int high) {
-        if (low >= high) {
-            return;
+
+    private void mergeSort(int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(left, mid);
+            mergeSort(mid + 1, right);
+            merge(left, mid, right);
         }
-        
-        int mid = (high + low) / 2;
-        mergeSort(low, mid);
-        mergeSort(mid + 1, high);
-        merge(low, mid, high);
     }
-    
-    private void merge(int low, int mid, int high) {
-        Element<T>[] leftArray = new Element[mid - low + 1];
-        Element<T>[] rightArray = new Element[high - mid];
-        
-        for (int i = 0; i < leftArray.length; i++) {
-            leftArray[i] = array.get(low + i);
+
+    private void merge(int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        ArrayUtil<T> leftArray = new ArrayUtil<T>(n1);
+        ArrayUtil<T> rightArray = new ArrayUtil<T>(n2);
+
+        for (int i = 0; i < n1; i++) {
+            leftArray.set(i, array.get(left + i));
         }
-        for (int i = 0; i < rightArray.length; i++) {
-            rightArray[i] = array.get(mid + 1 + i);
+        for (int j = 0; j < n2; j++) {
+            rightArray.set(j, array.get(mid + 1 + j));
         }
-        
-        int i = 0, j = 0, k = low;
-        while (i < leftArray.length && j < rightArray.length) {
-            if (lessThanOrEqual(leftArray[i].getValue(), rightArray[j].getValue())) {
-            	array.set(k++, leftArray[i++]);
-//            	array.printArray();
+
+        int i = 0;
+        int j = 0;
+        int k = left;
+
+        while (i < n1 && j < n2) {
+            if (lessThanOrEqual(leftArray.get(i).getValue(), rightArray.get(j).getValue())) {
+                array.set(k, leftArray.get(i));
+                i++;
             } else {
-                array.set(k++, rightArray[j++]);
-//              array.printArray();
+                array.set(k, rightArray.get(j));
+                j++;
             }
+            stepsList.add(array.clone());
+            k++;
         }
-        stepsList.add(array.clone());
-        
-        while (i < leftArray.length) {
-            array.set(k++, leftArray[i++]);
-//            array.printArray();
+
+        while (i < n1) {
+            array.set(k, leftArray.get(i));
+            i++;
+            k++;
         }
-//        array.printArray();
-        while (j < rightArray.length) {
-            array.set(k++, rightArray[j++]);
-//            array.printArray();
+        while (j < n2) {
+            array.set(k, rightArray.get(j));
+            j++;
+            k++;
         }
-        array.printArray();
+        //stepsList.add(array); 
     }
     
     @Override

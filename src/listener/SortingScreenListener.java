@@ -20,6 +20,7 @@ public class SortingScreenListener {
 	public SortControllingButtonListener sortControllingButton;
 	public SortingScreenListener() {
 		// TODO Auto-generated constructor stub
+		
 	}
 	public ComponentAdapter changeWindowSize() {
 		this.changeWindowSize = new ComponentAdapter() {

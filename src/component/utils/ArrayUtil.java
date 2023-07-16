@@ -61,6 +61,16 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
     public ArrayUtil<T> clone() {
     	return new ArrayUtil<T>(array.clone());
     }
+    
+    public int min(int a, int b) { 
+    	if (a <= b) {
+    		return a;
+    	}
+    	else {
+    		return b;
+    	}
+    }
+        
     public void set(int index, Element<T> element) {
         this.array[index] = element;
     }
@@ -68,7 +78,6 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
 
 	@Override
 	public Iterator<Element<T>> iterator() {
-		// TODO Auto-generated method stub
 		return new ArrayUtilIterator();
 	}
 	

@@ -15,6 +15,9 @@ public abstract class SortingAlgorithm<T extends Comparable<T>> {
     public SortingAlgorithm(ArrayUtil<T> array) {
         this.array = array;
     }
+    public SortingAlgorithm() {
+    	
+    }
     
     public abstract void sort();
     

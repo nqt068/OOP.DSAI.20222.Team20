@@ -26,8 +26,8 @@ public class ButtonComponent extends JButton implements MouseListener {
         this.buttonColor = buttonColor;
         this.hoverColor = buttonHoverColor;
         this.textColor = textColor;
-        this.setFont(new Font("Arial", Font.PLAIN, 16));
-        this.setPreferredSize(new Dimension(100, 40));
+        this.setFont(new Font("Arial",Font.CENTER_BASELINE, 14));
+        this.setPreferredSize(new Dimension(50, 40));
         this.addMouseListener(this);
     }
     public ButtonComponent(Icon icon) {

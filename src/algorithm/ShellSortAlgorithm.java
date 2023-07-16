@@ -21,7 +21,7 @@ public class ShellSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
 		arrayUtilGaps = gapsIns.array;
 		
 		for (int i = 0; i < gaps.length; i ++) {
-			gaps[i] = (int) arrayUtilGaps.get(i).getValue();
+			gaps[gaps.length - i - 1] = (int) arrayUtilGaps.get(i).getValue();
 		}
 		
 		this.gaps = gaps;
@@ -54,11 +54,9 @@ public class ShellSortAlgorithm<T extends Comparable<T>> extends SortingAlgorith
 						
 						InsertionSortAlgorithm ins = new InsertionSortAlgorithm(subArray);
 						ins.sort();
-						
 						count = 0;
 						for (int i = j; i < n; i+= gap) {
 							array.set(i, ins.array.get(count));
-							steps++;
 							stepsList.add(array.clone());
 							count += 1;
 						}
@@ -74,11 +72,6 @@ class InsertionSortAlgorithm<T extends Comparable<T>> extends SortingAlgorithm<T
 	public InsertionSortAlgorithm(ArrayUtil<T> array) {
 		super(array);
 	}
-	
-	@Override
-    protected boolean lessThanOrEqual(T a, T b) {
-        return a.compareTo(b) <= 0;
-    }
 	
 	@SuppressWarnings("unchecked")
 	public ArrayUtil<T> partlySort(int n, ArrayUtil<T> arr) {

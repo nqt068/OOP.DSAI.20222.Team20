@@ -3,6 +3,7 @@ package component;
 import javax.swing.*;
 
 import controller.HomeScreenController;
+import view.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -19,12 +20,15 @@ public class CardComponent extends JPanel implements MouseListener {
         // Create the heading label and add it to the panel
         headingLabel = new JLabel(heading);
         headingLabel.setFont(new Font("Arial", Font.BOLD, 18));
+//        add(headingLabel, BorderLayout.NORTH);
+        headingLabel.setHorizontalAlignment(JLabel.CENTER);
+        
         add(headingLabel, BorderLayout.NORTH);
-
+        
         // Create the image label or blank box and add it to the panel
         JPanel imagePanel = new JPanel(new BorderLayout());
         if (image != null) {
-            imageLabel = new JLabel(new ImageIcon(image));
+            imageLabel = new JLabel(new ImageIcon(image.getScaledInstance(300, 200, Image.SCALE_SMOOTH)));
             imagePanel.add(imageLabel, BorderLayout.CENTER);
         } else {
             imagePanel.setPreferredSize(new Dimension(300, 200));
@@ -46,7 +50,18 @@ public class CardComponent extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    	
+    	if (headingLabel.getText() == "Merge Sort") {
+    		MergeSortScreen sortScreen = new MergeSortScreen();
+//    		SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();	
+    	}
+    	else if (headingLabel.getText() == "Selection Sort") {
+    		SelectionSortScreen sortScreen = new SelectionSortScreen();
+//    		SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();	
+    	}
+    	else if (headingLabel.getText() == "Shell Sort") {
+    		ShellSortScreen sortScreen = new ShellSortScreen();
+//    		SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();	
+    	}
     }
 
     @Override

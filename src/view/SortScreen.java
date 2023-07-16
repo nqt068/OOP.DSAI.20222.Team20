@@ -24,12 +24,12 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import algorithm.SortingAlgorithm;
 import component.*;
 import component.utils.*;
 import controller.SortController;
 
 public abstract class SortScreen extends Screen{
-	
 	protected SortController sortController;
 	protected ArrayUtil sortArray;
 	protected String sortInfo = "Welcome to our Sorting Algorithms Visualizer";
@@ -69,9 +69,10 @@ public abstract class SortScreen extends Screen{
 	
 	protected int padding = 5;
 
-	public SortScreen() {
+	public SortScreen(SortingAlgorithm sortAlgorithm) {
 		super();
 		sortController = new SortController(this);
+		sortController.setSortAlgorithm(sortAlgorithm);
 		generateArray(null);
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();
@@ -104,7 +105,7 @@ public abstract class SortScreen extends Screen{
 		}
 	}
 	private void addBackButtonToNavigationButton() {
-		ButtonComponent backButton = new ButtonComponent("Back", Color.BLACK, Color.BLUE, Color.CYAN);
+		ButtonComponent backButton = new ButtonComponent("Back", Color.WHITE, Color.BLUE, Color.CYAN);
 		backButton.addActionListener(controller.backProtocol());
 		navigationButton.add(backButton, 2, 0);
 	}
@@ -186,6 +187,8 @@ public abstract class SortScreen extends Screen{
 		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonCreateRandomArray.setSize(new Dimension(100, 34));
 		westPanel.add(buttonCreateRandomArray, JLayeredPane.MODAL_LAYER);
+
+//		buttonCreateRandomArray.addActionListener();
 		
 		arrayEqualsLabel = new LabelComponent("Array :=");
 		westPanel.add(arrayEqualsLabel, JLayeredPane.MODAL_LAYER);

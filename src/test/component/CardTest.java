@@ -9,7 +9,7 @@ import component.CardComponent;
 public class CardTest {
     public static void main(String[] args) {
         // Create a sample image
-        Image image = new ImageIcon("sampleImage.png").getImage();
+        Image image = new ImageIcon(System.getProperty("user.dir") + "\\Image_Resources\\" + "sampleImage.png").getImage();
 
         // Create a CardPanel object
         CardComponent cardPanel = new CardComponent("Sample Heading", image, "This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. ");
