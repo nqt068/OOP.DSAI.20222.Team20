@@ -39,6 +39,7 @@ public abstract class SortScreen extends Screen{
 	
 	Container cp;
 
+
 	JPanel eastPanel;
 	JLayeredPane visualizerArea;
 	ArrayGraphic main;
@@ -137,6 +138,7 @@ public abstract class SortScreen extends Screen{
 		errorLabel.setBounds(0,0,1200,50);
 		visualizerArea.setPreferredSize(new Dimension(1000, 350));
 
+
 		visualizerArea.add(errorLabel, new Integer(2));
 		
 		visualizerArea.add(createWest(), new Integer(3));
@@ -173,6 +175,7 @@ public abstract class SortScreen extends Screen{
 		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonCreateRandomArray.setSize(new Dimension(100, 34));
 		buttonCreateRandomArray.addActionListener(sortController.buttonCreateRandomArrayClicked());
+
 
 		arrayEqualsLabel = new LabelComponent("Array :=");
 		inputArrayTextField = new TextFieldComponent(30, "Ex: 1 8 3 5 7 15 21 34");
@@ -334,6 +337,7 @@ public abstract class SortScreen extends Screen{
 //	public Container getContainer() {
 //		return this.cp;
 //	}
+
 
 	public JPanel getEastPanel() {
 		return this.eastPanel;
