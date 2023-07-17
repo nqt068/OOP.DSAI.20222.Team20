@@ -39,7 +39,6 @@ public abstract class SortScreen extends Screen{
 	
 	Container cp;
 
-
 	JPanel eastPanel;
 	JLayeredPane visualizerArea;
 	ArrayGraphic main;
@@ -83,6 +82,7 @@ public abstract class SortScreen extends Screen{
 		sortController = new SortController(this);
 		sortController.setSortAlgorithm(sortAlgorithm);
 		sortController.generateArray(null);
+		sortController.setAttributes();
 //		System.out.println(this.sortController.getSortArray());
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();
@@ -176,11 +176,11 @@ public abstract class SortScreen extends Screen{
 		buttonCreateRandomArray.setSize(new Dimension(100, 34));
 		buttonCreateRandomArray.addActionListener(sortController.buttonCreateRandomArrayClicked());
 
-
 		arrayEqualsLabel = new LabelComponent("Array :=");
 		inputArrayTextField = new TextFieldComponent(30, "Ex: 1 8 3 5 7 15 21 34");
 		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonConfirmInputArray.addActionListener(sortController.buttonConfirmInputArrayClicked());
+		
 		createArrayField.add(buttonCreateRandomArray);
 		createArrayField.add(arrayEqualsLabel);
 		createArrayField.add(inputArrayTextField);
@@ -222,18 +222,23 @@ public abstract class SortScreen extends Screen{
 		
 		Icon iconPause = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"pause.png").getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		buttonPlayOrPause = new ButtonComponent(iconPause);
+		buttonPlayOrPause.addActionListener(sortController.buttonPlayOrPauseClicked());
 		
 		Icon iconForward = new ImageIcon(new ImageIcon(IMAGE_RESOURCES +"forward.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonForwardOneStep = new ButtonComponent(iconForward);
+		buttonForwardOneStep.addActionListener(sortController.buttonForwardOneStepClicked());
 		
 		Icon iconBackward = new ImageIcon(new ImageIcon(IMAGE_RESOURCES +"backward.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardOneStep = new ButtonComponent(iconBackward);
+		buttonBackwardOneStep.addActionListener(sortController.buttonBackwardOneStepClicked());
 		
 		Icon iconForwardToTheEnd = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"end.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonForwardToTheEnd = new ButtonComponent(iconForwardToTheEnd);
+		buttonForwardToTheEnd.addActionListener(sortController.buttonForwardToTheEndClicked());
 		
 		Icon iconBackwardToTheStart = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"start.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardToTheStart = new ButtonComponent(iconBackwardToTheStart);
+		buttonBackwardToTheStart.addActionListener(sortController.buttonBackwardToTheStartClicked());
 		
 		controlPanel.add(buttonBackwardToTheStart);
 		controlPanel.add(buttonBackwardOneStep);
