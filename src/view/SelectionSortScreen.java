@@ -1,5 +1,7 @@
 package view;
 
+import algorithm.SelectionSortAlgorithm;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,7 +15,7 @@ import view.MergeSortScreen.MenuItemListener;
 public class SelectionSortScreen extends SortScreen{
 
 	public SelectionSortScreen() {
-		super();
+		super(new SelectionSortAlgorithm());
 	}
 
 	@Override
