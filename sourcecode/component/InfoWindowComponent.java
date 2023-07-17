@@ -26,7 +26,7 @@ public class InfoWindowComponent extends JFrame {
         infoTextArea.setLineWrap(true);
         infoTextArea.setWrapStyleWord(true);
         infoTextArea.setEditable(false);
-        infoTextArea.setFont(new Font("Silkscreen", Font.ITALIC, 14));
+        infoTextArea.setFont(new Font("Arial", Font.ITALIC, 14));
         JScrollPane scrollPane = new JScrollPane(infoTextArea);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 

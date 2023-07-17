@@ -15,19 +15,21 @@ public class ShellSortScreen extends SortScreen{
 	@Override
 	public String getHelpString() {
 		// TODO Auto-generated method stub
-		return null;
+		return "To sort an array: \n Click Create (A) to create an array (random or self-declared) \n Then press sort and try out yourself the controls";
 	}
 
 	@Override
 	public String getAboutString() {
 		// TODO Auto-generated method stub
-		return null;
+		return " Team 20 has developed this capstone project with \n "
+				+ "the aim of providing you with a visualization of how "
+				+ "\n sorting algorithms operate on arrays.";
 	}
 
 	@Override
 	public String getTeamString() {
 		// TODO Auto-generated method stub
-		return null;
+		return "We are team 20!";
 	}
 	
     protected class MenuItemListener extends view.Screen.MenuItemListener implements ActionListener {

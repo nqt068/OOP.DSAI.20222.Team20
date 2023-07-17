@@ -129,18 +129,18 @@ public abstract class SortScreen extends Screen{
 		container.setVisible(true);
     
 		animation = new JPanel();
-		visualizerArea.add(container, 1);
 
-		errorLabel = new LabelComponent("Exceptions will be printed here");
-		errorLabel.setAlignment(SwingConstants.CENTER, SwingConstants.CENTER);
+		errorLabel = new LabelComponent("Exceptions will be printed here", 20);
+//		errorLabel.setAlignment(SwingConstants.CENTER, SwingConstants.CENTER);
 		errorLabel.setForeground(Color.RED);
-//		errorLabel.setPreferredSize(new Dimension(2000,50));
-		errorLabel.setSize(new Dimension(1200,50));
-		visualizerArea.setBounds(0, 0, 1551, 1300);
+		errorLabel.setBounds(590,0,1550,80);
+//		errorLabel.setSize(new Dimension(1200,50));
+		visualizerArea.setBounds(0, 0, 1551, 1200);
 
 
-		visualizerArea.add(errorLabel, 2);
-		
+		visualizerArea.add(errorLabel, 1);
+		visualizerArea.add(container, 2);
+
 		visualizerArea.add(createWest(), 3);
 		visualizerArea.setVisible(true);		
 		return visualizerArea;

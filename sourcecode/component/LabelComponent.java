@@ -15,6 +15,16 @@ public class LabelComponent extends JLabel {
         setOpaque(false);
     }
     
+    public LabelComponent(String text, int size) {
+        super(text);
+        setFont(new Font("Arial", Font.PLAIN, size));
+        setForeground(Color.BLACK);
+        setHorizontalAlignment(JLabel.LEFT);
+        setVerticalAlignment(JLabel.CENTER);
+        setPreferredSize(new Dimension(100, 30));
+        setOpaque(false);
+    }
+    
     public void setFontStyle(Font font) {
         setFont(font);
     }
