@@ -39,6 +39,7 @@ public class SortController extends Controller{
 	
 	public static final int MAX_ARRAY_LENGTH = 30;
 	public static final int DELAY = 100;
+	
 	private SortScreen sortScreen;
 	protected ArrayUtil sortArray;
 	// TODO: Change the parameters
@@ -137,7 +138,7 @@ public class SortController extends Controller{
 				sortArray = new ArrayUtil(MAX_ARRAY_LENGTH);
 				sortArray.generateRandomArray();
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
-				getSortScreen().updateArrayToScreen();
+				getSortScreen().updateArrayToScreen(-1);
 			}
 		};
 	}
@@ -160,10 +161,33 @@ public class SortController extends Controller{
 				sortArray.dataType = Integer.class;
 //				sortArray.printArray();
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
-				getSortScreen().updateArrayToScreen();
+				getSortScreen().updateArrayToScreen(-1);
 			}
 		};
 	}
+	
+    public ActionListener taskPerformer = new ActionListener() {
+    	public void actionPerformed(ActionEvent evt) {
+    		if (LI.hasNext()) {
+    			int index = -1;
+    			ArrayUtil tempArray = sortArray.clone(); 
+    			setCurrentStep(LI.nextIndex());
+    			sortArray = (ArrayUtil) LI.next();
+    			
+    			for (int i = 0; i < tempArray.size(); i++) {
+    				if (tempArray.get(i) != sortArray.get(i)) {
+    					index = i;
+    					break;
+    				}
+    			}
+    			getSortScreen().updateArrayToScreen(index);
+    			if (!LI.hasNext()) {
+    				((Timer)evt.getSource()).stop();
+    			}
+    		}
+    	}
+    };
+    
 	public ActionListener buttonStartSortingClicked() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
@@ -175,26 +199,12 @@ public class SortController extends Controller{
 				} else if (algName == "algorithm.ShellSortAlgorithm") {
 					int[] gaps = {8,4,2,1};
 					sortAlgorithm = new ShellSortAlgorithm(gaps, sortArray);
-				} else {
-					System.out.println("hêh");
-				}
+				} else {}
 
+//				sortAlgorithm.sort();
 				stepsList = sortAlgorithm.sortAndGetSteps();
 				LI = stepsList.listIterator();
 				
-			    ActionListener taskPerformer = new ActionListener() {
-			    	public void actionPerformed(ActionEvent evt) {
-			    		if (LI.hasNext()) {
-			    			sortArray = (ArrayUtil) LI.next();
-//			    			sortArray.printArray();
-			    			getSortScreen().updateArrayToScreen();
-			    			if (!LI.hasNext()) {
-			    				((Timer)evt.getSource()).stop();
-			    			}
-			    		}
-			    	}
-			    };
-			    
 			    timer = new Timer(delay, taskPerformer);
 			    timer.start();
 			}

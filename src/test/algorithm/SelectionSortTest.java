@@ -28,11 +28,11 @@ public class SelectionSortTest {
 
         SortingAlgorithm<Integer> selectionSort = new SelectionSortAlgorithm<>(intArrayUtil);
         selectionSort.sort();
-
-        System.out.println("Sort checking - isSorted: " + selectionSort.isSorted());
-        intArrayUtil.printArray();
-        System.out.println("Number of steps: " + selectionSort.getSteps());
-        System.out.println("Time complexity: " + selectionSort.getTimeComplexity());
+//
+//        System.out.println("Sort checking - isSorted: " + selectionSort.isSorted());
+//        intArrayUtil.printArray();
+//        System.out.println("Number of steps: " + selectionSort.getSteps());
+//        System.out.println("Time complexity: " + selectionSort.getTimeComplexity());
 
         List<ArrayUtil<Integer>> stepsList = selectionSort.sortAndGetSteps();
         System.out.println(stepsList.toString());

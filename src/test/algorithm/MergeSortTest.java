@@ -17,11 +17,12 @@ public class MergeSortTest {
     
     private static void testIntegerSort() {
         Element<Integer>[] intArray = createArray(
-            new Element<>(5),
-            new Element<>(3),
+            new Element<>(1),
+            new Element<>(2),
             new Element<>(7),
             new Element<>(1),
-            new Element<>(9)
+            new Element<>(2),
+            new Element<>(4)
         );
         ArrayUtil<Integer> intArrayUtil = new ArrayUtil<>(intArray);
         intArrayUtil.printArray();

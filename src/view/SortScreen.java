@@ -90,7 +90,7 @@ public abstract class SortScreen extends Screen{
 
 		this.cp = new Container();
 		cp.setLayout(new BorderLayout());
-		cp.add(createCenter(), BorderLayout.CENTER);
+		cp.add(createCenter(-1), BorderLayout.CENTER);
 		cp.add(createSouth(), BorderLayout.SOUTH);
 		cp.add(createEast(), BorderLayout.EAST);
 		cp.add(createWest(), BorderLayout.WEST);
@@ -118,12 +118,12 @@ public abstract class SortScreen extends Screen{
 		backButton.addActionListener(controller.backProtocol());
 		navigationButton.add(backButton, 2, 0);
 	}
-	private JLayeredPane createCenter(){
+	private JLayeredPane createCenter(int index){
 		visualizerArea = new JLayeredPane();
 		JPanel container = new JPanel();
 		container.setLayout(null);
 		container.setSize(1000, 1000);
-		container.add(mainBarChartVisualizer(Color.ORANGE));
+		container.add(mainBarChartVisualizer(Color.ORANGE, Color.YELLOW, index));
 		sub = new ArrayGraphic(sortController.getSortArray());
 		container.add(sub);
 		container.setBounds(0,0,1200,500);
@@ -285,32 +285,70 @@ public abstract class SortScreen extends Screen{
 
 		return infoPanel;
 	}
-	private ArrayGraphic mainBarChartVisualizer(Color color) {
+	private ArrayGraphic mainBarChartVisualizer(Color color, Color updateColor, int index) {
 		int unitWidth = ((int) getWidth()-200)/sortController.getSortArray().size();
 		ArrayGraphic mainBarChart = new ArrayGraphic(sortController.getSortArray()) {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				if (sortController.getSortArray().dataType == Double.class) {
-
-					for (int i = 0; i< sortController.getSortArray().size();i++) {
-
-						int width = Math.min(unitWidth,15+padding);
-						g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))
-								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
-						g.setColor(color);
-					}
-				} 
-				else if (sortController.getSortArray().dataType == Integer.class) {
-
-					for (int i = 0; i< sortController.getSortArray().size();i++) {
-
-						int width = Math.min(unitWidth,15+padding);
-						g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((int)sortController.getSortArray().get(i).getValue() * unitHeight))
-								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortController.getSortArray().get(i).getValue()*unitHeight)));
-						g.setColor(color);
-					}
-				}// TODO: Write fillRect for String data type here
+				if (index == -1) {
+					if (sortController.getSortArray().dataType == Double.class) {
+	
+						for (int i = 0; i< sortController.getSortArray().size();i++) {
+	
+							int width = Math.min(unitWidth,15+padding);
+							g.setColor(color);
+							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))
+									+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
+							
+						}
+					} 
+					else if (sortController.getSortArray().dataType == Integer.class) {
+	
+						for (int i = 0; i< sortController.getSortArray().size();i++) {
+	
+							int width = Math.min(unitWidth,15+padding);
+							g.setColor(color);
+							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((int)sortController.getSortArray().get(i).getValue() * unitHeight))
+									+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortController.getSortArray().get(i).getValue()*unitHeight)));
+							
+						}
+					}// TODO: Write fillRect for String data type here
+				}
+				else {
+					if (sortController.getSortArray().dataType == Double.class) {
+						
+						for (int i = 0; i< sortController.getSortArray().size();i++) {
+	
+							int width = Math.min(unitWidth,15+padding);
+							if (i == index) {
+								g.setColor(updateColor);
+							}
+							else {
+								g.setColor(color);
+							}
+							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))
+									+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
+							
+						}
+					} 
+					else if (sortController.getSortArray().dataType == Integer.class) {
+	
+						for (int i = 0; i< sortController.getSortArray().size();i++) {
+	
+							int width = Math.min(unitWidth,15+padding);
+							if (i == index) {
+								g.setColor(updateColor);
+							}
+							else {
+								g.setColor(color);
+							}
+							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((int)sortController.getSortArray().get(i).getValue() * unitHeight))
+									+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortController.getSortArray().get(i).getValue()*unitHeight)));
+							
+						}
+					}// TODO: Write fillRect for String data type here
+				}
 			}
 		};
 		// TODO: Redesign the boundary if necessary
@@ -318,7 +356,7 @@ public abstract class SortScreen extends Screen{
 		return mainBarChart;
 	}
 	
-	public void updateArrayToScreen() {
+	public void updateArrayToScreen(int index) {
     	BorderLayout layout = (BorderLayout) cp.getLayout();
     	cp.remove(layout.getLayoutComponent(BorderLayout.WEST));
     	cp.remove(layout.getLayoutComponent(BorderLayout.EAST));
@@ -328,7 +366,7 @@ public abstract class SortScreen extends Screen{
 		calculateUnitHeight();
 //		System.out.println(unitHeight);
 //		addBackButtonToNavigationButton();
-		cp.add(createCenter(), BorderLayout.CENTER);
+		cp.add(createCenter(index), BorderLayout.CENTER);
 		cp.add(createSouth(), BorderLayout.SOUTH);
 		cp.add(createEast(), BorderLayout.EAST);
 		cp.add(createWest(), BorderLayout.WEST);
