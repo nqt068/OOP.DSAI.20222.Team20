@@ -58,6 +58,7 @@ public class ButtonComponent extends JButton implements MouseListener {
     public void mouseEntered(MouseEvent e) {
         setBackground(this.hoverColor);
     }
+
     @Override
     public void mouseExited(MouseEvent e) {
         setBackground(this.backgroundColor);

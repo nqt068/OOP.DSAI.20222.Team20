@@ -14,7 +14,7 @@ public class ArrayGraphic extends JPanel{
 	{
 	    return new Dimension(100, 100);
 	}
-	
+
 	public ArrayGraphic(ArrayUtil array) {
 		super();
 		this.mainArray = array;
@@ -22,5 +22,4 @@ public class ArrayGraphic extends JPanel{
 	public ArrayUtil getArray() {
 		return this.mainArray;
 	}
-
 }

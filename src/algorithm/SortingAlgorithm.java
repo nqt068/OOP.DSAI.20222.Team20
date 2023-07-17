@@ -71,6 +71,7 @@ public abstract class SortingAlgorithm<T extends Comparable<T>> {
     }
     
     public List<ArrayUtil<T>> sortAndGetSteps() {
+    	sort();
         return stepsList;
     }
 }

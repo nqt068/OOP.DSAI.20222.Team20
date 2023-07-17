@@ -115,6 +115,7 @@ public class ArrayUtil<T extends Comparable<T>> implements Iterable<Element<T>>{
     	Random rand = new Random();
     	if (dataType == Integer.class || dataType == null) {
             for (int i = 0; i < this.size(); i++) {
+            	this.dataType = (Class<T>) Integer.class;
                 array[i] = new Element<T>((T)Integer.valueOf(rand.nextInt(100)));
             }
     	} else if (dataType == Double.class) {

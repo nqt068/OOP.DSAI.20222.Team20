@@ -2,10 +2,12 @@ package view;
 
 import java.awt.BorderLayout;  
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,20 +33,22 @@ import controller.SortController;
 
 public abstract class SortScreen extends Screen{
 	protected SortController sortController;
-	protected ArrayUtil sortArray;
+	
 	protected String sortInfo = "Welcome to our Sorting Algorithms Visualizer";
 	protected double unitHeight;
 	
+	Container cp;
+	JPanel eastPanel;
 	JLayeredPane visualizerArea;
-    ArrayGraphic main;
-    ArrayGraphic sub;
+	ArrayGraphic main;
+	ArrayGraphic sub;
 	JPanel animation;
 	JPanel controlPanel;
 	
-	SliderBarComponent progressSlider;
-	
+	ButtonComponent showExplanation;
 	TextAreaComponent explanationDisplayer;
 	
+	JPanel createArrayField;
 	ButtonComponent buttonCreateSortingArray;
 	ButtonComponent buttonCreateRandomArray;
 	LabelComponent arrayEqualsLabel;
@@ -52,7 +56,9 @@ public abstract class SortScreen extends Screen{
 	ButtonComponent buttonConfirmInputArray;
 	ButtonComponent buttonStartSorting;
 	LabelComponent errorLabel;
-	
+
+	SliderBarComponent progressSlider;
+
 	ButtonComponent buttonPlayOrPause;
 	ButtonComponent buttonForwardOneStep;
 	ButtonComponent buttonBackwardOneStep;
@@ -66,58 +72,38 @@ public abstract class SortScreen extends Screen{
 	ButtonComponent buttonHelp;
 	ButtonComponent buttonTeam;	
 	
+	ButtonComponent showMenuList;
+
 	protected int padding = 5;
 
-	public SortScreen(SortingAlgorithm sortAlgorithm) {
+	public SortScreen(@SuppressWarnings("rawtypes") SortingAlgorithm sortAlgorithm) {
 		super();
 		sortController = new SortController(this);
 		sortController.setSortAlgorithm(sortAlgorithm);
-		generateArray(null);
-		System.out.println(this.sortArray);
+		sortController.generateArray(null);
+//		System.out.println(this.sortController.getSortArray());
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();
-		
-		JPanel p = new JPanel();
-//
-//		
-		p.add(createWest(), BorderLayout.NORTH);
-//
-//		p.add(createSouth(), BorderLayout.SOUTH);
-		p.add(createCenter(), BorderLayout.CENTER);
-		p.setVisible(true);
-		
-		add(p, BorderLayout.CENTER);
-		setVisible(true);
-		
-//		add(createWest(), BorderLayout.NORTH);
 
-		add(createSouth(), BorderLayout.SOUTH);
-//		add(createCenter(), BorderLayout.CENTER);
-		setVisible(true);
+		this.cp = new Container();
+		cp.setLayout(new BorderLayout());
+		cp.add(createCenter(), BorderLayout.CENTER);
+		cp.add(createSouth(), BorderLayout.SOUTH);
+		cp.add(createEast(), BorderLayout.EAST);
+		cp.add(createWest(), BorderLayout.WEST);
+		add(cp);
 		
-
+		setVisible(true);
 	}
 
-	@SuppressWarnings("rawtypes")
-	private void generateArray(ArrayUtil array) {
-		if (sortArray == null) {
-			sortArray = new ArrayUtil(sortController.MAX_ARRAY_LENGTH);
-			sortArray.dataType = Integer.class; //TODO: Let user choose the dataType
-			sortArray.generateRandomArray();
-//			sortArray.printArray();
-		} else {
-			this.sortArray = array;
-		}
-	}
 	private void calculateUnitHeight() {
-		if (this.sortArray.getMax() == null) {
+		if (sortController.getSortArray().getMax() == null) {
 			this.unitHeight = 0;
 		} else {			
-			if (this.sortArray.getMax().getValue() != (Integer) 0) {
-
-				this.unitHeight = ((int)300)/((int)this.sortArray.getMax().getValue());
-			} else if (this.sortArray.getMax().getValue() != (Double) 0.0) {
-				this.unitHeight = ((double)300.0)/((double)this.sortArray.getMax().getValue());			
+			if (sortController.getSortArray().getMax().getValue() != (Integer) 0) {
+				this.unitHeight = ((int)200)/((int)sortController.getSortArray().getMax().getValue());
+			} else if (sortController.getSortArray().getMax().getValue() != (Double) 0.0) {
+				this.unitHeight = ((double)200.0)/((double)sortController.getSortArray().getMax().getValue());			
 			} else {
 				this.unitHeight = 0;
 			}
@@ -128,71 +114,104 @@ public abstract class SortScreen extends Screen{
 		backButton.addActionListener(controller.backProtocol());
 		navigationButton.add(backButton, 2, 0);
 	}
-	private JPanel createCenter(){
-		JPanel center = new JPanel();
-
+	private JLayeredPane createCenter(){
 		visualizerArea = new JLayeredPane();
-		
-//		JPanel vis = new JPanel();
 		JPanel container = new JPanel();
 		container.setLayout(null);
-		container.setSize(1000, 500);
-		container.add(mainBarChartVisualizer(Color.ORANGE), "North");
-		sub = new ArrayGraphic(sortArray);
+		container.setSize(1000, 1000);
+		container.add(mainBarChartVisualizer(Color.ORANGE));
+		sub = new ArrayGraphic(sortController.getSortArray());
 		container.add(sub);
+		container.setBounds(0,0,1200,500);
 		container.setVisible(true);
+    
 		animation = new JPanel();
-		visualizerArea.add(container, JLayeredPane.DEFAULT_LAYER);
-//		
+		visualizerArea.add(container, new Integer(1));
+
 		errorLabel = new LabelComponent("Exceptions will be printed here");
+		errorLabel.setAlignment(SwingConstants.CENTER, SwingConstants.CENTER);
 		errorLabel.setForeground(Color.RED);
-		visualizerArea.add(errorLabel, JLayeredPane.DRAG_LAYER);
-		visualizerArea.setPreferredSize(new Dimension(1000, 500));
+//		errorLabel.setPreferredSize(new Dimension(2000,50));
+		errorLabel.setBounds(0,0,1200,50);
+		visualizerArea.setPreferredSize(new Dimension(1000, 350));
+		visualizerArea.add(errorLabel, new Integer(2));
 		
-//		vis.setPreferredSize(new Dimension(1000, 500));
-//		vis.add(container, BorderLayout.CENTER);
-//		vis.setVisible(true);
-//		createWest();
-//		visualizerArea.setVisible(true);
-		
-		center.add(visualizerArea, BorderLayout.WEST);
-//		center.add(vis, BorderLayout.CENTER);
-
-//		JPanel westPanel = createWest();
-
-//		center.add(westPanel, BorderLayout.NORTH);
-//		center.setPreferredSize(new Dimension(1000, 500));
-		center.setVisible(true);
-		
-		return center;
+		visualizerArea.add(createWest(), new Integer(3));
+		visualizerArea.setVisible(true);		
+		return visualizerArea;
 	}
 	private JPanel createSouth() {
-		JPanel bottomFunctionalBar = new JPanel(new BorderLayout());
-		bottomFunctionalBar.setPreferredSize(new Dimension(1000, 45));
-		bottomFunctionalBar.setBackground(Color.BLACK);
+		JPanel southPanel = new JPanel(new BorderLayout());
+		southPanel.setPreferredSize(new Dimension(1000, 45));
+		southPanel.setBackground(Color.BLACK);
 		
-		bottomFunctionalBar.add(createControlPanel(), BorderLayout.CENTER);
-		bottomFunctionalBar.add(createSpeedChanger(), BorderLayout.WEST);
-		bottomFunctionalBar.add(createInfoPanel(), BorderLayout.EAST);
+		southPanel.add(createControlPanel(), BorderLayout.CENTER);
+		southPanel.add(createSpeedChanger(), BorderLayout.WEST);
+		southPanel.add(createInfoPanel(), BorderLayout.EAST);
 		
-		bottomFunctionalBar.setVisible(true);
-		return bottomFunctionalBar;
+		southPanel.setVisible(true);
+		return southPanel;
 	}
-//	private JPanel createWest() {
+	// Array generator menu list
+	private JPanel createWest() {
+		JPanel westLayerPane = new JPanel();
+		westLayerPane.setBackground(Color.BLACK);
 		
-//	}
+		JPanel menuCreateAndStart = new JPanel(new GridLayout(2,1));
+		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonCreateSortingArray.addActionListener(sortController.buttonCreateSortingArrayClicked());
+		buttonStartSorting = new ButtonComponent("Sort", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonStartSorting.addActionListener(sortController.buttonStartSortingClicked());
+		menuCreateAndStart.add(buttonCreateSortingArray);
+		menuCreateAndStart.add(buttonStartSorting);
+		menuCreateAndStart.setVisible(true);
+		
+		createArrayField = new JPanel(new FlowLayout());
+		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonCreateRandomArray.setSize(new Dimension(100, 34));
+		buttonCreateRandomArray.addActionListener(sortController.buttonCreateRandomArrayClicked());
+		arrayEqualsLabel = new LabelComponent("Array :=");
+		inputArrayTextField = new TextFieldComponent(30, "Ex: 1 8 3 5 7 15 21 34");
+		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonConfirmInputArray.addActionListener(sortController.buttonConfirmInputArrayClicked());
+		createArrayField.add(buttonCreateRandomArray);
+		createArrayField.add(arrayEqualsLabel);
+		createArrayField.add(inputArrayTextField);
+		createArrayField.add(buttonConfirmInputArray);
+		createArrayField.setVisible(false);
+		
+		westLayerPane.add(menuCreateAndStart);
+		westLayerPane.add(createArrayField);
+		
+		return westLayerPane;
+	}
+	private JPanel createEast() {
+		explanationDisplayer = new TextAreaComponent(new Dimension(70,20), Color.CYAN, "Welcome to the Sorting Algorithm Visualizer");
+		eastPanel = new JPanel(new BorderLayout());
+		eastPanel.setPreferredSize(new Dimension(40,590));
+		eastPanel.setBackground(Color.BLACK);
+		eastPanel.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
+		
+		showExplanation = new ButtonComponent("<");
+		showExplanation.addActionListener(sortController.showExplanation());
+		eastPanel.add(showExplanation, BorderLayout.SOUTH);
+		
+		eastPanel.add(explanationDisplayer, BorderLayout.CENTER);
+		return eastPanel;
+	}
 	// Progress slider bar, play&pause button, next & back buttons
 	private JPanel createControlPanel() {
-		JPanel controlPanel = new JPanel();
+		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		controlPanel.setBackground(new Color(238,238,238));
+		controlPanel.setPreferredSize(new Dimension(800, 50));
 		
 		if ((int)sortController.getSortAlgorithm().stepsList.size()!=0) {
-			progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size(),0);
+			progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size(),0,700);
 		} else {
-			progressSlider = new SliderBarComponent(0,1,0);
+			progressSlider = new SliderBarComponent(0,1,0,700);
 		}
-		// TODO: Add ChangeListener for the progressSlider
-		progressSlider.setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 0));
+		progressSlider.addChangeListener(sortController.progressSliderBarChanged());
+		progressSlider.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
 		
 		Icon iconPause = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"pause.png").getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		buttonPlayOrPause = new ButtonComponent(iconPause);
@@ -208,7 +227,6 @@ public abstract class SortScreen extends Screen{
 		
 		Icon iconBackwardToTheStart = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"start.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardToTheStart = new ButtonComponent(iconBackwardToTheStart);
-
 		
 		controlPanel.add(buttonBackwardToTheStart);
 		controlPanel.add(buttonBackwardOneStep);
@@ -219,58 +237,24 @@ public abstract class SortScreen extends Screen{
 //		controlPanel.setVisible(true);
 		return controlPanel;
 	}
-	// Array generator menu list
-	private JPanel createWest() {
-		JPanel westPanel = new JPanel();
-		JPanel a = new JPanel();
-		JPanel b = new JPanel();
-		JPanel c = new JPanel();
 
-		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.WHITE, Color.CYAN, Color.cyan.darker());
-		buttonCreateSortingArray.addActionListener(sortController.buttonCreateSortingArrayClicked());
-		buttonCreateSortingArray.setSize(new Dimension(100, 34));
-		a.add(buttonCreateSortingArray, "West");
-		
-		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
-		buttonCreateRandomArray.setSize(new Dimension(100, 34));
-		a.add(buttonCreateRandomArray, "East");
-		
-		arrayEqualsLabel = new LabelComponent("Array :=");
-		b.add(arrayEqualsLabel, "West");
-		
-		inputArrayTextField = new TextFieldComponent(30, "Ex: 1, 8, 3, 5, 7, 15, 21, 34");
-		b.add(inputArrayTextField, "East");
-		
-		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.WHITE, Color.CYAN, Color.cyan.darker());
-		buttonConfirmInputArray.addActionListener(sortController.buttonConfirmInputArrayClicked());
-		c.add(buttonConfirmInputArray, "West");
-		
-		buttonStartSorting = new ButtonComponent("Sort", Color.WHITE, Color.CYAN, Color.cyan.darker());
-		buttonStartSorting.addActionListener(sortController.buttonStartSortingClicked());
-		c.add(buttonStartSorting, "East");
-		
-		westPanel.add(a, "West");
-		westPanel.add(b, "Center");
-		westPanel.add(c, "East");
-		westPanel.setPreferredSize(new Dimension(1000, 50));
-		westPanel.setVisible(true);
-		return westPanel;
-	}
 	// Speed adjust slider
 	private JPanel createSpeedChanger() {
-		JPanel speedChanger = new JPanel(new BorderLayout());
-		speedChanger.setPreferredSize(new Dimension(300,50));
+		JPanel speedChanger = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		speedChanger.setPreferredSize(new Dimension(400,50));
 		speedChanger.setBackground(new Color(238,238,238));
-		speedChanger.setBorder(BorderFactory.createEmptyBorder(5,80,0,0));
+		speedChanger.setBorder(BorderFactory.createEmptyBorder(5,10,0,0));
 		
 		speedLabel = new LabelComponent(sortController.getSpeed()+"x");
 		speedLabel.setForeground(Color.BLACK);
+		speedLabel.setVisible(true);
 		
-		speedSlider = new SliderBarComponent(1,7,1);
+		speedSlider = new SliderBarComponent(1,10,1,250);
 		speedSlider.addChangeListener(sortController.speedSliderBarChanged());
 		
-		speedChanger.add(speedLabel, BorderLayout.EAST);
-		speedChanger.add(speedSlider, BorderLayout.WEST);
+		speedChanger.add(speedSlider);
+		speedChanger.add(speedLabel);
+    
 		return speedChanger;
 	}
 	// Help, About and Team buttons
@@ -290,42 +274,64 @@ public abstract class SortScreen extends Screen{
 		buttonTeam = new ButtonComponent("Team", Color.WHITE, Color.BLACK, Color.black.brighter());
 		buttonTeam.addActionListener(sortController.buttonTeamClicked());
 		infoPanel.add(buttonTeam);
+
 		return infoPanel;
 	}
 	private ArrayGraphic mainBarChartVisualizer(Color color) {
-		int unitWidth = ((int) getWidth()-200)/this.sortArray.size();
-		ArrayGraphic mainBarChart = new ArrayGraphic(sortArray) {
-			
+		int unitWidth = ((int) getWidth()-200)/sortController.getSortArray().size();
+		ArrayGraphic mainBarChart = new ArrayGraphic(sortController.getSortArray()) {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-//				System.out.println("heehe");
-
-				if (sortArray.dataType == Double.class) {
-					for (int i = 0; i< sortArray.size();i++) {
+				if (sortController.getSortArray().dataType == Double.class) {
+					for (int i = 0; i< sortController.getSortArray().size();i++) {
 
 						int width = Math.min(unitWidth,15+padding);
-						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((double)sortArray.get(i).getValue() * unitHeight))
-								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortArray.get(i).getValue()*unitHeight)));
+						g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
 						g.setColor(color);
 					}
 				} 
-				else if (sortArray.dataType == Integer.class) {
-					for (int i = 0; i< sortArray.size();i++) {
+				else if (sortController.getSortArray().dataType == Integer.class) {
+					for (int i = 0; i< sortController.getSortArray().size();i++) {
 
 						int width = Math.min(unitWidth,15+padding);
-						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((int)sortArray.get(i).getValue() * unitHeight))
-								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortArray.get(i).getValue()*unitHeight)));
+						g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((int)sortController.getSortArray().get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortController.getSortArray().get(i).getValue()*unitHeight)));
 						g.setColor(color);
 					}
 				}// TODO: Write fillRect for String data type here
 			}
 		};
 		// TODO: Redesign the boundary if necessary
-		mainBarChart.setBounds(-250,70,getWidth()-100,325);
+
+		mainBarChart.setBounds(-250,250,getWidth()-200,250);
 		return mainBarChart;
 	}
-//	public JPanel 
+	
+	public void updateArrayToScreen() {
+    	BorderLayout layout = (BorderLayout) cp.getLayout();
+    	cp.remove(layout.getLayoutComponent(BorderLayout.WEST));
+    	cp.remove(layout.getLayoutComponent(BorderLayout.EAST));
+    	cp.remove(layout.getLayoutComponent(BorderLayout.SOUTH));
+    	cp.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+    	
+		calculateUnitHeight();
+//		System.out.println(unitHeight);
+//		addBackButtonToNavigationButton();
+		cp.add(createCenter(), BorderLayout.CENTER);
+		cp.add(createSouth(), BorderLayout.SOUTH);
+		cp.add(createEast(), BorderLayout.EAST);
+		cp.add(createWest(), BorderLayout.WEST);
+    	revalidate();
+    	repaint();
+	}
+//	public Container getContainer() {
+//		return this.cp;
+//	}
+	public JPanel getEastPanel() {
+		return this.eastPanel;
+	}
 	public TextAreaComponent getExplanationDisplayer() {
 		return this.explanationDisplayer;
 	}
@@ -371,7 +377,9 @@ public abstract class SortScreen extends Screen{
 	public ButtonComponent getTeamButton() {
 		return this.buttonTeam;
 	}
-	
+	public JPanel getCreateArrayField() {
+		return this.createArrayField;
+	}
 	public abstract String getHelpString();
 	public abstract String getAboutString();
 	public abstract String getTeamString();

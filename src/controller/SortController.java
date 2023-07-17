@@ -1,24 +1,38 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.lang.reflect.Constructor;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import algorithm.SortingAlgorithm;
+import algorithm.MergeSortAlgorithm;
+import algorithm.ShellSortAlgorithm;
+import algorithm.SelectionSortAlgorithm;
+
 import listener.SortingScreenListener;
 import view.SortScreen;
 import component.InfoWindowComponent;
+import component.utils.ArrayUtil;
+import component.utils.Element;
 
 public class SortController extends Controller{
 	private SortingAlgorithm sortAlgorithm;
-	private SortingScreenListener sortListener;
+	
 	public static final int MAX_ARRAY_LENGTH = 30;
 	private SortScreen sortScreen;
+	protected ArrayUtil sortArray;
 	private Timer timer;
 	// TODO: Change the parameters
 	private int sortingSpeed = 1;
@@ -33,6 +47,16 @@ public class SortController extends Controller{
 	public SortScreen getSortScreen() {
 		return this.sortScreen;
 	}
+	@SuppressWarnings("rawtypes")
+	public void generateArray(ArrayUtil array) {
+		if (sortArray == null) {
+			sortArray = new ArrayUtil(MAX_ARRAY_LENGTH);
+//			sortArray.dataType = Integer.class; //TODO: Let user choose the dataType
+			sortArray.generateRandomArray();
+		} else {
+			this.sortArray = array;
+		}
+	}
 	public ComponentAdapter adjustWindowSize() {
 		return new ComponentAdapter() {
 		    @Override
@@ -43,12 +67,7 @@ public class SortController extends Controller{
 		    	getSortScreen().getArrayEqualsLabel().setBounds(236, getSortScreen().getHeight()-205, 28,28);
 		    	getSortScreen().getInputArrayTextField().setBounds(266, getSortScreen().getHeight()-205, 228,28);
 		    	getSortScreen().betButtonConfirmInputArray().setBounds(496, getSortScreen().getHeight()-205, 50,28);
-//		    	getSortScreen().getAnimation().setBounds(45, 30, getSortScreen().getWidth()-200, 520);
 		    	getSortScreen().getExplanationDisplayer().setBounds(getSortScreen().getWidth()-490,  getSortScreen().getHeight() -208,380 , 65);
-//		    	getSortScreen().getContainer1().setBounds(45, 30, getSortScreen().getWidth()-200, 522);
-//		    	getSortScreen().getMain().setBounds(0, 0, getSortScreen().getWidth()-200, 250);
-//		    	getSortScreen().getSub().setBounds(0, 270, getSortScreen().getWidth()-200, 250);
-//		    	getSortScreen().getErrorLabel().setBounds((getSortScreen().getWidth()-450)/2, 5, 300, 20);
 		    }
 		};
 	}
@@ -69,7 +88,8 @@ public class SortController extends Controller{
 			}
 		};
 	}
-	public ActionListener showExplaination() {
+
+	public ActionListener showExplanation() {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -78,11 +98,12 @@ public class SortController extends Controller{
 				if (isBackwardButton) {
 				    sourceButton.setText(">");
 				    getSortScreen().getExplanationDisplayer().setVisible(true);
+				    getSortScreen().getEastPanel().setPreferredSize(new Dimension(200, 590));
 				} else {
 				    sourceButton.setText("<");
 				    getSortScreen().getExplanationDisplayer().setVisible(false);
+				    getSortScreen().getEastPanel().setPreferredSize(new Dimension(40, 590));
 				}
-				
 			}
 		};
 	}
@@ -90,26 +111,78 @@ public class SortController extends Controller{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+//				System.out.println("hehe");
+				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
+			}
+		};
+	}
+	public ActionListener buttonCreateRandomArrayClicked() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				System.out.println("hehe");
+				sortArray = new ArrayUtil(MAX_ARRAY_LENGTH);
+				sortArray.generateRandomArray();
+				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
+				getSortScreen().updateArrayToScreen();
 			}
 		};
 	}
 	public ActionListener buttonConfirmInputArrayClicked() {
 		return new ActionListener() {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				String inputArrayString = getSortScreen().getInputArrayTextField().getText();
+				String[] inputArray = inputArrayString.split(" ");
+				int[] intArray = new int[inputArray.length];
 				
+				for (int i = 0; i < inputArray.length; i++) {
+				    intArray[i] = Integer.parseInt(inputArray[i]);
+				}
+				sortArray = new ArrayUtil(inputArray.length);
+				for (int i = 0; i < inputArray.length; i ++) {
+					sortArray.set(i, new Element<Integer>(intArray[i]));
+				}
+				sortArray.dataType = Integer.class;
+//				sortArray.printArray();
+				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
+				getSortScreen().updateArrayToScreen();
 			}
 		};
 	}
 	public ActionListener buttonStartSortingClicked() {
 		return new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				String algName = sortAlgorithm.getClass().getName();
 				
+				if (algName == "algorithm.MergeSortAlgorithm") {
+					sortAlgorithm = new MergeSortAlgorithm(sortArray);
+				} else if (algName == "algorithm.SelectionSortAlgorithm") {
+					sortAlgorithm = new SelectionSortAlgorithm(sortArray);
+				} else if (algName == "algorithm.ShellSortAlgorithm") {
+					int[] gaps = {8,4,2,1};
+ 					sortAlgorithm = new ShellSortAlgorithm(gaps, sortArray);
+				}
+
+				List<ArrayUtil> stepsList = sortAlgorithm.sortAndGetSteps();
+				ListIterator LI = stepsList.listIterator();
+				
+				int delay = 100;
+			    ActionListener taskPerformer = new ActionListener() {
+			    	public void actionPerformed(ActionEvent evt) {
+			    		if (LI.hasNext()) {
+			    			sortArray = (ArrayUtil) LI.next();
+//			    			sortArray.printArray();
+			    			getSortScreen().updateArrayToScreen();
+			    		} else {
+			    			((Timer)evt.getSource()).stop();
+			    		}
+			    	}
+			    };
+			    timer = new Timer(delay, taskPerformer);
+			    timer.start();
 			}
 		};
 	}
@@ -117,8 +190,7 @@ public class SortController extends Controller{
 		return new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				// TODO Auto-generated method stub
-				
+				System.out.println(((JSlider)e.getSource()).getValue());
 			}
 		};
 	}
@@ -127,7 +199,7 @@ public class SortController extends Controller{
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				setSpeed(((JSlider)e.getSource()).getValue());
-				getSortScreen().getSpeedLabel().setText(getSpeed()+"");
+				getSortScreen().getSpeedLabel().setText(getSpeed()+"x");
 				if (isSorting()) {
 					timer.stop();
 					timer.setDelay(1000 - sortingSpeed*100);
@@ -163,6 +235,9 @@ public class SortController extends Controller{
 	}
 	
 	// Setter methods
+	public ArrayUtil getSortArray() {
+		return this.sortArray;
+	}
 	public void setSpeed(int newSpeed) {
 		this.sortingSpeed = newSpeed;
 	}
