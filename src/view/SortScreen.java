@@ -32,7 +32,7 @@ import controller.SortController;
 
 public abstract class SortScreen extends Screen{
 	protected SortController sortController;
-	protected ArrayUtil sortArray;
+	
 	protected String sortInfo = "Welcome to our Sorting Algorithms Visualizer";
 	protected double unitHeight;
 	
@@ -46,6 +46,7 @@ public abstract class SortScreen extends Screen{
 	ButtonComponent showExplanation;
 	TextAreaComponent explanationDisplayer;
 	
+	JPanel createArrayField;
 	ButtonComponent buttonCreateSortingArray;
 	ButtonComponent buttonCreateRandomArray;
 	LabelComponent arrayEqualsLabel;
@@ -77,35 +78,26 @@ public abstract class SortScreen extends Screen{
 		super();
 		sortController = new SortController(this);
 		sortController.setSortAlgorithm(sortAlgorithm);
-		generateArray(null);
-		System.out.println(this.sortArray);
+		sortController.generateArray(null);
+		System.out.println(this.sortController.getSortArray());
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();
 		add(createCenter(), BorderLayout.CENTER);
 		add(createSouth(), BorderLayout.SOUTH);
-//		add(createWest(), BorderLayout.WEST);
+		add(createWest(), BorderLayout.WEST);
 		add(createEast(), BorderLayout.EAST);
 		setVisible(true);
 	}
 
-	@SuppressWarnings("rawtypes")
-	private void generateArray(ArrayUtil array) {
-		if (sortArray == null) {
-			sortArray = new ArrayUtil(sortController.MAX_ARRAY_LENGTH);
-//			sortArray.dataType = Integer.TYPE; //TODO: Let user choose the dataType
-			sortArray.generateRandomArray();
-		} else {
-			this.sortArray = array;
-		}
-	}
+
 	private void calculateUnitHeight() {
-		if (this.sortArray.getMax() == null) {
+		if (sortController.getSortArray().getMax() == null) {
 			this.unitHeight = 0;
 		} else {			
-			if (this.sortArray.getMax().getValue() != (Integer) 0) {
-				this.unitHeight = ((int)300)/((int)this.sortArray.getMax().getValue());
-			} else if (this.sortArray.getMax().getValue() != (Double) 0.0) {
-				this.unitHeight = ((double)300.0)/((double)this.sortArray.getMax().getValue());			
+			if (sortController.getSortArray().getMax().getValue() != (Integer) 0) {
+				this.unitHeight = ((int)300)/((int)sortController.getSortArray().getMax().getValue());
+			} else if (sortController.getSortArray().getMax().getValue() != (Double) 0.0) {
+				this.unitHeight = ((double)300.0)/((double)sortController.getSortArray().getMax().getValue());			
 			} else {
 				this.unitHeight = 0;
 			}
@@ -122,7 +114,7 @@ public abstract class SortScreen extends Screen{
 		container.setLayout(null);
 		container.setSize(1000, 1000);
 		container.add(mainBarChartVisualizer(Color.ORANGE));
-		sub = new ArrayGraphic(sortArray);
+		sub = new ArrayGraphic(sortController.getSortArray());
 		container.add(sub);
 		container.setBounds(0,0,1200,500);
 		container.setVisible(true);
@@ -135,6 +127,7 @@ public abstract class SortScreen extends Screen{
 		errorLabel.setForeground(Color.RED);
 //		errorLabel.setPreferredSize(new Dimension(2000,50));
 		errorLabel.setBounds(0,0,1200,50);
+		visualizerArea.setPreferredSize(new Dimension(1000,100));
 		visualizerArea.add(errorLabel, new Integer(2));
 		
 		visualizerArea.add(createWest(), new Integer(3));
@@ -154,8 +147,9 @@ public abstract class SortScreen extends Screen{
 		return southPanel;
 	}
 	// Array generator menu list
-	private JLayeredPane createWest() {
-		JLayeredPane westLayerPane = new JLayeredPane();
+	private JPanel createWest() {
+		JPanel westLayerPane = new JPanel();
+		westLayerPane.setBackground(Color.BLACK);
 		
 		JPanel menuCreateAndStart = new JPanel(new GridLayout(2,1));
 		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.WHITE, Color.CYAN, Color.cyan.darker());
@@ -166,21 +160,21 @@ public abstract class SortScreen extends Screen{
 		menuCreateAndStart.add(buttonStartSorting);
 		menuCreateAndStart.setVisible(true);
 		
-		JPanel createArrayField = new JPanel(new FlowLayout());
+		createArrayField = new JPanel(new FlowLayout());
 		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonCreateRandomArray.setSize(new Dimension(100, 34));
 		arrayEqualsLabel = new LabelComponent("Array :=");
-		inputArrayTextField = new TextFieldComponent(30, "Ex: 1, 8, 3, 5, 7, 15, 21, 34");
+		inputArrayTextField = new TextFieldComponent(30, "Ex: 1 8 3 5 7 15 21 34");
 		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonConfirmInputArray.addActionListener(sortController.buttonConfirmInputArrayClicked());
 		createArrayField.add(buttonCreateRandomArray);
 		createArrayField.add(arrayEqualsLabel);
 		createArrayField.add(inputArrayTextField);
 		createArrayField.add(buttonConfirmInputArray);
-		createArrayField.setVisible(true);
+		createArrayField.setVisible(false);
 		
-		westLayerPane.add(menuCreateAndStart, new Integer(2));
-		westLayerPane.add(createArrayField, new Integer(1));
+		westLayerPane.add(menuCreateAndStart);
+		westLayerPane.add(createArrayField);
 		
 		return westLayerPane;
 	}
@@ -276,33 +270,36 @@ public abstract class SortScreen extends Screen{
 		return infoPanel;
 	}
 	private ArrayGraphic mainBarChartVisualizer(Color color) {
-		int unitWidth = ((int) getWidth()-200)/this.sortArray.size();
-		ArrayGraphic mainBarChart = new ArrayGraphic(sortArray) {
+		int unitWidth = ((int) getWidth()-200)/sortController.getSortArray().size();
+		ArrayGraphic mainBarChart = new ArrayGraphic(sortController.getSortArray()) {
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				if (sortArray.dataType == Double.class) {
-					for (int i = 0; i< sortArray.size();i++) {
+//				System.out.println("heheh");
+				if (sortController.getSortArray().dataType == Double.class) {
+//					System.out.println("heheh");
+					for (int i = 0; i< sortController.getSortArray().size();i++) {
 
-						int width = Math.min(unitWidth,60+padding);
-						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((double)sortArray.get(i).getValue() * unitHeight))
-								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortArray.get(i).getValue()*unitHeight)));
+						int width = Math.min(unitWidth,15+padding);
+						g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
 						g.setColor(color);
 					}
 				} 
-				else if (sortArray.dataType == Integer.class) {
-					for (int i = 0; i< sortArray.size();i++) {
+				else if (sortController.getSortArray().dataType == Integer.class) {
+//					System.out.println("heheh");
+					for (int i = 0; i< sortController.getSortArray().size();i++) {
 
-						int width = Math.min(unitWidth,60+padding);
-						g.fillRect(i*width+(getWidth()-width*sortArray.size())/2,-(int)(Math.round((int)sortArray.get(i).getValue() * unitHeight))
-								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortArray.get(i).getValue()*unitHeight)));
+						int width = Math.min(unitWidth,15+padding);
+						g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((int)sortController.getSortArray().get(i).getValue() * unitHeight))
+								+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortController.getSortArray().get(i).getValue()*unitHeight)));
 						g.setColor(color);
 					}
 				}// TODO: Write fillRect for String data type here
 			}
 		};
 		// TODO: Redesign the boundary if necessary
-		mainBarChart.setBounds(45,30,getWidth()-200,250);
+		mainBarChart.setBounds(-250,250,getWidth()-200,250);
 		return mainBarChart;
 	}
 	public JPanel getEastPanel() {
@@ -353,7 +350,9 @@ public abstract class SortScreen extends Screen{
 	public ButtonComponent getTeamButton() {
 		return this.buttonTeam;
 	}
-	
+	public JPanel getCreateArrayField() {
+		return this.createArrayField;
+	}
 	public abstract String getHelpString();
 	public abstract String getAboutString();
 	public abstract String getTeamString();
