@@ -27,13 +27,20 @@ import component.InfoWindowComponent;
 import component.utils.ArrayUtil;
 import component.utils.Element;
 
+
 public class SortController extends Controller{
+	
 	private SortingAlgorithm sortAlgorithm;
+	private String algName;
+	private List<ArrayUtil> stepsList;
+	private ListIterator LI;
+	private int delay = DELAY;
+	private Timer timer;
 	
 	public static final int MAX_ARRAY_LENGTH = 30;
+	public static final int DELAY = 100;
 	private SortScreen sortScreen;
 	protected ArrayUtil sortArray;
-	private Timer timer;
 	// TODO: Change the parameters
 	private int sortingSpeed = 1;
 	private boolean isPlaying = true;
@@ -47,12 +54,16 @@ public class SortController extends Controller{
 	public SortScreen getSortScreen() {
 		return this.sortScreen;
 	}
+	
+	// Only do this after setting the sortAlgorithm
+	public void setAttributes() {
+		algName = sortAlgorithm.getClass().getName();
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public void generateArray(ArrayUtil array) {
 		if (sortArray == null) {
 			sortArray = new ArrayUtil(MAX_ARRAY_LENGTH);
-//			sortArray.dataType = Integer.class; //TODO: Let user choose the dataType
-
 
 			sortArray.generateRandomArray();
 		} else {
@@ -127,8 +138,6 @@ public class SortController extends Controller{
 				sortArray.generateRandomArray();
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
 				getSortScreen().updateArrayToScreen();
-
-
 			}
 		};
 	}
@@ -152,16 +161,12 @@ public class SortController extends Controller{
 //				sortArray.printArray();
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
 				getSortScreen().updateArrayToScreen();
-
-
 			}
 		};
 	}
 	public ActionListener buttonStartSortingClicked() {
 		return new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				String algName = sortAlgorithm.getClass().getName();
+			public void actionPerformed(ActionEvent e) {	
 				
 				if (algName == "algorithm.MergeSortAlgorithm") {
 					sortAlgorithm = new MergeSortAlgorithm(sortArray);
@@ -169,27 +174,27 @@ public class SortController extends Controller{
 					sortAlgorithm = new SelectionSortAlgorithm(sortArray);
 				} else if (algName == "algorithm.ShellSortAlgorithm") {
 					int[] gaps = {8,4,2,1};
- 					sortAlgorithm = new ShellSortAlgorithm(gaps, sortArray);
+					sortAlgorithm = new ShellSortAlgorithm(gaps, sortArray);
+				} else {
+					System.out.println("hêh");
 				}
 
-				List<ArrayUtil> stepsList = sortAlgorithm.sortAndGetSteps();
-				ListIterator LI = stepsList.listIterator();
+				stepsList = sortAlgorithm.sortAndGetSteps();
+				LI = stepsList.listIterator();
 				
-				int delay = 100;
 			    ActionListener taskPerformer = new ActionListener() {
 			    	public void actionPerformed(ActionEvent evt) {
 			    		if (LI.hasNext()) {
 			    			sortArray = (ArrayUtil) LI.next();
 //			    			sortArray.printArray();
 			    			getSortScreen().updateArrayToScreen();
-			    		} else {
-			    			sortArray = (ArrayUtil) LI.next();
-//			    			sortArray.printArray();
-			    			getSortScreen().updateArrayToScreen();
-			    			((Timer)evt.getSource()).stop();
+			    			if (!LI.hasNext()) {
+			    				((Timer)evt.getSource()).stop();
+			    			}
 			    		}
 			    	}
 			    };
+			    
 			    timer = new Timer(delay, taskPerformer);
 			    timer.start();
 			}

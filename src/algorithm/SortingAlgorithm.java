@@ -21,7 +21,7 @@ public abstract class SortingAlgorithm<T extends Comparable<T>> {
     
     public abstract void sort();
     
-    protected void printArray() {
+    public void printArray() {
         for (Element<T> element : array) {
             System.out.print(element + " ");
         }

@@ -83,6 +83,7 @@ public abstract class SortScreen extends Screen{
 		sortController = new SortController(this);
 		sortController.setSortAlgorithm(sortAlgorithm);
 		sortController.generateArray(null);
+		sortController.setAttributes();
 //		System.out.println(this.sortController.getSortArray());
 		calculateUnitHeight();
 		addBackButtonToNavigationButton();
