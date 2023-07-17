@@ -51,18 +51,7 @@ public class CardComponent extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
     	if (headingLabel.getText() == "Merge Sort") {
-    		MergeSortScreen sortScreen = new MergeSortScreen();
-
-//    		SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();	
-    	}
-    	else if (headingLabel.getText() == "Selection Sort") {
-    		SelectionSortScreen sortScreen = new SelectionSortScreen();
-//    		SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();	
-    	}
-    	else if (headingLabel.getText() == "Shell Sort") {
     		ShellSortScreen sortScreen = new ShellSortScreen();
-//    		SwingUtilities.windowForComponent(((JButton)e.getSource())).dispose();	
-
     		SwingUtilities.getWindowAncestor(((JPanel)e.getSource())).dispose();	
     		revalidate();
     	}
