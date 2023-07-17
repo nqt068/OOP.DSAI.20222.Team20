@@ -34,6 +34,7 @@ public class SortController extends Controller{
 	private SortScreen sortScreen;
 	protected ArrayUtil sortArray;
 	private Timer timer;
+	private ListIterator LI;
 	// TODO: Change the parameters
 	private int sortingSpeed = 1;
 	private boolean isPlaying = true;
@@ -52,8 +53,6 @@ public class SortController extends Controller{
 		if (sortArray == null) {
 			sortArray = new ArrayUtil(MAX_ARRAY_LENGTH);
 //			sortArray.dataType = Integer.class; //TODO: Let user choose the dataType
-
-
 			sortArray.generateRandomArray();
 		} else {
 			this.sortArray = array;
@@ -113,7 +112,6 @@ public class SortController extends Controller{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				System.out.println("hehe");
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
 			}
 		};
@@ -122,13 +120,10 @@ public class SortController extends Controller{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				System.out.println("hehe");
 				sortArray = new ArrayUtil(MAX_ARRAY_LENGTH);
 				sortArray.generateRandomArray();
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
 				getSortScreen().updateArrayToScreen();
-
-
 			}
 		};
 	}
@@ -148,12 +143,9 @@ public class SortController extends Controller{
 				for (int i = 0; i < inputArray.length; i ++) {
 					sortArray.set(i, new Element<Integer>(intArray[i]));
 				}
-				sortArray.dataType = Integer.class;
-//				sortArray.printArray();
+				sortArray.dataType = Integer.class;;
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
 				getSortScreen().updateArrayToScreen();
-
-
 			}
 		};
 	}
@@ -173,7 +165,7 @@ public class SortController extends Controller{
 				}
 
 				List<ArrayUtil> stepsList = sortAlgorithm.sortAndGetSteps();
-				ListIterator LI = stepsList.listIterator();
+				LI = stepsList.listIterator();
 				
 				int delay = 100;
 			    ActionListener taskPerformer = new ActionListener() {
@@ -214,7 +206,6 @@ public class SortController extends Controller{
 					timer.setDelay(1000 - sortingSpeed*100);
 					timer.start();
 				}
-				// TODO: Check the isPlaying if necessary
 			}
 		};
 	}

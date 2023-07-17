@@ -390,6 +390,21 @@ public abstract class SortScreen extends Screen{
 	public JPanel getCreateArrayField() {
 		return this.createArrayField;
 	}
+	public ButtonComponent getButtonPlayOrPause() {
+		return this.buttonPlayOrPause;
+	}
+	public ButtonComponent getButtonBackwardToTheStart() {
+		return this.buttonBackwardToTheStart;
+	}
+	public ButtonComponent getButtonBackwardOneStep() {
+		return this.buttonBackwardOneStep;
+	}
+	public ButtonComponent getButtonForwardOneStep() {
+		return this.buttonForwardOneStep;
+	}
+	public ButtonComponent getButtonForwardToTheEnd() {
+		return this.buttonForwardToTheEnd;
+	}
 	public abstract String getHelpString();
 	public abstract String getAboutString();
 	public abstract String getTeamString();
