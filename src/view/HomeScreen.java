@@ -56,12 +56,19 @@ public class HomeScreen extends Screen{
 	}
 	
 	private JPanel logoPanel() {
+	
 		JPanel logoPanel = new JPanel(new BorderLayout());
-		Icon visualSoIcon= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"VisualSO_icon1.png").getImage().getScaledInstance(420, 70, Image.SCALE_SMOOTH));
+		
+		 // Create the logo label and add it to the panel
+		Icon visualSoIcon= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"VisualSO_icon1.png").getImage().getScaledInstance(350, 168, Image.SCALE_SMOOTH));
 		JLabel logo = new JLabel(visualSoIcon);
-		logoPanel.add(logo, BorderLayout.CENTER);
+		logoPanel.add(logo, BorderLayout.CENTER); 
+		
+		// Create the appNameLabel 
 		JLabel appNameLabel = new JLabel("SORTING ALGORITHM VISUALIZER");
 		appNameLabel.setFont(new Font("Silkscreen", Font.PLAIN, 20));
+		
+		//add it to a separate panel with horizontal space
 		JPanel a = new JPanel();
 		a.add(appNameLabel, BorderLayout.CENTER);
 		logoPanel.add(a, BorderLayout.SOUTH);
@@ -73,13 +80,13 @@ public class HomeScreen extends Screen{
 		Image mergeSortImage = new ImageIcon(IMAGE_RESOURCES + "mergeSortImage.png").getImage();
 		Image selectionSortImage = new ImageIcon(IMAGE_RESOURCES + "selectionSortImage.png").getImage();
 		Image shellSortImage = new ImageIcon(IMAGE_RESOURCES + "shellSortImage.png").getImage();
-		String mergeSortDescription = "This is merge sort";
+		/*String mergeSortDescription = "This is merge sort";
 		String selectionSortDescription = "This is selection sort";
-		String shellSortDescription = "This is Shell sort";
-		CardComponent mergeSortCard = new CardComponent("Merge Sort", mergeSortImage, mergeSortDescription);
-		CardComponent selectionSortCard = new CardComponent("Selection Sort", selectionSortImage, selectionSortDescription);
-		CardComponent shellSortCard = new CardComponent("Shell Sort", shellSortImage, shellSortDescription);
-		
+		String shellSortDescription = "This is Shell sort"; */
+		CardComponent mergeSortCard = new CardComponent("Merge Sort", mergeSortImage);
+		CardComponent selectionSortCard = new CardComponent("Selection Sort", selectionSortImage);
+		CardComponent shellSortCard = new CardComponent("Shell Sort", shellSortImage);
+	
 		sortPanel.add(mergeSortCard);
 		sortPanel.add(selectionSortCard);
 		sortPanel.add(shellSortCard);
@@ -114,7 +121,10 @@ public class HomeScreen extends Screen{
 				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", "HomeScreenHelp");
 			}
 			else if (menuItem.equals("About")) {
-				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", "HomeScreenAbout");
+				String message=" Team 20 has developed this capstone project with \n "
+						+ "the aim of providing you with a visualization of how "
+						+ "\n sorting algorithms operate on arrays.";
+				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", message);
 			}
 		}
     }

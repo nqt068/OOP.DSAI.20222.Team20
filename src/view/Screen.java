@@ -61,9 +61,9 @@ public class Screen extends JFrame {
     	navigationBar.setPreferredSize(new Dimension(800, 30));
     	navigationBar.setBorder(BorderFactory.createEmptyBorder(0,35,0,40));
     	
-		Icon visualSoLogo= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"\\VisualSO_icon1.png").getImage().getScaledInstance(180, 30, Image.SCALE_SMOOTH));
+		/* Icon visualSoLogo= new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"\\VisualSO_icon1.png").getImage().getScaledInstance(180, 30, Image.SCALE_SMOOTH));
 		JLabel icon = new JLabel(visualSoLogo);
-		navigationBar.add(icon,"Center");
+		navigationBar.add(icon,"Center"); */ 
 		
     	JMenuBar menuBar = createMenuBar();
     	
@@ -106,7 +106,10 @@ public class Screen extends JFrame {
 				
 			}
 			else if (menuItem.equals("About")) {
-				
+				String message=" Team 20 has developed this capstone project with \n "
+						+ "the aim of providing you with a visualization of how "
+						+ "\n sorting algorithms operate on arrays.";
+				JOptionPane.showOptionDialog(null, message, "About", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
 			}
     	}
     }
