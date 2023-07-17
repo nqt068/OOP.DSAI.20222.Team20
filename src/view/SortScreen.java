@@ -39,7 +39,6 @@ public abstract class SortScreen extends Screen{
 	
 	Container cp;
 
-
 	JPanel eastPanel;
 	JLayeredPane visualizerArea;
 	ArrayGraphic main;
@@ -90,8 +89,8 @@ public abstract class SortScreen extends Screen{
 
 		this.cp = new Container();
 		cp.setLayout(new BorderLayout());
-		cp.add(createCenter(-1), BorderLayout.CENTER);
 		cp.add(createSouth(), BorderLayout.SOUTH);
+		cp.add(createCenter(-1), BorderLayout.CENTER);
 		cp.add(createEast(), BorderLayout.EAST);
 		cp.add(createWest(), BorderLayout.WEST);
 		add(cp);
@@ -104,9 +103,9 @@ public abstract class SortScreen extends Screen{
 			this.unitHeight = 0;
 		} else {			
 			if (sortController.getSortArray().getMax().getValue() != (Integer) 0) {
-				this.unitHeight = ((int)200)/((int)sortController.getSortArray().getMax().getValue());
+				this.unitHeight = ((int)400)/((int)sortController.getSortArray().getMax().getValue());
 			} else if (sortController.getSortArray().getMax().getValue() != (Double) 0.0) {
-				this.unitHeight = ((double)200.0)/((double)sortController.getSortArray().getMax().getValue());			
+				this.unitHeight = ((double)400.0)/((double)sortController.getSortArray().getMax().getValue());			
 
 			} else {
 				this.unitHeight = 0;
@@ -122,27 +121,27 @@ public abstract class SortScreen extends Screen{
 		visualizerArea = new JLayeredPane();
 		JPanel container = new JPanel();
 		container.setLayout(null);
-		container.setSize(1000, 1000);
+		container.setSize(new Dimension(1200, 1000));
 		container.add(mainBarChartVisualizer(Color.ORANGE, Color.YELLOW, index));
 		sub = new ArrayGraphic(sortController.getSortArray());
 		container.add(sub);
-		container.setBounds(0,0,1200,500);
+		container.setBounds(150, -150, 1400, 1000);
 		container.setVisible(true);
     
 		animation = new JPanel();
-		visualizerArea.add(container, new Integer(1));
+		visualizerArea.add(container, 1);
 
 		errorLabel = new LabelComponent("Exceptions will be printed here");
 		errorLabel.setAlignment(SwingConstants.CENTER, SwingConstants.CENTER);
 		errorLabel.setForeground(Color.RED);
 //		errorLabel.setPreferredSize(new Dimension(2000,50));
-		errorLabel.setBounds(0,0,1200,50);
-		visualizerArea.setPreferredSize(new Dimension(1000, 350));
+		errorLabel.setSize(new Dimension(1200,50));
+		visualizerArea.setBounds(0, 0, 1551, 1300);
 
 
-		visualizerArea.add(errorLabel, new Integer(2));
+		visualizerArea.add(errorLabel, 2);
 		
-		visualizerArea.add(createWest(), new Integer(3));
+		visualizerArea.add(createWest(), 3);
 		visualizerArea.setVisible(true);		
 		return visualizerArea;
 	}
@@ -177,11 +176,11 @@ public abstract class SortScreen extends Screen{
 		buttonCreateRandomArray.setSize(new Dimension(100, 34));
 		buttonCreateRandomArray.addActionListener(sortController.buttonCreateRandomArrayClicked());
 
-
 		arrayEqualsLabel = new LabelComponent("Array :=");
 		inputArrayTextField = new TextFieldComponent(30, "Ex: 1 8 3 5 7 15 21 34");
 		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonConfirmInputArray.addActionListener(sortController.buttonConfirmInputArrayClicked());
+		
 		createArrayField.add(buttonCreateRandomArray);
 		createArrayField.add(arrayEqualsLabel);
 		createArrayField.add(inputArrayTextField);
@@ -212,29 +211,36 @@ public abstract class SortScreen extends Screen{
 		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		controlPanel.setBackground(new Color(238,238,238));
 		controlPanel.setPreferredSize(new Dimension(800, 50));
-		
+		progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size(),0,700);
+
 		if ((int)sortController.getSortAlgorithm().stepsList.size()!=0) {
-			progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size(),0,700);
+			progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size()-1,0,700);
 		} else {
 			progressSlider = new SliderBarComponent(0,1,0,700);
 		}
+		
 		progressSlider.addChangeListener(sortController.progressSliderBarChanged());
 		progressSlider.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
 		
 		Icon iconPause = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"pause.png").getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		buttonPlayOrPause = new ButtonComponent(iconPause);
+		buttonPlayOrPause.addActionListener(sortController.buttonPlayOrPauseClicked());
 		
 		Icon iconForward = new ImageIcon(new ImageIcon(IMAGE_RESOURCES +"forward.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonForwardOneStep = new ButtonComponent(iconForward);
+		buttonForwardOneStep.addActionListener(sortController.buttonForwardOneStepClicked());
 		
 		Icon iconBackward = new ImageIcon(new ImageIcon(IMAGE_RESOURCES +"backward.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardOneStep = new ButtonComponent(iconBackward);
+		buttonBackwardOneStep.addActionListener(sortController.buttonBackwardOneStepClicked());
 		
 		Icon iconForwardToTheEnd = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"end.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonForwardToTheEnd = new ButtonComponent(iconForwardToTheEnd);
+		buttonForwardToTheEnd.addActionListener(sortController.buttonForwardToTheEndClicked());
 		
 		Icon iconBackwardToTheStart = new ImageIcon(new ImageIcon(IMAGE_RESOURCES+"start.png").getImage().getScaledInstance(18, 18, Image.SCALE_SMOOTH));
 		buttonBackwardToTheStart = new ButtonComponent(iconBackwardToTheStart);
+		buttonBackwardToTheStart.addActionListener(sortController.buttonBackwardToTheStartClicked());
 		
 		controlPanel.add(buttonBackwardToTheStart);
 		controlPanel.add(buttonBackwardOneStep);
@@ -296,10 +302,12 @@ public abstract class SortScreen extends Screen{
 	
 						for (int i = 0; i< sortController.getSortArray().size();i++) {
 	
-							int width = Math.min(unitWidth,15+padding);
+							int width = Math.min(unitWidth,30+padding);
 							g.setColor(color);
-							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))
-									+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
+							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,
+									-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))+ getHeight(),
+									Math.min(width-padding,60),
+									(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
 							
 						}
 					} 
@@ -307,10 +315,12 @@ public abstract class SortScreen extends Screen{
 	
 						for (int i = 0; i< sortController.getSortArray().size();i++) {
 	
-							int width = Math.min(unitWidth,15+padding);
+							int width = Math.min(unitWidth,30+padding);
 							g.setColor(color);
-							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((int)sortController.getSortArray().get(i).getValue() * unitHeight))
-									+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortController.getSortArray().get(i).getValue()*unitHeight)));
+							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,
+									-(int)(Math.round((int)sortController.getSortArray().get(i).getValue() * unitHeight)) + getHeight(),
+									Math.min(width-padding,60),
+									(int)(Math.round((int)sortController.getSortArray().get(i).getValue()*unitHeight)));
 							
 						}
 					}// TODO: Write fillRect for String data type here
@@ -320,15 +330,17 @@ public abstract class SortScreen extends Screen{
 						
 						for (int i = 0; i< sortController.getSortArray().size();i++) {
 	
-							int width = Math.min(unitWidth,15+padding);
+							int width = Math.min(unitWidth,30+padding);
 							if (i == index) {
 								g.setColor(updateColor);
 							}
 							else {
 								g.setColor(color);
 							}
-							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))
-									+ getHeight(),Math.min(width-padding,60),(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
+							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,
+									-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))
+									+ getHeight(),
+									Math.min(width-padding,60),(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
 							
 						}
 					} 
@@ -336,15 +348,17 @@ public abstract class SortScreen extends Screen{
 	
 						for (int i = 0; i< sortController.getSortArray().size();i++) {
 	
-							int width = Math.min(unitWidth,15+padding);
+							int width = Math.min(unitWidth,30+padding);
 							if (i == index) {
 								g.setColor(updateColor);
 							}
 							else {
 								g.setColor(color);
 							}
-							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,-(int)(Math.round((int)sortController.getSortArray().get(i).getValue() * unitHeight))
-									+ getHeight(),Math.min(width-padding,60),(int)(Math.round((int)sortController.getSortArray().get(i).getValue()*unitHeight)));
+							g.fillRect(i*width+(getWidth()-width*sortController.getSortArray().size())/2,
+									-(int)(Math.round((int)sortController.getSortArray().get(i).getValue() * unitHeight)) + getHeight(),
+									Math.min(width-padding,60),
+									(int)(Math.round((int)sortController.getSortArray().get(i).getValue()*unitHeight)));
 							
 						}
 					}// TODO: Write fillRect for String data type here
@@ -352,7 +366,7 @@ public abstract class SortScreen extends Screen{
 			}
 		};
 		// TODO: Redesign the boundary if necessary
-		mainBarChart.setBounds(-250,250,getWidth()-200,250);
+		mainBarChart.setBounds(0, 0, 1200, 800);
 		return mainBarChart;
 	}
 	
@@ -360,23 +374,35 @@ public abstract class SortScreen extends Screen{
     	BorderLayout layout = (BorderLayout) cp.getLayout();
     	cp.remove(layout.getLayoutComponent(BorderLayout.WEST));
     	cp.remove(layout.getLayoutComponent(BorderLayout.EAST));
-    	cp.remove(layout.getLayoutComponent(BorderLayout.SOUTH));
     	cp.remove(layout.getLayoutComponent(BorderLayout.CENTER));
     	
 		calculateUnitHeight();
-//		System.out.println(unitHeight);
-//		addBackButtonToNavigationButton();
+
 		cp.add(createCenter(index), BorderLayout.CENTER);
-		cp.add(createSouth(), BorderLayout.SOUTH);
 		cp.add(createEast(), BorderLayout.EAST);
 		cp.add(createWest(), BorderLayout.WEST);
     	revalidate();
     	repaint();
 	}
-//	public Container getContainer() {
-//		return this.cp;
-//	}
-
+	
+	public void updateControl() {
+    	BorderLayout layout = (BorderLayout) cp.getLayout();
+    	
+    	cp.remove(layout.getLayoutComponent(BorderLayout.WEST));
+    	cp.remove(layout.getLayoutComponent(BorderLayout.EAST));
+    	cp.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+    	cp.remove(layout.getLayoutComponent(BorderLayout.SOUTH));
+    	
+		calculateUnitHeight();
+		
+		cp.add(createSouth(), BorderLayout.SOUTH);
+		cp.add(createCenter(-1), BorderLayout.CENTER);
+		cp.add(createEast(), BorderLayout.EAST);
+		cp.add(createWest(), BorderLayout.WEST);
+		
+    	revalidate();
+    	repaint();
+	}
 
 	public JPanel getEastPanel() {
 		return this.eastPanel;
@@ -428,6 +454,21 @@ public abstract class SortScreen extends Screen{
 	}
 	public JPanel getCreateArrayField() {
 		return this.createArrayField;
+	}
+	public ButtonComponent getButtonPlayOrPause() {
+		return this.buttonPlayOrPause;
+	}
+	public ButtonComponent getButtonBackwardToTheStart() {
+		return this.buttonBackwardToTheStart;
+	}
+	public ButtonComponent getButtonBackwardOneStep() {
+		return this.buttonBackwardOneStep;
+	}
+	public ButtonComponent getButtonForwardOneStep() {
+		return this.buttonForwardOneStep;
+	}
+	public ButtonComponent getButtonForwardToTheEnd() {
+		return this.buttonForwardToTheEnd;
 	}
 	public abstract String getHelpString();
 	public abstract String getAboutString();

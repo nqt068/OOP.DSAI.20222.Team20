@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -38,11 +39,10 @@ public class SortController extends Controller{
 	private Timer timer;
 	
 	public static final int MAX_ARRAY_LENGTH = 30;
-	public static final int DELAY = 100;
-	
+	public static final int DELAY = 1000;
+
 	private SortScreen sortScreen;
 	protected ArrayUtil sortArray;
-	// TODO: Change the parameters
 	private int sortingSpeed = 1;
 	private boolean isPlaying = true;
 	private boolean isSorting = false;
@@ -125,7 +125,6 @@ public class SortController extends Controller{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				System.out.println("hehe");
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
 			}
 		};
@@ -134,7 +133,6 @@ public class SortController extends Controller{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				System.out.println("hehe");
 				sortArray = new ArrayUtil(MAX_ARRAY_LENGTH);
 				sortArray.generateRandomArray();
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
@@ -158,15 +156,15 @@ public class SortController extends Controller{
 				for (int i = 0; i < inputArray.length; i ++) {
 					sortArray.set(i, new Element<Integer>(intArray[i]));
 				}
-				sortArray.dataType = Integer.class;
-//				sortArray.printArray();
+				sortArray.dataType = Integer.class;;
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
 				getSortScreen().updateArrayToScreen(-1);
+
 			}
 		};
 	}
 	
-    public ActionListener taskPerformer = new ActionListener() {
+    public ActionListener updateArraySequentially = new ActionListener() {
     	public void actionPerformed(ActionEvent evt) {
     		if (LI.hasNext()) {
     			int index = -1;
@@ -191,22 +189,116 @@ public class SortController extends Controller{
 	public ActionListener buttonStartSortingClicked() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				
+				setSorting(true);
 				if (algName == "algorithm.MergeSortAlgorithm") {
-					sortAlgorithm = new MergeSortAlgorithm(sortArray);
+					sortAlgorithm = new MergeSortAlgorithm(sortArray.clone());
 				} else if (algName == "algorithm.SelectionSortAlgorithm") {
-					sortAlgorithm = new SelectionSortAlgorithm(sortArray);
+					sortAlgorithm = new SelectionSortAlgorithm(sortArray.clone());
 				} else if (algName == "algorithm.ShellSortAlgorithm") {
 					int[] gaps = {8,4,2,1};
-					sortAlgorithm = new ShellSortAlgorithm(gaps, sortArray);
+					sortAlgorithm = new ShellSortAlgorithm(gaps, sortArray.clone());
 				} else {}
 
 //				sortAlgorithm.sort();
 				stepsList = sortAlgorithm.sortAndGetSteps();
 				LI = stepsList.listIterator();
-				
-			    timer = new Timer(delay, taskPerformer);
+				getSortScreen().updateControl();
+			    timer = new Timer(DELAY - sortingSpeed*(DELAY/10), updateArraySequentially);
+			    setPlaying(true);
 			    timer.start();
+			}
+		};
+	}
+	public ActionListener buttonPlayOrPauseClicked() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Icon pauseIcon = new ImageIcon(new ImageIcon(getSortScreen().IMAGE_RESOURCES+"pause.png").getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+				Icon playIcon = new ImageIcon(new ImageIcon(getSortScreen().IMAGE_RESOURCES+"play.png").getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+				if (isSorting) {
+					if (!isPlaying()) {
+						getSortScreen().getButtonPlayOrPause().setIcon(pauseIcon);
+						setPlaying(true);
+						LI = stepsList.listIterator(currentStep);
+						timer.start();
+					} else {
+						getSortScreen().getButtonPlayOrPause().setIcon(playIcon);
+						setPlaying(false);
+						timer.stop();
+					}
+				}
+			}
+		};
+	}
+	public ActionListener buttonBackwardToTheStartClicked() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (isSorting) {
+					if (isPlaying) {
+						getSortScreen().getButtonPlayOrPause().doClick();
+					}
+					setCurrentStep(0);
+					getSortScreen().getProgressSlider().setValue(currentStep);
+				} else {
+					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
+				}
+			}
+		};
+	}
+	public ActionListener buttonBackwardOneStepClicked() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (isSorting) {
+					if (isPlaying) {
+						getSortScreen().getButtonPlayOrPause().doClick();
+					}
+					if (currentStep > 0) {
+						currentStep--;
+						getSortScreen().getProgressSlider().setValue(currentStep);
+					} else {
+						getSortScreen().getErrorLabel().setText("You have already been in the start point.");
+					}
+				} else {
+					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
+				}
+			}
+		};
+	}
+	public ActionListener buttonForwardOneStepClicked() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (isSorting) {
+					if (isPlaying) {
+						getSortScreen().getButtonPlayOrPause().doClick();
+					}
+					if (currentStep < stepsList.size()-1) {
+						currentStep++;
+						getSortScreen().getProgressSlider().setValue(currentStep);
+					} else {
+						getSortScreen().getErrorLabel().setText("You have already been in the end point.");
+					}
+				} else {
+					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
+				}
+			}
+		};
+	}
+	public ActionListener buttonForwardToTheEndClicked() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (isSorting) {
+					if (isPlaying) {
+						getSortScreen().getButtonPlayOrPause().doClick();
+					}
+					setCurrentStep(stepsList.size()-1);
+					getSortScreen().getProgressSlider().setValue(currentStep);
+				} else {
+					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
+				}
 			}
 		};
 	}
@@ -214,7 +306,16 @@ public class SortController extends Controller{
 		return new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				System.out.println(((JSlider)e.getSource()).getValue());
+				if (isSorting) {
+					if (isPlaying) {
+						getSortScreen().getButtonPlayOrPause().doClick();
+					}
+					setCurrentStep(((JSlider)e.getSource()).getValue());
+					sortArray = (ArrayUtil) stepsList.get(currentStep);
+					getSortScreen().updateArrayToScreen(-1);
+				} else {
+					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
+				}
 			}
 		};
 	}
@@ -222,14 +323,18 @@ public class SortController extends Controller{
 		return new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				setSpeed(((JSlider)e.getSource()).getValue());
-				getSortScreen().getSpeedLabel().setText(getSpeed()+"x");
-				if (isSorting()) {
+				if (isPlaying) {
 					timer.stop();
-					timer.setDelay(1000 - sortingSpeed*100);
+					setSpeed(((JSlider)e.getSource()).getValue());
+					getSortScreen().getSpeedLabel().setText(getSpeed()+"x");
+					timer.setDelay(DELAY - sortingSpeed*(DELAY/10));
 					timer.start();
 				}
-				// TODO: Check the isPlaying if necessary
+				else {
+					setSpeed(((JSlider)e.getSource()).getValue());
+					getSortScreen().getSpeedLabel().setText(getSpeed()+"x");
+					timer.setDelay(DELAY - sortingSpeed*(DELAY/10));
+				}
 			}
 		};
 	}
@@ -283,7 +388,7 @@ public class SortController extends Controller{
 	public int getCurrentStep() {
 		return currentStep;
 	}
-	public void setCurrentStep(int currentStep) {
+	private void setCurrentStep(int currentStep) {
 		this.currentStep = currentStep;
 	}
 	public void setSortAlgorithm(SortingAlgorithm sortingAlgorithm) {
