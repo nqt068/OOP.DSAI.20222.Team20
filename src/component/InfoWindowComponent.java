@@ -26,16 +26,16 @@ public class InfoWindowComponent extends JFrame {
         infoTextArea.setLineWrap(true);
         infoTextArea.setWrapStyleWord(true);
         infoTextArea.setEditable(false);
-        infoTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        infoTextArea.setFont(new Font("Silkscreen", Font.ITALIC, 14));
         JScrollPane scrollPane = new JScrollPane(infoTextArea);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton closeButton = new JButton("Close");
+        /*JButton closeButton = new JButton("Close");
         closeButton.addActionListener(e -> dispose());
-        buttonPanel.add(closeButton);
+        buttonPanel.add(closeButton); */
 
         JButton copyButton = new JButton("Copy to Clipboard");
         copyButton.addActionListener(e -> {

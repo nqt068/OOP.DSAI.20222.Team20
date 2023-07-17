@@ -11,10 +11,10 @@ import java.awt.event.*;
 public class CardComponent extends JPanel implements MouseListener {
     private JLabel headingLabel;
     private JLabel imageLabel;
-    private JTextArea descriptionTextArea;
+    //private JTextArea descriptionTextArea;
     private HomeScreenController homeScreenController;
 
-    public CardComponent(String heading, Image image, String description) {
+    public CardComponent(String heading, Image image) {
         setLayout(new BorderLayout());
 
         // Create the heading label and add it to the panel
@@ -37,13 +37,13 @@ public class CardComponent extends JPanel implements MouseListener {
         add(imagePanel, BorderLayout.CENTER);
 
         // Create the description text area and add it to the panel
-        descriptionTextArea = new JTextArea(description);
+        /* descriptionTextArea = new JTextArea(description);
         descriptionTextArea.setLineWrap(true);
         descriptionTextArea.setWrapStyleWord(true);
         descriptionTextArea.setEditable(false);
-        add(new JScrollPane(descriptionTextArea), BorderLayout.SOUTH);
+        add(new JScrollPane(descriptionTextArea), BorderLayout.SOUTH); */
 
-        setPreferredSize(new Dimension(300, 400));
+        setPreferredSize(new Dimension(300, 400)); 
 
         addMouseListener(this);
     }
