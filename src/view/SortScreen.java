@@ -38,6 +38,7 @@ public abstract class SortScreen extends Screen{
 	protected double unitHeight;
 	
 	Container cp;
+
 	JPanel eastPanel;
 	JLayeredPane visualizerArea;
 	ArrayGraphic main;
@@ -104,6 +105,7 @@ public abstract class SortScreen extends Screen{
 				this.unitHeight = ((int)200)/((int)sortController.getSortArray().getMax().getValue());
 			} else if (sortController.getSortArray().getMax().getValue() != (Double) 0.0) {
 				this.unitHeight = ((double)200.0)/((double)sortController.getSortArray().getMax().getValue());			
+
 			} else {
 				this.unitHeight = 0;
 			}
@@ -134,6 +136,7 @@ public abstract class SortScreen extends Screen{
 //		errorLabel.setPreferredSize(new Dimension(2000,50));
 		errorLabel.setBounds(0,0,1200,50);
 		visualizerArea.setPreferredSize(new Dimension(1000, 350));
+
 		visualizerArea.add(errorLabel, new Integer(2));
 		
 		visualizerArea.add(createWest(), new Integer(3));
@@ -170,6 +173,7 @@ public abstract class SortScreen extends Screen{
 		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
 		buttonCreateRandomArray.setSize(new Dimension(100, 34));
 		buttonCreateRandomArray.addActionListener(sortController.buttonCreateRandomArrayClicked());
+
 		arrayEqualsLabel = new LabelComponent("Array :=");
 		inputArrayTextField = new TextFieldComponent(30, "Ex: 1 8 3 5 7 15 21 34");
 		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.WHITE, Color.CYAN, Color.cyan.darker());
@@ -284,6 +288,7 @@ public abstract class SortScreen extends Screen{
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				if (sortController.getSortArray().dataType == Double.class) {
+
 					for (int i = 0; i< sortController.getSortArray().size();i++) {
 
 						int width = Math.min(unitWidth,15+padding);
@@ -293,6 +298,7 @@ public abstract class SortScreen extends Screen{
 					}
 				} 
 				else if (sortController.getSortArray().dataType == Integer.class) {
+
 					for (int i = 0; i< sortController.getSortArray().size();i++) {
 
 						int width = Math.min(unitWidth,15+padding);
@@ -304,7 +310,6 @@ public abstract class SortScreen extends Screen{
 			}
 		};
 		// TODO: Redesign the boundary if necessary
-
 		mainBarChart.setBounds(-250,250,getWidth()-200,250);
 		return mainBarChart;
 	}
@@ -329,6 +334,7 @@ public abstract class SortScreen extends Screen{
 //	public Container getContainer() {
 //		return this.cp;
 //	}
+
 	public JPanel getEastPanel() {
 		return this.eastPanel;
 	}

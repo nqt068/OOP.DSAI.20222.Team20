@@ -52,6 +52,7 @@ public class SortController extends Controller{
 		if (sortArray == null) {
 			sortArray = new ArrayUtil(MAX_ARRAY_LENGTH);
 //			sortArray.dataType = Integer.class; //TODO: Let user choose the dataType
+
 			sortArray.generateRandomArray();
 		} else {
 			this.sortArray = array;
@@ -125,6 +126,7 @@ public class SortController extends Controller{
 				sortArray.generateRandomArray();
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
 				getSortScreen().updateArrayToScreen();
+
 			}
 		};
 	}
@@ -148,6 +150,7 @@ public class SortController extends Controller{
 //				sortArray.printArray();
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
 				getSortScreen().updateArrayToScreen();
+
 			}
 		};
 	}
@@ -177,6 +180,9 @@ public class SortController extends Controller{
 //			    			sortArray.printArray();
 			    			getSortScreen().updateArrayToScreen();
 			    		} else {
+			    			sortArray = (ArrayUtil) LI.next();
+//			    			sortArray.printArray();
+			    			getSortScreen().updateArrayToScreen();
 			    			((Timer)evt.getSource()).stop();
 			    		}
 			    	}
