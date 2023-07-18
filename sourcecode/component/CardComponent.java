@@ -2,7 +2,6 @@ package component;
 
 import javax.swing.*;
 
-import controller.HomeScreenController;
 import view.*;
 
 import java.awt.*;
@@ -34,13 +33,6 @@ public class CardComponent extends JPanel implements MouseListener {
             imagePanel.setBackground(Color.WHITE);
         }
         add(imagePanel, BorderLayout.CENTER);
-
-        // Create the description text area and add it to the panel
-        /* descriptionTextArea = new JTextArea(description);
-        descriptionTextArea.setLineWrap(true);
-        descriptionTextArea.setWrapStyleWord(true);
-        descriptionTextArea.setEditable(false);
-        add(new JScrollPane(descriptionTextArea), BorderLayout.SOUTH); */
 
         setPreferredSize(new Dimension(300, 400)); 
 
