@@ -2,7 +2,6 @@ package component;
 
 import javax.swing.*;
 
-import controller.HomeScreenController;
 import view.*;
 
 import java.awt.*;
@@ -12,7 +11,6 @@ public class CardComponent extends JPanel implements MouseListener {
     private JLabel headingLabel;
     private JLabel imageLabel;
     //private JTextArea descriptionTextArea;
-    private HomeScreenController homeScreenController;
 
     public CardComponent(String heading, Image image) {
         setLayout(new BorderLayout());

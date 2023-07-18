@@ -17,17 +17,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import controller.HomeScreenController;
 import view.Screen.MenuItemListener;
 import component.*;
 
 public class HomeScreen extends Screen{
-	private final HomeScreenController homeScreenController;
+//	private final HomeScreenController homeScreenController;
 
 	public HomeScreen() {
 		super();
 		this.menuItemListener = new MenuItemListener();
-		homeScreenController = new HomeScreenController();
+//		homeScreenController = new HomeScreenController();
 		JPanel homeScreen = new JPanel(new GridLayout(2,1));
 		add(homeScreen, BorderLayout.CENTER);
 		
