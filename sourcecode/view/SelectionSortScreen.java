@@ -27,16 +27,11 @@ public class SelectionSortScreen extends SortScreen{
 	@Override
 	public String getAboutString() {
 		// TODO Auto-generated method stub
-		return " Team 20 has developed this capstone project with \n "
-				+ "the aim of providing you with a visualization of how "
-				+ "\n sorting algorithms operate on arrays.";
+		return " Selection sort is a simple and efficient sorting algorithm that works"
+				+ " by repeatedly selecting the smallest (or largest) element from "
+				+ "the unsorted portion of the list and moving it to the sorted portion of the list.";
 	}
 
-	@Override
-	public String getTeamString() {
-		// TODO Auto-generated method stub
-		return "We are team 20!";
-	}
 	
     protected JMenuBar createMenuBar() {
     	this.menuItemListener = new MenuItemListener();
@@ -63,10 +58,10 @@ public class SelectionSortScreen extends SortScreen{
     	public void actionPerformed(ActionEvent e) {
 			String menuItem = e.getActionCommand();
 			if (menuItem.equals("Help")) {
-				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", "SelectionSortScreenHelp");
+				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", getHelpString());
 			}
 			else if (menuItem.equals("About")) {
-				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", "SelectionSortScreenAbout");
+				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", getAboutString());
 			}
 		}
     }

@@ -21,26 +21,27 @@ public class ShellSortScreen extends SortScreen{
 	@Override
 	public String getAboutString() {
 		// TODO Auto-generated method stub
-		return " Team 20 has developed this capstone project with \n "
-				+ "the aim of providing you with a visualization of how "
-				+ "\n sorting algorithms operate on arrays.";
+		return "Shell sort is mainly a variation of Insertion Sort. "
+				+ "In insertion sort, we move elements only one position "
+				+ "ahead. When an element has to be moved far ahead, many"
+				+ " movements are involved. The idea of ShellSort is to allow "
+				+ "the exchange of far items. In Shell sort, we make the array "
+				+ "h-sorted for a large value of h. We keep reducing the value "
+				+ "of h until it becomes 1. An array is said to be h-sorted if "
+				+ "all sublists of every h’th element are sorted.";
 	}
 
-	@Override
-	public String getTeamString() {
-		// TODO Auto-generated method stub
-		return "We are team 20!";
-	}
+	
 	
     protected class MenuItemListener extends view.Screen.MenuItemListener implements ActionListener {
     	@Override
     	public void actionPerformed(ActionEvent e) {
 			String menuItem = e.getActionCommand();
 			if (menuItem.equals("Help")) {
-				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", "ShellSortScreenHelp");
+				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", getHelpString());
 			}
 			else if (menuItem.equals("About")) {
-				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", "ShellSortScreenAbout");
+				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", getAboutString());
 			}
 		}
     }

@@ -28,16 +28,11 @@ public class MergeSortScreen extends SortScreen{
 	@Override
 	public String getAboutString() {
 		// TODO Auto-generated method stub
-		return " Team 20 has developed this capstone project with \n "
-				+ "the aim of providing you with a visualization of how "
-				+ "\n sorting algorithms operate on arrays.";
+		return " Merge sort is defined as a sorting algorithm that works by dividing an "
+				+ "array into smaller subarrays, sorting each subarray, and then merging"
+				+ " the sorted subarrays back together to form the final sorted array.";
 	}
 
-	@Override
-	public String getTeamString() {
-		// TODO Auto-generated method stub
-		return "We are team 20!";
-	}
 	
     protected JMenuBar createMenuBar() {
     	this.menuItemListener = new MenuItemListener();
@@ -64,10 +59,10 @@ public class MergeSortScreen extends SortScreen{
     	public void actionPerformed(ActionEvent e) {
 			String menuItem = e.getActionCommand();
 			if (menuItem.equals("Help")) {
-				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", "MergeSortScreenHelp");
+				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", getHelpString());
 			}
 			else if (menuItem.equals("About")) {
-				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", "MergeSortScreenAbout");
+				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", getAboutString());
 			}
 		}
     }

@@ -2,7 +2,7 @@ package component;
 
 import java.awt.Color;
 import java.awt.Dimension;
-
+import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JTextArea;
 
@@ -18,5 +18,7 @@ public class TextAreaComponent extends JTextArea{
     setWrapStyleWord(true);
     setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
     setVisible(false);
+    Font boldFont = getFont().deriveFont(Font.BOLD);
+    setFont(boldFont);
 	}
 }

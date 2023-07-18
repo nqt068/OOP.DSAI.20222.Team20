@@ -34,7 +34,6 @@ import controller.SortController;
 public abstract class SortScreen extends Screen{
 	protected SortController sortController;
 	
-	protected String sortInfo = "Welcome to our Sorting Algorithms Visualizer";
 	protected double unitHeight;
 	
 	Container cp;
@@ -121,8 +120,8 @@ public abstract class SortScreen extends Screen{
 		visualizerArea = new JLayeredPane();
 		JPanel container = new JPanel();
 		container.setLayout(null);
-		container.setSize(new Dimension(1200, 1000));
-		container.add(mainBarChartVisualizer(Color.ORANGE, Color.YELLOW, index));
+		container.setSize(new Dimension(1000, 1000));
+		container.add(mainBarChartVisualizer(Color.ORANGE, Color.PINK, index));
 		sub = new ArrayGraphic(sortController.getSortArray());
 		container.add(sub);
 		container.setBounds(150, -150, 1400, 1000);
@@ -163,22 +162,22 @@ public abstract class SortScreen extends Screen{
 		westLayerPane.setBackground(Color.BLACK);
 		
 		JPanel menuCreateAndStart = new JPanel(new GridLayout(2,1));
-		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonCreateSortingArray = new ButtonComponent("Create (A)", Color.BLACK, Color.lightGray, Color.cyan.darker());
 		buttonCreateSortingArray.addActionListener(sortController.buttonCreateSortingArrayClicked());
-		buttonStartSorting = new ButtonComponent("Sort", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonStartSorting = new ButtonComponent("Sort", Color.BLACK, Color.lightGray, Color.cyan.darker());
 		buttonStartSorting.addActionListener(sortController.buttonStartSortingClicked());
 		menuCreateAndStart.add(buttonCreateSortingArray);
 		menuCreateAndStart.add(buttonStartSorting);
 		menuCreateAndStart.setVisible(true);
 		
 		createArrayField = new JPanel(new FlowLayout());
-		buttonCreateRandomArray = new ButtonComponent("Random", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonCreateRandomArray = new ButtonComponent("Random", Color.BLACK, Color.RED, Color.cyan.darker());
 		buttonCreateRandomArray.setSize(new Dimension(100, 34));
 		buttonCreateRandomArray.addActionListener(sortController.buttonCreateRandomArrayClicked());
 
 		arrayEqualsLabel = new LabelComponent("Array :=");
 		inputArrayTextField = new TextFieldComponent(30, "Ex: 1 8 3 5 7 15 21 34");
-		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.WHITE, Color.CYAN, Color.cyan.darker());
+		buttonConfirmInputArray = new ButtonComponent("Confirm", Color.BLACK, Color.lightGray, Color.cyan.darker());
 		buttonConfirmInputArray.addActionListener(sortController.buttonConfirmInputArrayClicked());
 		
 		createArrayField.add(buttonCreateRandomArray);
@@ -193,7 +192,7 @@ public abstract class SortScreen extends Screen{
 		return westLayerPane;
 	}
 	private JPanel createEast() {
-		explanationDisplayer = new TextAreaComponent(new Dimension(70,20), Color.CYAN, "Welcome to the Sorting Algorithm Visualizer");
+		explanationDisplayer = new TextAreaComponent(new Dimension(70,20), Color.BLACK, "Welcome to the Sorting Algorithm Visualizer");
 		eastPanel = new JPanel(new BorderLayout());
 		eastPanel.setPreferredSize(new Dimension(40,590));
 		eastPanel.setBackground(Color.BLACK);
@@ -208,7 +207,7 @@ public abstract class SortScreen extends Screen{
 	}
 	// Progress slider bar, play&pause button, next & back buttons
 	private JPanel createControlPanel() {
-		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		controlPanel.setBackground(new Color(238,238,238));
 		controlPanel.setPreferredSize(new Dimension(800, 50));
 		progressSlider = new SliderBarComponent(0,(int)sortController.getSortAlgorithm().stepsList.size(),0,700);
@@ -271,13 +270,13 @@ public abstract class SortScreen extends Screen{
     
 		return speedChanger;
 	}
-	// Help, About and Team buttons
+	// Help, About and Team buttons 
 	private JPanel createInfoPanel() {
 		JPanel infoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		infoPanel.setPreferredSize(new Dimension(300,50));
 		infoPanel.setBackground(new Color(238,238,238));
 		
-		buttonHelp = new ButtonComponent("Help", Color.WHITE, Color.BLACK, Color.black.brighter());
+		/* buttonHelp = new ButtonComponent("Help", Color.WHITE, Color.BLACK, Color.black.brighter());
 		buttonHelp.addActionListener(sortController.buttonHelpClicked());
 		infoPanel.add(buttonHelp);
 
@@ -287,10 +286,10 @@ public abstract class SortScreen extends Screen{
 		
 		buttonTeam = new ButtonComponent("Team", Color.WHITE, Color.BLACK, Color.black.brighter());
 		buttonTeam.addActionListener(sortController.buttonTeamClicked());
-		infoPanel.add(buttonTeam);
+		infoPanel.add(buttonTeam); */
 
-		return infoPanel;
-	}
+		return infoPanel; 
+	} 
 	private ArrayGraphic mainBarChartVisualizer(Color color, Color updateColor, int index) {
 		int unitWidth = ((int) getWidth()-200)/sortController.getSortArray().size();
 		ArrayGraphic mainBarChart = new ArrayGraphic(sortController.getSortArray()) {
@@ -466,8 +465,7 @@ public abstract class SortScreen extends Screen{
 	}
 	public abstract String getHelpString();
 	public abstract String getAboutString();
-	public abstract String getTeamString();
-	
+
 	@Override
 	public void onEntry() {}
 
