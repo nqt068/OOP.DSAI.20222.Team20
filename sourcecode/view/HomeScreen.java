@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -20,11 +21,12 @@ import view.Screen.MenuItemListener;
 import component.*;
 
 public class HomeScreen extends Screen{
+//	private final HomeScreenController homeScreenController;
 
 	public HomeScreen() {
 		super();
 		this.menuItemListener = new MenuItemListener();
-
+//		homeScreenController = new HomeScreenController();
 		JPanel homeScreen = new JPanel(new GridLayout(2,1));
 		add(homeScreen, BorderLayout.CENTER);
 		
@@ -47,7 +49,7 @@ public class HomeScreen extends Screen{
 		infoPanel.add(logoPanel());
 //		infoPanel.add(helpPanel(),BorderLayout.SOUTH);
 		// TODO: Adjust the dimension of the empty border
-		infoPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0));;
+		infoPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0));
 		return infoPanel;
 	}
 	
