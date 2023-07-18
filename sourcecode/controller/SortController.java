@@ -123,7 +123,7 @@ public class SortController extends Controller{
 				sortArray = new ArrayUtil(MAX_ARRAY_LENGTH);
 				sortArray.generateRandomArray();
 				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
-				getSortScreen().updateArrayToScreen(-1);
+				getSortScreen().updateNewArrayToScreen(-1);
 			}
 		};
 	}
