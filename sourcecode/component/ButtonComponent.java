@@ -17,7 +17,7 @@ public class ButtonComponent extends JButton implements MouseListener {
     private Color foregroundColor = Color.WHITE;
     private Color hoverColor = new Color(102,204,255);
     private Border border = BorderFactory.createEmptyBorder(5, 15, 5, 15);
-    private Font font = new Font("Arial", Font.PLAIN, 16);
+    private Font font = new Font("Arial", Font.BOLD, 16);
     
     public ButtonComponent(String text,Color foregroundColor, Color backgroundColor, Color hoverColor) {
         super(text);
