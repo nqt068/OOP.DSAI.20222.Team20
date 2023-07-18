@@ -115,7 +115,10 @@ public class HomeScreen extends Screen{
     	public void actionPerformed(ActionEvent e) {
 			String menuItem = e.getActionCommand();
 			if (menuItem.equals("Help")) {
-				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", "HomeScreenHelp");
+				String helpMessage = "Welcome to the Sorting Algorithm Visualizer! \n"
+						     + "To make the application easier to use, on each screen, you can press 'Menu' button, then press the 'Help' button for instructions and the 'About' button to view application and sorting algorithm information.\n"
+						     + "To see the sorting algorithm's representation on the array, first select one of the three types of sorting algorithms on this screen.";
+				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", helpMessage);
 			}
 			else if (menuItem.equals("About")) {
 				String message=" Team 20 has developed this capstone project with \n "
