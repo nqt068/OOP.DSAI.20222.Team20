@@ -22,7 +22,6 @@ import algorithm.MergeSortAlgorithm;
 import algorithm.ShellSortAlgorithm;
 import algorithm.SelectionSortAlgorithm;
 
-import listener.SortingScreenListener;
 import view.SortScreen;
 import component.InfoWindowComponent;
 import component.utils.ArrayUtil;
@@ -46,6 +45,7 @@ public class SortController extends Controller{
 	private int sortingSpeed = 1;
 	private boolean isPlaying = true;
 	private boolean isSorting = false;
+	private boolean isManuallyControlling = false;
 	private int currentStep = 0;
 	
 
@@ -71,20 +71,7 @@ public class SortController extends Controller{
 			this.sortArray = array;
 		}
 	}
-	public ComponentAdapter adjustWindowSize() {
-		return new ComponentAdapter() {
-		    @Override
-		    public void componentResized( ComponentEvent e ) {
-		    	getSortScreen().getButtonStartSorting().setBounds(3, getSortScreen().getHeight()-175 , 150, 32);
-		    	getSortScreen().getButtonCreateSortingArray().setBounds(3, getSortScreen().getHeight() -208, 150, 33);
-		    	getSortScreen().getButtonCreateRandomArray().setBounds(156, getSortScreen().getHeight()-205, 78,28);
-		    	getSortScreen().getArrayEqualsLabel().setBounds(236, getSortScreen().getHeight()-205, 28,28);
-		    	getSortScreen().getInputArrayTextField().setBounds(266, getSortScreen().getHeight()-205, 228,28);
-		    	getSortScreen().betButtonConfirmInputArray().setBounds(496, getSortScreen().getHeight()-205, 50,28);
-		    	getSortScreen().getExplanationDisplayer().setBounds(getSortScreen().getWidth()-490,  getSortScreen().getHeight() -208,380 , 65);
-		    }
-		};
-	}
+	
 	public ChangeListener adjustSpeed() {
 		return new ChangeListener() {
 			@Override
@@ -145,20 +132,36 @@ public class SortController extends Controller{
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String inputArrayString = getSortScreen().getInputArrayTextField().getText();
-				String[] inputArray = inputArrayString.split(" ");
-				int[] intArray = new int[inputArray.length];
-				
-				for (int i = 0; i < inputArray.length; i++) {
-				    intArray[i] = Integer.parseInt(inputArray[i]);
+				try {
+					String[] inputArray;
+					String inputArrayString;
+					
+					try {
+						inputArrayString = getSortScreen().getInputArrayTextField().getText();
+						inputArray = inputArrayString.split(" ");
+						if (inputArray.length > 30) {
+							throw new ArrayIndexOutOfBoundsException();
+						}
+					}
+					catch (Exception ee) {
+						throw new IllegalArgumentException();
+					}
+					int[] intArray = new int[inputArray.length];
+					
+					for (int i = 0; i < inputArray.length; i++) {
+					    intArray[i] = Integer.parseInt(inputArray[i]);
+					}
+					sortArray = new ArrayUtil(inputArray.length);
+					for (int i = 0; i < inputArray.length; i ++) {
+						sortArray.set(i, new Element<Integer>(intArray[i]));
+					}
+					sortArray.dataType = Integer.class;;
+					getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
+					getSortScreen().updateArrayToScreen(-1);
 				}
-				sortArray = new ArrayUtil(inputArray.length);
-				for (int i = 0; i < inputArray.length; i ++) {
-					sortArray.set(i, new Element<Integer>(intArray[i]));
+				catch (Exception eee){
+					getSortScreen().getErrorLabel().setText("<html><body style='text-align: center'>Invalid inputArray. <br> Please check our example for reference.</html>");
 				}
-				sortArray.dataType = Integer.class;;
-				getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
-				getSortScreen().updateArrayToScreen(-1);
 
 			}
 		};
@@ -168,7 +171,7 @@ public class SortController extends Controller{
     	public void actionPerformed(ActionEvent evt) {
     		if (LI.hasNext()) {
     			int index = -1;
-    			ArrayUtil tempArray = sortArray.clone(); 
+    			ArrayUtil tempArray = sortArray.clone();
     			setCurrentStep(LI.nextIndex());
     			sortArray = (ArrayUtil) LI.next();
     			
@@ -178,6 +181,8 @@ public class SortController extends Controller{
     					break;
     				}
     			}
+    			setManuallyControlling(true);
+    			getSortScreen().getProgressSlider().setValue(currentStep);
     			getSortScreen().updateArrayToScreen(index);
     			if (!LI.hasNext()) {
     				((Timer)evt.getSource()).stop();
@@ -234,13 +239,18 @@ public class SortController extends Controller{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (isSorting) {
-					if (isPlaying) {
-						getSortScreen().getButtonPlayOrPause().doClick();
+				try {
+					if (isSorting) {
+						if (isPlaying) {
+							getSortScreen().getButtonPlayOrPause().doClick();
+						}
+	;					setCurrentStep(0);
+						getSortScreen().getProgressSlider().setValue(currentStep);
+					} else {
+						throw new NullPointerException();
 					}
-					setCurrentStep(0);
-					getSortScreen().getProgressSlider().setValue(currentStep);
-				} else {
+				}
+				catch (NullPointerException npe){
 					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
 				}
 			}
@@ -250,18 +260,26 @@ public class SortController extends Controller{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (isSorting) {
-					if (isPlaying) {
-						getSortScreen().getButtonPlayOrPause().doClick();
-					}
-					if (currentStep > 0) {
-						currentStep--;
-						getSortScreen().getProgressSlider().setValue(currentStep);
+				try {
+					if (isSorting) {
+						if (isPlaying) {
+							getSortScreen().getButtonPlayOrPause().doClick();
+						}
+						if (currentStep > 0) {
+							currentStep--;
+							getSortScreen().getProgressSlider().setValue(currentStep);
+						} else {
+							throw new IllegalArgumentException();
+						}
 					} else {
-						getSortScreen().getErrorLabel().setText("You have already been in the start point.");
+						throw new NullPointerException();
 					}
-				} else {
+				}
+				catch (NullPointerException npe){
 					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
+				}
+				catch (IllegalArgumentException iae) {
+					getSortScreen().getErrorLabel().setText("You have already been in the end point.");
 				}
 			}
 		};
@@ -270,18 +288,26 @@ public class SortController extends Controller{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (isSorting) {
-					if (isPlaying) {
-						getSortScreen().getButtonPlayOrPause().doClick();
-					}
-					if (currentStep < stepsList.size()-1) {
-						currentStep++;
-						getSortScreen().getProgressSlider().setValue(currentStep);
+				try {
+					if (isSorting) {
+						if (isPlaying) {
+							getSortScreen().getButtonPlayOrPause().doClick();
+						}
+						if (currentStep < stepsList.size()-1) {
+							currentStep++;
+							getSortScreen().getProgressSlider().setValue(currentStep);
+						} else {
+							throw new IllegalArgumentException();
+						}
 					} else {
-						getSortScreen().getErrorLabel().setText("You have already been in the end point.");
+						throw new NullPointerException();
 					}
-				} else {
+				}
+				catch (NullPointerException npe){
 					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
+				}
+				catch (IllegalArgumentException iae) {
+					getSortScreen().getErrorLabel().setText("You have already been in the end point.");
 				}
 			}
 		};
@@ -290,13 +316,18 @@ public class SortController extends Controller{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (isSorting) {
-					if (isPlaying) {
-						getSortScreen().getButtonPlayOrPause().doClick();
+				try {
+					if (isSorting) {
+						if (isPlaying) {
+							getSortScreen().getButtonPlayOrPause().doClick();
+						}
+						setCurrentStep(stepsList.size()-1);
+						getSortScreen().getProgressSlider().setValue(currentStep);
+					} else {
+						throw new NullPointerException();
 					}
-					setCurrentStep(stepsList.size()-1);
-					getSortScreen().getProgressSlider().setValue(currentStep);
-				} else {
+				}
+				catch (NullPointerException npe){
 					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
 				}
 			}
@@ -306,14 +337,20 @@ public class SortController extends Controller{
 		return new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				if (isSorting) {
-					if (isPlaying) {
-						getSortScreen().getButtonPlayOrPause().doClick();
+				try {
+					if (isSorting) {
+						if (isPlaying && !isManuallyControlling) {
+							getSortScreen().getButtonPlayOrPause().doClick();
+						}
+						setCurrentStep(((JSlider)e.getSource()).getValue());
+						sortArray = (ArrayUtil) stepsList.get(currentStep);
+						LI = stepsList.listIterator(currentStep);
+						getSortScreen().updateArrayToScreen(-1);
+					} else {
+						throw new NullPointerException();
 					}
-					setCurrentStep(((JSlider)e.getSource()).getValue());
-					sortArray = (ArrayUtil) stepsList.get(currentStep);
-					getSortScreen().updateArrayToScreen(-1);
-				} else {
+				}
+				catch (NullPointerException npe){
 					getSortScreen().getErrorLabel().setText("Click the button \"Sort\" first.");
 				}
 			}
@@ -378,6 +415,15 @@ public class SortController extends Controller{
 	}
 	public void setPlaying(boolean isPlaying) {
 		this.isPlaying = isPlaying;
+		if (isPlaying == true) {
+			setManuallyControlling(false);
+		}
+		else {
+			setManuallyControlling(true);
+		}
+	}
+	public void setManuallyControlling(boolean isManuallyControlling) {
+		this.isManuallyControlling = isManuallyControlling;
 	}
 	public boolean isSorting() {
 		return isSorting;

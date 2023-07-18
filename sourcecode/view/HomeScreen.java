@@ -19,7 +19,6 @@ import javax.swing.JMenuItem;
 
 import controller.HomeScreenController;
 import view.Screen.MenuItemListener;
-import component.ButtonComponent;
 import component.*;
 
 public class HomeScreen extends Screen{
@@ -111,8 +110,7 @@ public class HomeScreen extends Screen{
     	menuBar.add(menu);
     	
     	return menuBar;
-    }
-    
+    }    
     protected class MenuItemListener extends view.Screen.MenuItemListener implements ActionListener {
     	@Override
     	public void actionPerformed(ActionEvent e) {
@@ -127,6 +125,5 @@ public class HomeScreen extends Screen{
 				InfoWindowComponent aboutWindow = new InfoWindowComponent("About", message);
 			}
 		}
-    }
-
+    }    
 }

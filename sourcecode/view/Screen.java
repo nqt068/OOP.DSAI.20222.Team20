@@ -99,7 +99,7 @@ public class Screen extends JFrame {
     	return menuBar;
     }
     
-    protected class MenuItemListener implements ActionListener {
+    public class MenuItemListener implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
 			String menuItem = e.getActionCommand();
 			if (menuItem.equals("Help")) {

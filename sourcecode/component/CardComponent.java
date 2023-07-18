@@ -36,13 +36,6 @@ public class CardComponent extends JPanel implements MouseListener {
         }
         add(imagePanel, BorderLayout.CENTER);
 
-        // Create the description text area and add it to the panel
-        /* descriptionTextArea = new JTextArea(description);
-        descriptionTextArea.setLineWrap(true);
-        descriptionTextArea.setWrapStyleWord(true);
-        descriptionTextArea.setEditable(false);
-        add(new JScrollPane(descriptionTextArea), BorderLayout.SOUTH); */
-
         setPreferredSize(new Dimension(300, 400)); 
 
         addMouseListener(this);

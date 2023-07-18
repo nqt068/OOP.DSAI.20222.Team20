@@ -90,8 +90,8 @@ public abstract class SortScreen extends Screen{
 		this.cp = new Container();
 		cp.setLayout(new BorderLayout());
 		cp.add(createSouth(), BorderLayout.SOUTH);
-		cp.add(createCenter(-1), BorderLayout.CENTER);
 		cp.add(createEast(), BorderLayout.EAST);
+		cp.add(createCenter(-1), BorderLayout.CENTER);
 		cp.add(createWest(), BorderLayout.WEST);
 		add(cp);
 		
@@ -341,7 +341,6 @@ public abstract class SortScreen extends Screen{
 									-(int)(Math.round((double)sortController.getSortArray().get(i).getValue() * unitHeight))
 									+ getHeight(),
 									Math.min(width-padding,60),(int)(Math.round((double)sortController.getSortArray().get(i).getValue()*unitHeight)));
-							
 						}
 					} 
 					else if (sortController.getSortArray().dataType == Integer.class) {
@@ -373,13 +372,9 @@ public abstract class SortScreen extends Screen{
 	public void updateArrayToScreen(int index) {
     	BorderLayout layout = (BorderLayout) cp.getLayout();
     	cp.remove(layout.getLayoutComponent(BorderLayout.WEST));
-    	cp.remove(layout.getLayoutComponent(BorderLayout.EAST));
     	cp.remove(layout.getLayoutComponent(BorderLayout.CENTER));
     	
-		calculateUnitHeight();
-
 		cp.add(createCenter(index), BorderLayout.CENTER);
-		cp.add(createEast(), BorderLayout.EAST);
 		cp.add(createWest(), BorderLayout.WEST);
     	revalidate();
     	repaint();
@@ -393,7 +388,6 @@ public abstract class SortScreen extends Screen{
     	cp.remove(layout.getLayoutComponent(BorderLayout.CENTER));
     	cp.remove(layout.getLayoutComponent(BorderLayout.SOUTH));
     	
-		calculateUnitHeight();
 		
 		cp.add(createSouth(), BorderLayout.SOUTH);
 		cp.add(createCenter(-1), BorderLayout.CENTER);
