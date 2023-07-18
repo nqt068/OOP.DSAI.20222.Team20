@@ -101,11 +101,10 @@ public abstract class SortScreen extends Screen{
 		if (sortController.getSortArray().getMax() == null) {
 			this.unitHeight = 0;
 		} else {			
-			if (sortController.getSortArray().getMax().getValue() != (Integer) 0) {
+			if ((sortController.getSortArray().dataType == Integer.class) && (sortController.getSortArray().getMax().getValue() != (Integer) 0)) {
 				this.unitHeight = ((int)400)/((int)sortController.getSortArray().getMax().getValue());
-			} else if (sortController.getSortArray().getMax().getValue() != (Double) 0.0) {
+			} else if ((sortController.getSortArray().dataType == Double.class) && (sortController.getSortArray().getMax().getValue() != (Double) 0.0)) {
 				this.unitHeight = ((double)400.0)/((double)sortController.getSortArray().getMax().getValue());			
-
 			} else {
 				this.unitHeight = 0;
 			}
@@ -366,6 +365,18 @@ public abstract class SortScreen extends Screen{
 		// TODO: Redesign the boundary if necessary
 		mainBarChart.setBounds(0, 0, 1200, 800);
 		return mainBarChart;
+	}
+	public void updateNewArrayToScreen(int index) {
+    	BorderLayout layout = (BorderLayout) cp.getLayout();
+    	cp.remove(layout.getLayoutComponent(BorderLayout.WEST));
+    	cp.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+    	
+    	calculateUnitHeight();
+    	
+		cp.add(createCenter(index), BorderLayout.CENTER);
+		cp.add(createWest(), BorderLayout.WEST);
+    	revalidate();
+    	repaint();
 	}
 	
 	public void updateArrayToScreen(int index) {

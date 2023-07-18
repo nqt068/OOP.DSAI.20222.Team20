@@ -146,18 +146,37 @@ public class SortController extends Controller{
 					catch (Exception ee) {
 						throw new IllegalArgumentException();
 					}
-					int[] intArray = new int[inputArray.length];
-					
-					for (int i = 0; i < inputArray.length; i++) {
-					    intArray[i] = Integer.parseInt(inputArray[i]);
+					try {
+						int[] intArray = new int[inputArray.length];
+						
+						for (int i = 0; i < inputArray.length; i++) {
+						    intArray[i] = Integer.parseInt(inputArray[i]);
+						}
+						sortArray = new ArrayUtil(inputArray.length);
+						for (int i = 0; i < inputArray.length; i ++) {
+							sortArray.set(i, new Element<Integer>(intArray[i]));
+						}
+						sortArray.dataType = Integer.class;
 					}
-					sortArray = new ArrayUtil(inputArray.length);
-					for (int i = 0; i < inputArray.length; i ++) {
-						sortArray.set(i, new Element<Integer>(intArray[i]));
+					catch (Exception ee){
+						try {
+							double[] intArray = new double[inputArray.length];
+							
+							for (int i = 0; i < inputArray.length; i++) {
+							    intArray[i] = Double.parseDouble(inputArray[i]);
+							}
+							sortArray = new ArrayUtil(inputArray.length);
+							for (int i = 0; i < inputArray.length; i ++) {
+								sortArray.set(i, new Element<Double>(intArray[i]));
+							}
+							sortArray.dataType = Double.class;
+						}
+						catch (Exception eee){
+							throw eee;
+						}
 					}
-					sortArray.dataType = Integer.class;;
 					getSortScreen().getCreateArrayField().setVisible(!getSortScreen().getCreateArrayField().isVisible());
-					getSortScreen().updateArrayToScreen(-1);
+					getSortScreen().updateNewArrayToScreen(-1);
 				}
 				catch (Exception eee){
 					getSortScreen().getErrorLabel().setText("<html><body style='text-align: center'>Invalid inputArray. <br> Please check our example for reference.</html>");
@@ -391,14 +410,14 @@ public class SortController extends Controller{
 			}
 		};
 	}
-	public ActionListener buttonTeamClicked() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				InfoWindowComponent teamWindow = new InfoWindowComponent("Team Window",getSortScreen().getTeamString());
-			}
-		};
-	}
+//	public ActionListener buttonTeamClicked() {
+//		return new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				InfoWindowComponent teamWindow = new InfoWindowComponent("Team Window",getSortScreen().getTeamString());
+//			}
+//		};
+//	}
 	
 	// Setter methods
 	public ArrayUtil getSortArray() {
