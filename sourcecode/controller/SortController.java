@@ -22,7 +22,6 @@ import algorithm.MergeSortAlgorithm;
 import algorithm.ShellSortAlgorithm;
 import algorithm.SelectionSortAlgorithm;
 
-import listener.SortingScreenListener;
 import view.SortScreen;
 import component.InfoWindowComponent;
 import component.utils.ArrayUtil;
