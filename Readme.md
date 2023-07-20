@@ -49,5 +49,3 @@ To run the Sorting Algorithm Visualizer, follow these steps:
    - Generate a random array by clicking the "Create (A)" button.
 5. After inputting the array, click the "Sort" button to start the visualization.
 
-## Demo video: 
-### https://drive.google.com/file/d/1kIWk__rOS-suHgjoF6RNGtUZKehVBZuP/view?usp=sharing
