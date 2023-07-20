@@ -120,7 +120,7 @@ public abstract class SortScreen extends Screen{
 		JPanel container = new JPanel();
 		container.setLayout(null);
 		container.setSize(new Dimension(1000, 1000));
-		container.add(mainBarChartVisualizer(Color.ORANGE, Color.PINK, index));
+		container.add(mainBarChartVisualizer(Color.LIGHT_GRAY, Color.ORANGE, index));
 		sub = new ArrayGraphic(sortController.getSortArray());
 		container.add(sub);
 		container.setBounds(150, -150, 1400, 1000);
