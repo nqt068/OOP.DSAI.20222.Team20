@@ -12,8 +12,7 @@ public class CardTest {
         Image image = new ImageIcon(System.getProperty("user.dir") + "\\Image_Resources\\" + "sampleImage.png").getImage();
 
         // Create a CardPanel object
-        CardComponent cardPanel = new CardComponent("Sample Heading", image, "This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. This is a sample description. ");
-
+        CardComponent cardPanel = new CardComponent("Sample Heading", image);
         // Create a JFrame and add the CardPanel to it
         JFrame frame = new JFrame("CardPanel Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
