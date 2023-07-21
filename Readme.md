@@ -52,7 +52,7 @@ To run the Sorting Algorithm Visualizer, follow these steps:
    - Generate a random array by clicking the "Create (A)" button.
 5. After inputting the array, click the "Sort" button to start the visualization.
 
-##Task Distribution
+## Task Distribution
 
 | Task                               | Role                                   | Member                                               |
 |------------------------------------|----------------------------------------|------------------------------------------------------|
@@ -94,5 +94,5 @@ To run the Sorting Algorithm Visualizer, follow these steps:
 | Readme                             | *                                      | Dang Kieu Trinh                                     |
 
 
-##Demo Video
+## Demo Video
 https://drive.google.com/file/d/1NINaKk5cqqYWNSCIwZAYA4H-fRUMKnEj/view?usp=sharing
