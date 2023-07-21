@@ -115,7 +115,10 @@ public class HomeScreen extends Screen{
     	public void actionPerformed(ActionEvent e) {
 			String menuItem = e.getActionCommand();
 			if (menuItem.equals("Help")) {
-				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", "HomeScreenHelp");
+				String message="Welcome to SoAlVi - Sorting Algorithm Visualizer ! \n "
+						+ "Choose 1 of the 3 algorithms on the Home screen \n"
+						+ "for the respective visualization";
+				InfoWindowComponent helpWindow = new InfoWindowComponent("Help", message);
 			}
 			else if (menuItem.equals("About")) {
 				String message=" Team 20 has developed this capstone project with \n "

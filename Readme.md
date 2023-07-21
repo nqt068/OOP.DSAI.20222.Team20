@@ -9,6 +9,9 @@ This is a Java project developed for the Object-Oriented Programming course. The
 - [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Task Distribution](#task-distribution)
+- [Demo Video](#demo-video)
+
 
 ## Team Members
 #### Nguyen Thi Trang - 20194458
@@ -49,3 +52,47 @@ To run the Sorting Algorithm Visualizer, follow these steps:
    - Generate a random array by clicking the "Create (A)" button.
 5. After inputting the array, click the "Sort" button to start the visualization.
 
+##Task Distribution
+
+| Task                               | Role                                   | Member                                               |
+|------------------------------------|----------------------------------------|------------------------------------------------------|
+| algorithm                          | SortingAlgorithm.java                  | Nguyen Quang Tri                                     |
+|                                    | ShellSortAlgorithm.java                | Tran Van Toan                                       |
+|                                    | SelectionSortAlgorithm.java            | Dang Kieu Trinh                                     |
+|                                    | MergeSortAlgorithm.java                | Nguyen Thi Trang                                    |
+| component                          | ArrayGraphic.java                      | Nguyen Quang Tri                                     |
+|                                    | ButtonComponent.java                   | Nguyen Quang Tri, Dang Kieu Trinh, Tran Van Toan     |
+|                                    | CardComponent.java                     | Nguyen Quang Tri, Dang Kieu Trinh                    |
+|                                    | InfoWindowComponent.java               | Nguyen Quang Tri, Nguyen Thi Trang, Dang Kieu Trinh  |
+|                                    | LabelComponent.java                    | Nguyen Quang Tri, Nguyen Thi Trang                   |
+|                                    | SliderBarComponent.java                | Nguyen Quang Tri                                     |
+|                                    | TextAreaComponent.java                 | Nguyen Quang Tri                                     |
+|                                    | TextFieldComponent.java                | Nguyen Quang Tri                                     |
+|                                    | ToggleMenuComponent.java               | Nguyen Quang Tri                                     |
+| component.utils                    | ArrayUtil.java                         | Nguyen Quang Tri, Tran Van Toan                      |
+|                                    | Element.java                           | Nguyen Quang Tri                                     |
+| controller                         | Controller.java                        | Nguyen Quang Tri                                     |
+|                                    | SortController.java                    | Tran Van Toan, Nguyen Quang Tri                      |
+| listener                           | ScreenListener.java                    | Nguyen Quang Tri                                     |
+| test.algorithm                     | *                                      | Nguyen Quang Tri, Tran Van Toan, Dang Kieu Trinh, Nguyen Thi Trang |
+| test.component                     | *                                      | Nguyen Quang Tri, Tran Van Toan, Dang Kieu Trinh, Nguyen Thi Trang |
+| test.component.utils               | *                                      | Nguyen Quang Tri, Tran Van Toan, Dang Kieu Trinh, Nguyen Thi Trang |
+| test.utils                         | *                                      | Nguyen Quang Tri, Tran Van Toan, Dang Kieu Trinh, Nguyen Thi Trang |
+| test.view                          | *                                      | Nguyen Quang Tri, Tran Van Toan, Dang Kieu Trinh, Nguyen Thi Trang |
+| view                               | HomeScreen.java                        | Nguyen Quang Tri, Tran Van Toan, Dang Kieu Trinh, Nguyen Thi Trang |
+|                                    | MergeSortScreen.java                   |  Nguyen Thi Trang |
+|                                    | Screen.java                            | Nguyen Quang Tri|
+|                                    | SelectionSortScreen.java               |  Dang Kieu Trinh |
+|                                    | ShellSortScreen.java                   |  Tran Van Toan |
+|                                    | SortScreen.java                        | Nguyen Quang Tri, Tran Van Toan, Dang Kieu Trinh, Nguyen Thi Trang |
+| Report                             | *                                      | Dang Kieu Trinh, Nguyen Thi Trang                    |
+| Diagrams                           | UseCaseDiagram                         | Dang Kieu Trinh                                     |
+|                                    | GeneralClassDiagram                    | Dang Kieu Trinh, Tran Van Toan, Nguyen Quang Tri     |
+|                                    | DetailedClassDiagrams                  | Dang Kieu Trinh, Nguyen Thi Trang                    |
+| Presentation                       | *                                      | Nguyen Thi Trang                                    |
+| Demo video                         | *                                      | Dang Kieu Trinh                                     |
+| Readme                             | *                                      | Dang Kieu Trinh                                     |
+
+
+##Demo Video
+https://drive.google.com/file/d/1NINaKk5cqqYWNSCIwZAYA4H-fRUMKnEj/view?usp=sharing
